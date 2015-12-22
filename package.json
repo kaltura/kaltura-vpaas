@@ -1,0 +1,53 @@
+{
+  "name": "kAnalony",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "^1.4.8",
+    "angular-bootstrap": "^0.12.2",
+    "angular-route": "^1.4.8",
+    "bootstrap": "^3.3.6",
+    "lodash": "^3.10.1"
+  },
+  "devDependencies": {
+    "debowerify": "*",
+    "envify": "*",
+    "grunt": "*",
+    "grunt-autoprefixer": "*",
+    "grunt-browserify": "*",
+    "grunt-concurrent": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-compass": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-connect": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-cssmin": "*",
+    "grunt-contrib-htmlmin": "*",
+    "grunt-contrib-imagemin": "*",
+    "grunt-contrib-jasmine": "*",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-karma": "*",
+    "grunt-modernizr": "*",
+    "grunt-newer": "*",
+    "grunt-node-inspector": "^0.4.1",
+    "grunt-rev": "*",
+    "grunt-shell": "*",
+    "grunt-svgmin": "*",
+    "grunt-usemin": "*",
+    "jshint-stylish": "*",
+    "karma": "*",
+    "karma-chrome-launcher": "*",
+    "karma-coffee-preprocessor": "*",
+    "karma-firefox-launcher": "*",
+    "karma-jasmine": "*",
+    "karma-ng-html2js-preprocessor": "*",
+    "karma-phantomjs-launcher": "*",
+    "karma-script-launcher": "*",
+    "load-grunt-tasks": "*",
+    "time-grunt": "*"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}

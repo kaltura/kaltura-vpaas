@@ -1,0 +1,15 @@
+{
+  "name": "kAnalony",
+  "version": "0.0.1",
+  "dependencies": {
+    "font-awesome": "*",
+    "lodash": "*",
+    "angular-resource": "*",
+    "angular-mocks": "*",
+    "angular-ui-router": "~0.2.13",
+    "angular-bootstrap": "*",
+    "angular-animate": "*",
+    "jquery": "~2.1.2"
+  }
+}
+
