@@ -347,6 +347,13 @@ module.exports = function(grunt) {
         'node-inspector': {
             dev: {}
         },
+        'kan-app-styles':{
+            app: {
+                files: {
+                    '<%= project.temp %>/assets/main.css': '<%= project.app %>/assets/sass/main.scss'
+                }
+            }
+        },
         'kan-browserify':{
             app:{
                 options : {
@@ -384,6 +391,7 @@ module.exports = function(grunt) {
             /*'concurrent:server',*/
             'concat',
             'kan-browserify',
+            'kan-app-styles',
             'autoprefixer',
             'connect:livereload',
             'watch'

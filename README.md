@@ -24,12 +24,25 @@ In the repository folder install node modules
 $ npm install 
 ```
 
-Also make sure bower libraries are installed
+Make sure bower libraries are installed
 ```
 $ bower install
 ```
 
-You are ready, just continue to read the [usage section](##usage).
+You also required to have [Ruby](https://www.ruby-lang.org/en/downloads/) and [Sass](http://sass-lang.com/install) installed. If you're on OS X or Linux you probably already have Ruby installed; test with the following command in your terminal. 
+
+```
+$ ruby -v
+```
+ 
+When you've confirmed you have Ruby installed, continue installing the Sass engine.
+
+ ``` 
+ $ gem install sass
+ ```
+
+
+**You are ready!** to open the application in the browser continue reading section '[usage section](##usage)'.
 
 ## Usage
 This project is using grunt to run develop & packaging tasks.
@@ -47,7 +60,7 @@ This command will browserify your project and open a browser with your site. Whe
 If you get any errors during the process just follow the [FAQ](##faq) section.
 
 ## Technical information
-
+kAnalony application is based on many third party libraries. You can review the full list in the wiki (TBD). 
 
 ## FAQ
 
