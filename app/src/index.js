@@ -1,7 +1,8 @@
 'use strict';
 
 require('angular');
-require('lodash');
+var lodash = require('lodash');
+window._ = lodash;
 
 var $ = require('jquery');
 window.jQuery = $;
