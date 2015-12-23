@@ -1,4 +1,4 @@
-# Kaltura Client Analytics 2.0 (aka kAnalony project) 
+# Kaltura Analytics 2.0 Front-End (aka kAnalony project Front-End) 
 This project is the new client analytics project of Kaltura. 
 
 With kAnalony project, Kaltura real time analytics for live and on-demand video, you'll get historical or near real-time, raw or summarized data Kaltura partners need to truly understand how, when, and where their content is seen and shared by viewers. What keeps viewers watching? When do they lose interest? What do they share? Actionable Analytics ends the guesswork. 
