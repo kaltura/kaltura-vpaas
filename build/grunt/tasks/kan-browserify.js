@@ -1,12 +1,44 @@
 'use strict';
 
 module.exports = function (grunt) {
+    'use strict';
 
     var _ = require('lodash');
 
+    /*grunt.config.set('browserify', {
+
+            app: {
+                options : {
+                    debug: true,
+                    external:['angular']
+                },
+                files: {
+                    '.tmp/app.js': ['app/src/index.js']
+                }
+            },vendor: {
+
+                // External modules that don't need to be constantly re-compiled
+                src: ['.'],
+                dest: 'build/vendor.js',
+                options: {
+                    debug: false,
+                    alias: [
+                        'react:',
+                        'react/lib/ReactCSSTransitionGroup:',
+                        'react/lib/cx:',
+                        'q:',
+                        'underscore:',
+                        'loglevel:'
+                    ],
+                    external: null  // Reset this here because it's not needed
+                }
+            }
+        }
+    );*/
+
     grunt.registerMultiTask('kan-browserify','Bundle app and vendor scripts separately',function()
     {
-        var debug = this.data.options ? this.data.options.debug || false : false;
+        var debug = this.data.options.debug || false;
         var vendors = this.data.options.vendors;
 
         grunt.config.set('browserify.kan-app', {
