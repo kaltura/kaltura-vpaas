@@ -1,4 +1,4 @@
-# Kaltura Client Analytics 2.0 (aka kAnalony project) 
+# Kaltura Analytics 2.0 Front-End (aka kAnalony project Front-End) 
 This project is the new client analytics project of Kaltura. 
 
 With kAnalony project, Kaltura real time analytics for live and on-demand video, you'll get historical or near real-time, raw or summarized data Kaltura partners need to truly understand how, when, and where their content is seen and shared by viewers. What keeps viewers watching? When do they lose interest? What do they share? Actionable Analytics ends the guesswork. 
@@ -24,12 +24,25 @@ In the repository folder install node modules
 $ npm install 
 ```
 
-Also make sure bower libraries are installed
+Make sure bower libraries are installed
 ```
 $ bower install
 ```
 
-You are ready, just continue to read the [usage section](##usage).
+You also required to have [Ruby](https://www.ruby-lang.org/en/downloads/) and [Sass](http://sass-lang.com/install) installed. If you're on OS X or Linux you probably already have Ruby installed; test with the following command in your terminal. 
+
+```
+$ ruby -v
+```
+ 
+When you've confirmed you have Ruby installed, continue installing the Sass engine.
+
+ ``` 
+ $ gem install sass
+ ```
+
+
+**You are ready!** to open the application in the browser continue reading section '[usage section](##usage)'.
 
 ## Usage
 This project is using grunt to run develop & packaging tasks.
@@ -46,8 +59,27 @@ This command will browserify your project and open a browser with your site. Whe
 
 If you get any errors during the process just follow the [FAQ](##faq) section.
 
-## Technical information
+## Demo (local) server
+kAnalony front-end application uses a demo server to simulate front-end scenarios. In order to run the demo (local) server, open the server folder ```$ cd server``` and install node modules.
 
+```
+$ npm install
+```
+
+Now you should be able to run the demo server at port 9911 using the following command
+
+```
+$ grunt
+```
+
+To make sure it works, just run the following url in your browser *'http://localhost:9911/yo'* and excect the following result:
+
+```
+{"name":"kAnalony demo (local) server","version":"v3"}
+```
+
+## Technical information
+kAnalony application is based on many third party libraries. You can review the full list in the wiki (TBD). 
 
 ## FAQ
 

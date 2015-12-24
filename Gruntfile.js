@@ -61,42 +61,52 @@ module.exports = function(grunt) {
 
         // Watches files for changes and runs tasks based on the changed files
         watch: {
+            options: {
+                livereload: '<%= connect.options.livereload %>'
+            },
             js: {
-                files: ['<%= project.app %>/src/{,*/}*.js'],
-                tasks: ['jshint', 'kan-browserify:app'],
-                options: { livereload: true }
+                files: ['<%= project.app %>/{,*/}*.js'],
+                tasks: ['jshint', 'kan-browserify:app']
             },
-            jstest: {
-                files: ['test/spec/{,*/}*.js'],
-                tasks: ['test:watch']
+            html: {
+                files: [
+                    '<%= project.app %>/**/*.html'
+                ]
             },
+            scss : {
+                files: ['<%= project.app %>/assets/**/*.scss'],
+                tasks: ['kan-app-styles:app']
+
+            },
+            assets: {
+                files: [
+                    '<%= project.app %>/assets/*.*',
+                    '!**/*.scss'
+                ]
+            }
+            //jstest: {
+            //    options: {
+            //        livereload: false
+            //    },
+            //    files: ['test/spec/{,*/}*.js'],
+            //    tasks: ['test:watch']
+            //},
             //uncomment this if you want to run testing everytime your scripts changing
             //karma: {
+                //options: {
+                //    livereload: false
+                //},
                 //files: ['app/src/**/*.js', 'test/**/*.js'],
                 //tasks: ['karma:unit'] //NOTE the :run flag
             //},
-            gruntfile: {
-                files: ['Gruntfile.js']
-            },
-            browserifySpec: {
-                files: ['<%= project.app %>/src/**/*.spec.js'],
-                tasks: ['browserify:spec']
-            },
-            styles: {
-                files: ['<%= project.app %>/styles/{,*/}*.css'],
-                tasks: ['newer:copy:styles', 'autoprefixer']
-            },
-            livereload: {
-                options: {
-                    livereload: '<%= connect.options.livereload %>'
-                },
-                files: [
-                    '<%= project.app %>/{,*/}*.html',
-                    '<%= project.app %>/src/**/*.html',
-                    '.tmp/styles/{,*/}*.css',
-                    '<%= project.app %>/images/{,*/}*.{gif,jpeg,jpg,png,svg,webp}'
-                ]
-            }
+            //browserifySpec: {
+            //    options: {
+            //        livereload: false
+            //    },
+            //    files: ['<%= project.app %>/src/**/*.spec.js'],
+            //    tasks: ['browserify:spec']
+            //},
+
         },
 
         // Empties folders to start fresh
@@ -347,6 +357,13 @@ module.exports = function(grunt) {
         'node-inspector': {
             dev: {}
         },
+        'kan-app-styles':{
+            app: {
+                files: {
+                    '<%= project.temp %>/assets/main.css': '<%= project.app %>/assets/sass/main.scss'
+                }
+            }
+        },
         'kan-browserify':{
             app:{
                 options : {
@@ -384,6 +401,7 @@ module.exports = function(grunt) {
             /*'concurrent:server',*/
             'concat',
             'kan-browserify',
+            'kan-app-styles',
             'autoprefixer',
             'connect:livereload',
             'watch'
