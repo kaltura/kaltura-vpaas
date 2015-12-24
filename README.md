@@ -59,6 +59,25 @@ This command will browserify your project and open a browser with your site. Whe
 
 If you get any errors during the process just follow the [FAQ](##faq) section.
 
+## Demo (local) server
+kAnalony front-end application uses a demo server to simulate front-end scenarios. In order to run the demo (local) server, open the server folder ```$ cd server``` and install node modules.
+
+```
+$ npm install
+```
+
+Now you should be able to run the demo server at port 9911 using the following command
+
+```
+$ grunt
+```
+
+To make sure it works, just run the following url in your browser *'http://localhost:9911/yo'* and excect the following result:
+
+```
+{"name":"kAnalony demo (local) server","version":"v3"}
+```
+
 ## Technical information
 kAnalony application is based on many third party libraries. You can review the full list in the wiki (TBD). 
 

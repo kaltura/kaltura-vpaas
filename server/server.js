@@ -21,10 +21,15 @@ apiRouter.use(function (req, res, next) {
     next();
 });
 
+app.get('/yo',function(req,res)
+{
+   res.json({ name : 'kAnalony demo (local) server', version : 'v3'});
+});
+
 app.use('/api_v3', apiRouter);
 
 require('./app/routers/getData').initialize(apiRouter);
 
 app.listen(port);
-console.log('Server is running on port ' + port);
+console.log('Server is running on port ' + port + '. Try it by navigating to "http://localhost:9911/yo".');
 
