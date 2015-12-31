@@ -1,9 +1,8 @@
 ﻿'use strict';
 
-module.exports = function(){
-    require('angular-ui-router');
-    require('../kan-shell');
+require('angular-ui-router');
+require('../kan-shell');
+require('../kan-ui-charts');
+require('../kan-samples');
 
-    return angular.module('kanApp',['ui.router', 'kanShell']);
-};
-
+module.exports =angular.module('kanApp',['ui.router', 'kanShell','kanUICharts','kanSamples']);

@@ -1,20 +1,23 @@
-<div class="container">
-    <div class="header">
-        &nbsp
-    </div>
-    <div class="row">
-        <div class="jumbotron">
-            <h1>Welcome to kAnalony!</h1>
-            <p class="lead">We setup the following components, just for you:</p>
-            <ul>
-                <li><b>Angular.JS</b> mvc javascript framework including ui-routing</li>
-                <li><b>Bootstrap UI</b> ui framework</li>
-                <li><b>Node.JS and Grunt</b> support for development</li>
-                <li><b>Browserify implementation</b> bundle all scripts(both applicative and vendors) into one cozy file</li>
-                <li><b>Awesome project structure</b> follow community best practices and standards</li>
-                <li><b>Bower & Node.JS</b> third party dependencies management</li>
-                <li><b>Sass preprocessing</b> <span class="sample-scss-preprocessor">preprocessor</span> that adds nested rules, variables, mixins and functions, selector inheritance, and more to CSS </li>
-            </ul>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Kaltura Analytics 2.0</a>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li data-ui-sref-active="active"><a  data-ui-sref="root.shell.about">About</a></li>
+                <li data-ui-sref-active="active"><a  data-ui-sref="root.shell.samples.charts">Samples</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
     </div>
+</nav>
+
+<div class="container app-container">
+    <div data-ui-view></div>
 </div>

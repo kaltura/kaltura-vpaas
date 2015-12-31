@@ -62,10 +62,12 @@ module.exports = function(grunt) {
         // Watches files for changes and runs tasks based on the changed files
         watch: {
             options: {
-                livereload: '<%= connect.options.livereload %>'
+                livereload: {
+                  port : '<%= connect.options.livereload %>'
+                }
             },
             js: {
-                files: ['<%= project.app %>/{,*/}*.js'],
+                files: ['<%= project.app %>/src/**/*.js'],
                 tasks: ['jshint', 'kan-browserify:app']
             },
             html: {
@@ -391,6 +393,7 @@ module.exports = function(grunt) {
 
     grunt.registerTask('debug',['node-inspector']);
 
+    grunt.registerTask('default',['serve']);
     grunt.registerTask('serve', function(target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'connect:dist:keepalive']);
