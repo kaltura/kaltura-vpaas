@@ -1,9 +1,21 @@
-.sample-scss-preprocessor
-{
-    color:red;
+$active-background : #e7e7e7 !important;
+$active-color : #555 !important;
+
+@mixin active(){
+    background: $active-background;
+    color: $active-color;
 }
 
 .mt
 {
     margin-top:20px;
 }
+
+
+.tab-content
+{
+    @extend  .mt;
+    margin-top:20px;
+}
+
+

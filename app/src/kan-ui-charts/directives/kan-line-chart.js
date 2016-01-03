@@ -1,74 +1,88 @@
 'use strict';
 
 var nv = require('nvd3');
-module.exports =  function()
-{
+module.exports = function () {
 
-    function data() {
-        var sin = [],
-            cos = [];
+    function linkFunction(scope, element, attrs, ctrl) {
+        var chart = null;
 
-        for (var i = 0; i < 100; i++) {
-            sin.push({x: i, y: Math.sin(i/10)});
-            cos.push({x: i, y: .5 * Math.cos(i/10)});
+        function initializeChart() {
+            if (!chart && ctrl.options && ctrl.dataSource) {
+
+                element.find('svg').attr('height','300px');
+
+                chart = nv.addGraph(function () {
+                    var chart = nv.models.lineChart();
+
+                    if (ctrl.options.useInteractiveGuideline) {
+                        chart.useInteractiveGuideline(true);
+                    }
+
+                    if (ctrl.options.viewFinder) {
+                        chart.margin({bottom: 30})
+                            .focusEnable(true);
+                    }
+
+                    chart.xAxis
+                        .axisLabel('Time (ms)')
+                        .tickFormat(d3.format(',r'));
+
+                    chart.yAxis
+                        .axisLabel('Voltage (v)')
+                        .tickFormat(d3.format('.02f'));
+
+                    if (ctrl.dataSource) {
+                        d3.select(element.find('svg')[0])
+                            .datum(ctrl.dataSource)
+                            .transition().duration(500)
+                            .call(chart);
+                    }
+
+                    nv.utils.windowResize(chart.update);
+
+                    return chart;
+                });
+            } else {
+                // TODO
+            }
+
         }
 
-        return [
-            {
-                values: sin,
-                key: 'Sine Wave',
-                color: '#ff7f0e'
-            },
-            {
-                values: cos,
-                key: 'Cosine Wave',
-                color: '#2ca02c'
-            }
-        ];
-    }
+        scope.$watch('vm.rebind', function () {
+                initializeChart();
+            });
 
-    function linkFunction ($scope, element, attrs) {
-        nv.addGraph(function() {
-            var chart = nv.models.lineChart()
-                .useInteractiveGuideline(true)
-                ;
+        scope.$watch('vm.dataSource', function () {
+                initializeChart();
+            });
 
-            chart.xAxis
-                .axisLabel('Time (ms)')
-                .tickFormat(d3.format(',r'))
-            ;
+        scope.$watch('vm.options', function () {
+                initializeChart();
+            });
 
-            chart.yAxis
-                .axisLabel('Voltage (v)')
-                .tickFormat(d3.format('.02f'))
-            ;
-
-            d3.select(element.find('svg')[0])
-                .datum(data())
-                .transition().duration(500)
-                .call(chart)
-            ;
-
-            nv.utils.windowResize(chart.update);
-
-            return chart;
+        scope.$watch('$destroy', function () {
+            // TODO
         });
 
 
     }
 
-    function controllerFunction()
-    {
+    function controllerFunction() {
 
     }
 
 
     return {
         restrict: 'A',
-            scope: {},
+        scope: {
+            options: '=kOptions',
+            rebind : '=kRebind',
+            dataSource : '=kDataSource'
+        },
         templateUrl: 'src/kan-ui-charts/directives/kan-line-chart.html',
-            controller : controllerFunction,
-        controllerAs : 'vm',
-        link : linkFunction
+        controller: controllerFunction,
+        controllerAs: 'vm',
+        bindToController: true,
+        link: linkFunction
     }
 };

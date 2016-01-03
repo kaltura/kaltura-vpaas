@@ -1,1 +1,32 @@
-<div kan-line-chart></div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Simple line chart ( # line-chart-1 )
+    </div>
+    <div class="panel-body">
+        <uib-tabset type="pills" >
+            <uib-tab heading="Demo" >
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label><input type="checkbox" data-ng-model="vm.lineChart.sample1.options.chart.useInteractiveGuideline" data-ng-change="vm.lineChart.sample1.refresh()"> Interactive guideline</label>
+                    </div>
+                    <div class="form-group">
+                        <label><input type="checkbox" data-ng-model="vm.lineChart.sample1.viewData.showViewFinder" data-ng-change="vm.lineChart.sample1.refresh()"> Show view finder</label>
+                    </div>
+                </form>
+
+                <nvd3 data-options="vm.lineChart.sample1.options" data-data="vm.lineChart.sample1.data" data-api="vm.lineChart.sample1.api" data-config="vm.config" ></nvd3>
+            </uib-tab>
+            <uib-tab heading="Configuration">
+                <pre>{{vm.lineChart.sample1.options | json}}</pre>
+            </uib-tab>
+            <uib-tab heading="Data">
+                <pre>{{vm.lineChart.sample1.data | json}}</pre>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+
+    <div>
+
+    </div>
+</div>
+

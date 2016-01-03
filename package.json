@@ -6,7 +6,8 @@
     "angular-bootstrap": "^0.12.2",
     "angular-route": "^1.4.8",
     "bootstrap": "^3.3.6",
-    "lodash": "^3.10.1"
+    "lodash": "^3.10.1",
+    "moment": "^2.10.6"
   },
   "devDependencies": {
     "debowerify": "*",
