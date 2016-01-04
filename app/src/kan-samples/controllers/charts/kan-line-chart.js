@@ -14,7 +14,7 @@ module.exports = function (kanSamplesService) {
         self.loadingData = true;
         if (origin === 'demo')
         {
-            loadDataPromise = kanSamplesService.getDemoData({takeTop10 : self.filters.top10 });
+            loadDataPromise = kanSamplesService.getDemoData({key : 'lineChart', takeTop10 : self.filters.top10 });
         }else
         {
 

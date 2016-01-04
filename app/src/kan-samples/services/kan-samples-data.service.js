@@ -1,4 +1,5 @@
 
+var storage = require('../scripts/kan-samples-repository');
 
 module.exports = function($http,$q)
 {
@@ -25,13 +26,18 @@ module.exports = function($http,$q)
 
     function getDemoData(filters)
     {
-        return $http.post('http://localhost:9911/api_v3/report/getGraphs').then(function (result) {
-            var data = _.map(result.data, function (item) {
+        var dataKey = filters ? filters.key : '';
+
+        if (dataKey)
+        {
+            var serverData = storage.get(dataKey);
+
+            var resultData = _.map(serverData, function (item) {
                 return {key: item.id, values: convertToKeyValueArray(item.data, 'x', 'y',filters.takeTop10)};
             });
 
-            return ({data : data});
-        });
+            return $q.resolve({data : resultData});
+        }
     }
 
     self.getDemoData = getDemoData;

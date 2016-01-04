@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
@@ -16,7 +16,7 @@ module.exports = function(grunt) {
             // Configurable paths
             app: 'app',
             dist: 'dist',
-            temp : '.tmp'
+            temp: '.tmp'
 
         },
 
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
         watch: {
             options: {
                 livereload: {
-                  port : '<%= connect.options.livereload %>'
+                    port: '<%= connect.options.livereload %>'
                 }
             },
             js: {
@@ -75,7 +75,7 @@ module.exports = function(grunt) {
                     '<%= project.app %>/**/*.html'
                 ]
             },
-            scss : {
+            scss: {
                 files: ['<%= project.app %>/assets/**/*.scss'],
                 tasks: ['kan-app-styles:app']
 
@@ -86,29 +86,6 @@ module.exports = function(grunt) {
                     '!**/*.scss'
                 ]
             }
-            //jstest: {
-            //    options: {
-            //        livereload: false
-            //    },
-            //    files: ['test/spec/{,*/}*.js'],
-            //    tasks: ['test:watch']
-            //},
-            //uncomment this if you want to run testing everytime your scripts changing
-            //karma: {
-                //options: {
-                //    livereload: false
-                //},
-                //files: ['app/src/**/*.js', 'test/**/*.js'],
-                //tasks: ['karma:unit'] //NOTE the :run flag
-            //},
-            //browserifySpec: {
-            //    options: {
-            //        livereload: false
-            //    },
-            //    files: ['<%= project.app %>/src/**/*.spec.js'],
-            //    tasks: ['browserify:spec']
-            //},
-
         },
 
         // Empties folders to start fresh
@@ -123,13 +100,12 @@ module.exports = function(grunt) {
                     ]
                 }]
             },
-            afterBuild: {
+            serve: {
                 files: [{
                     dot: true,
-                    src: ['<%= project.dist %>/src/index.js']
+                    src: ['<%= project.temp %>/**/*.*']
                 }]
-            },
-            server: '.tmp'
+            }
         },
 
         // Make sure code styles are up to par and there are no obvious mistakes
@@ -146,62 +122,73 @@ module.exports = function(grunt) {
         },
 
 
-
         // Copies remaining files to places other tasks can use
         copy: {
-            dist: {
+            'dist': {
                 files: [{
                     expand: true,
                     dot: true,
-                    cwd: '<%= project.app %>',
+                    cwd: '<%= project.app %>/src',
                     dest: '<%= project.dist %>',
                     src: [
-                        '*.{ico,png,txt}',
-                        '.htaccess',
-                        'images/{,*/}*.webp',
-                        '{,*/}*.html',
-                        'styles/fonts/{,*/}*.*',
-                        'bower_components/font-awesome/fonts/*.*'
+                        '**/*.html'
                     ]
-                }]
-            },
-            html: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= project.app %>',
-                    dest: '<%= project.dist %>',
-                    src: ['src/**/*.html']
-                }]
+                },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: '<%= project.app %>',
+                        dest: '<%= project.dist %>',
+                        src: [
+                            '*.html'
+                        ]
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'node_modules/bootstrap/dist',
+                        dest: '<%= project.dist %>/assets/bootstrap',
+                        src: [
+                            '**/*.*'
+                        ]
+                    },
+                    {
+                        dest: '<%= project.dist %>/assets/nvd3/nv.d3.css',
+                        src: ['bower_components/nvd3/build/nv.d3.css']
+                    },
+
+                    {
+                        expand: true,
+                        cwd: '<%= project.temp %>',
+                        dest: '<%= project.dist %>',
+                        src: ['app.js', 'vendors.js', 'assets/**/*.*']
+                    }]
             }
         },
 
-
-        // Run some tasks in parallel to speed up build process
-        concurrent: {
-        },
-        'kan-app-styles':{
+        'kan-app-styles': {
             app: {
                 files: {
                     '<%= project.temp %>/assets/main.css': '<%= project.app %>/assets/sass/main.scss'
                 }
             }
         },
-        'kan-browserify':{
-            app:{
-                options : {
-                    debug:true,
-                    vendors : require('./app/vendors-references'),
-                    appFiles:  {
+        'kan-browserify': {
+            app: {
+                options: {
+                    debug: true,
+                    vendors: require('./app/vendors-references'),
+                    appFiles: {
                         '.tmp/app.js': ['app/src/index.js']
                     }
 
                 }
             },
-            vendors:{
-                options : {
-                    debug:true,
-                    vendors : require('./app/vendors-references'),
-                    vendorFiles:  {
+            vendors: {
+                options: {
+                    debug: true,
+                    vendors: require('./app/vendors-references'),
+                    vendorFiles: {
                         '.tmp/vendors.js': ['.']
                     }
                 }
@@ -212,15 +199,13 @@ module.exports = function(grunt) {
     grunt.loadTasks('./build/grunt/tasks');
 
 
-    grunt.registerTask('default',['serve']);
+    grunt.registerTask('default', ['serve']);
 
-    grunt.registerTask('serve', function(target) {
-        if (target === 'dist') {
-            return grunt.task.run(['build', 'connect:dist:keepalive']);
-        }
+    grunt.registerTask('serve', function () {
 
         grunt.task.run([
-            'clean:server',
+            'clean:serve',
+            'jshint',
             'kan-browserify',
             'kan-app-styles',
             'connect:livereload',
@@ -230,20 +215,12 @@ module.exports = function(grunt) {
 
 
     grunt.registerTask('build', [
-        'jshint',
         'clean:dist',
-        'useminPrepare',
-        'concurrent:dist',
-        'autoprefixer',
-        'cssmin',
-        'browserify:dist',
-        'clean:afterBuild',
-        'copy:dist',
-        'copy:html',
-        'uglify',
-        // 'rev',
-        'usemin',
-        'htmlmin'
+        'jshint',
+        'kan-browserify',
+        'kan-app-styles',
+        'copy:dist'
     ]);
 
 };
+
