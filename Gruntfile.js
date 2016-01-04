@@ -147,132 +147,6 @@ module.exports = function(grunt) {
 
 
 
-        // Add vendor prefixed styles
-        autoprefixer: {
-            options: {
-                browsers: ['last 1 version']
-            },
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '.tmp/styles/',
-                    src: '{,*/}*.',
-                    app: {
-                        html: '<%= project.app %>/index.html',
-                        ignorePath: '/'
-                    },
-                    dest: '.tmp/styles/'
-                }]
-            }
-        },
-
-        //browserify task
-        //browserify: {
-        //  spec: {
-        //    files: { '<%= project.temp %>/spec.js': ['<%= project.app %>/src/**/*.spec.js'] },
-        //    options: { alias: browserifyAliasConfig }
-        //  }
-        //},
-
-        // Renames files for browser caching purposes
-        rev: {
-            dist: {
-                files: {
-                    src: [
-                        '<%= project.dist %>/src/{,*/}*.js',
-                        '<%= project.dist %>/styles/{,*/}*.css',
-                        '<%= project.dist %>/images/{,*/}*.{gif,jpeg,jpg,png,webp}',
-                        '<%= project.dist %>/styles/fonts/{,*/}*.*'
-                    ]
-                }
-            }
-        },
-
-        // Reads HTML for usemin blocks to enable smart builds that automatically
-        // concat, minify and revision files. Creates configurations in memory so
-        // additional tasks can operate on them
-        useminPrepare: {
-            options: { dest: '<%= project.dist %>' },
-            html: '<%= project.app %>/index.html'
-        },
-
-        // Performs rewrites based on rev and the useminPrepare configuration
-        usemin: {
-            options: { assetsDirs: ['<%= project.dist %>'] },
-            html: ['<%= project.dist %>/{,*/}*.html'],
-            css: ['<%= project.dist %>/styles/{,*/}*.css']
-        },
-
-        // The following *-min tasks produce minified files in the dist folder
-        imagemin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= project.app %>/images',
-                    src: '{,*/}*.{gif,jpeg,jpg,png}',
-                    dest: '<%= project.dist %>/images'
-                }],
-                options: { cache: false }
-            }
-        },
-        svgmin: {
-            dist: {
-                files: [{
-                    expand: true,
-                    cwd: '<%= project.app %>/images',
-                    src: '{,*/}*.svg',
-                    dest: '<%= project.dist %>/images'
-                }]
-            }
-        },
-        htmlmin: {
-            dist: {
-                options: {
-                    collapseBooleanAttributes: true,
-                    collapseWhitespace: true,
-                    removeAttributeQuotes: true,
-                    removeCommentsFromCDATA: true,
-                    removeEmptyAttributes: true,
-                    removeOptionalTags: true,
-                    removeRedundantAttributes: true,
-                    useShortDoctype: true
-                },
-                files: [{
-                    expand: true,
-                    cwd: '<%= project.dist %>',
-                    src: '**/*.html',
-                    dest: '<%= project.dist %>'
-                }]
-            }
-        },
-
-        // By default, your `index.html`'s <!-- Usemin block --> will take care of
-        // minification. These next options are pre-configured if you do not wish
-        // to use the Usemin blocks.
-        cssmin: {
-            dist: {
-                files: {
-                    '<%= project.dist %>/styles/style.css': [
-                        '.tmp/styles/{,*/}*.css'
-                    ]
-                }
-            }
-        },
-        uglify: {
-            dist: {
-                files: [{
-                    src: '<%= project.dist %>/src/{,*/}*.js', // source files mask
-                    expand: true // allow dynamic building
-                }]
-            }
-        },
-        concat: {
-            dist: {
-                src: ['.tmp/styles/{,*/}*.css'],
-                dest: '.tmp/styles/style.css'
-            }
-        },
-
         // Copies remaining files to places other tasks can use
         copy: {
             dist: {
@@ -298,66 +172,12 @@ module.exports = function(grunt) {
                     dest: '<%= project.dist %>',
                     src: ['src/**/*.html']
                 }]
-            },
-            styles: {
-                expand: true,
-                dot: true,
-                cwd: '<%= project.app %>/styles',
-                dest: '.tmp/styles/',
-                src: '{,*/}*.css'
             }
         },
 
-        // Generates a custom Modernizr build that includes only the tests you
-        // reference in your app
-        modernizr: {
-            dist: {
-                devFile: '<%= project.app %>/bower_components/modernizr/modernizr.js',
-                outputFile: '<%= project.dist %>/src/vendor/modernizr.js',
-                files: {
-                    src: [
-                        '<%= project.dist %>/src/{,*/}*.js',
-                        '<%= project.dist %>/styles/{,*/}*.css',
-                        '!<%= project.dist %>/src/vendor/*'
-                    ]
-                },
-                uglify: true
-            }
-        },
 
         // Run some tasks in parallel to speed up build process
         concurrent: {
-            server: [
-                'copy:styles'
-            ],
-            test: [
-                'copy:styles'
-            ],
-            dist: [
-                'copy:styles',
-                'imagemin',
-                'svgmin'
-            ]
-        },
-        // karma testing
-        karma: {
-            unit: {
-                configFile: 'config/karma.conf.js'
-            }
-        },
-
-        // Jasmine testing framework configuration options
-        jasmine: {
-            pivotal: {
-                src: '<%= project.app %>/src/**/*.js',
-                options: {
-                    specs: 'test/spec/*Spec.js',
-                    helpers: 'test/spec/*Helper.js'
-                }
-            }
-        },
-        'node-inspector': {
-            dev: {}
         },
         'kan-app-styles':{
             app: {
@@ -391,9 +211,9 @@ module.exports = function(grunt) {
 
     grunt.loadTasks('./build/grunt/tasks');
 
-    grunt.registerTask('debug',['node-inspector']);
 
     grunt.registerTask('default',['serve']);
+
     grunt.registerTask('serve', function(target) {
         if (target === 'dist') {
             return grunt.task.run(['build', 'connect:dist:keepalive']);
@@ -401,30 +221,13 @@ module.exports = function(grunt) {
 
         grunt.task.run([
             'clean:server',
-            /*'concurrent:server',*/
-            'concat',
             'kan-browserify',
             'kan-app-styles',
-            'autoprefixer',
             'connect:livereload',
             'watch'
         ]);
     });
 
-    grunt.registerTask('test', function(target) {
-        if (target !== 'watch') {
-            grunt.task.run([
-                'clean:server',
-                'concurrent:test',
-                'autoprefixer'
-            ]);
-        }
-
-        grunt.task.run([
-            'connect:test',
-            'jasmine'
-        ]);
-    });
 
     grunt.registerTask('build', [
         'jshint',
@@ -443,9 +246,4 @@ module.exports = function(grunt) {
         'htmlmin'
     ]);
 
-    grunt.registerTask('deploy', [
-        'newer:jshint',
-        'test',
-        'build'
-    ]);
 };
