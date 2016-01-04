@@ -1,0 +1,201 @@
+<div>
+    <h1>Line chart samples</h1>
+    <div class="alert alert-warning" data-ng-show="vm.errorMessage">{{ vm.errorMessage }}</div>
+    <div class="alert kan-alert-brief">
+        <p>This page show various line charts that are used in Kaltura Analytics 2.0 as described in issue #<a
+            href="https://kaltura.atlassian.net/browse/PLAT-4900" target="_blank">PLAT-4900</a></p>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Extract data
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+
+                <p>Use one of the below forms to retrieve data for the line charts.
+                </p></div>
+            <div class="row ">
+                <div class="col-xs-6 ">
+                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.refreshAll('demo')">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p class="form-control-static kan-title">Demo server (recorded responses)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" data-ng-model="vm.filters.top10"
+                                               data-ng-change="vm.refreshAll()"> Take only 10 values per series
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Load demo data</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.refreshAll('api')">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p class="form-control-static kan-title">Kaltura API (Production)</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Partner Id</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Partner Id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Partner Secret</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Partner Secret">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-default">Load API data</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Standard line chart
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+                <p>This sample demonstrate multiple line series chart using the same y-axis values with the following
+                    features:</p>
+                <ul>
+                    <li>Toggle on/off interactive tooltip that summaries all series at a specific point.</li>
+                    <li>Toggle on/off view finder that allow the user to focus on specific area of the chart.</li>
+                </ul>
+            </div>
+            <hr>
+            <uib-tabset type="pills">
+                <uib-tab heading="Demo">
+                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
+                    </div>
+                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.data">- No chart data found for this
+                        sample (use one of the forms above to request data) -
+                    </div>
+                    <form class="form-inline" data-ng-show="vm.samples.sample1.data">
+                        <div class="form-group">
+                            <label><input type="checkbox"
+                                          data-ng-model="vm.samples.sample1.options.chart.useInteractiveGuideline"
+                                          data-ng-change="vm.samples.sample1.refresh()"> Interactive guideline</label>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" data-ng-model="vm.samples.sample1.viewData.showViewFinder"
+                                          data-ng-change="vm.samples.sample1.refresh()"> Show view finder</label>
+                        </div>
+                    </form>
+
+                    <nvd3 data-options="vm.samples.sample1.options" data-data="vm.samples.sample1.data"
+                          data-api="vm.samples.sample1.api" data-config="vm.config"></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre>{{vm.samples.sample1.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre>{{vm.samples.sample1.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Multi y-axis chart
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+                <p>This sample demonstrate multiple line series chart using <b>2 different y-axis values</b>.</p>
+                <ul>
+                    <li>Open issue - At the moment I didn't found a way to show view finder and interactive tooltip for
+                        this type of chart.
+                    </li>
+                </ul>
+            </div>
+            <hr>
+            <uib-tabset type="pills">
+                <uib-tab heading="Demo">
+                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
+                    </div>
+                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample2.data">- No chart data found for this
+                        sample (use one of the forms above to request data) -
+                    </div>
+                    <nvd3 data-options="vm.samples.sample2.options" data-data="vm.samples.sample2.data"
+                          data-api="vm.samples.sample2.api" data-config="vm.config"></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre>{{vm.samples.sample2.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre>{{vm.samples.sample2.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Cumulative line chart
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+                <p>This sample demonstrate multiple line series chart using the same y-axis values with the following
+                    features:</p>
+                <ul>
+                    <li>Ability to change the zero-point against which all values are calculated (drag the red vertical
+                        line found on the left-most area).
+                    </li>
+                    <li>Toggle on/off interactive tooltip that summaries all series at a specific point.</li>
+                    <li>Open issue - At the moment I didn't found a way to show view finder for this type of chart.</li>
+                </ul>
+            </div>
+            <hr>
+            <uib-tabset type="pills">
+                <uib-tab heading="Demo">
+                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
+                    </div>
+                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample3.data">- No chart data found for this
+                        sample (use one of the forms above to request data) -
+                    </div>
+                    <form class="form-inline" data-ng-show="vm.samples.sample3.data">
+                        <div class="form-group">
+                            <label><input type="checkbox"
+                                          data-ng-model="vm.samples.sample3.options.chart.useInteractiveGuideline"
+                                          data-ng-change="vm.samples.sample3.refresh()"> Interactive
+                                guideline</label>
+                        </div>
+                    </form>
+                    <nvd3 data-options="vm.samples.sample3.options" data-data="vm.samples.sample3.data"
+                          data-api="vm.samples.sample3.api" data-config="vm.config"></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre>{{vm.samples.sample3.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre>{{vm.samples.sample3.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,83 @@
+
+.kan-samples {
+
+    h1 {
+        margin-top:0px;
+        margin-bottom:30px;
+    }
+
+    .kan-no-data
+    {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .kan-sample-description
+    {
+        color: gray;
+    }
+
+    .form-inline .form-group:not(:first-child)
+    {
+        margin-left:10px;
+    }
+
+    .kan-alert-brief
+    {
+       @include active-panel();
+    }
+
+    .kan-filter-form
+    {
+        border: solid 1px lightgray;
+        background:#F5F5F6;
+        padding:10px;
+
+        .kan-title
+        {
+            font-weight: bolder;
+
+        }
+
+        label
+        {
+            font-weight: inherit;
+            text-align: left;
+        }
+    }
+
+    .kan-samples-sidebar .nav>li>a
+    {
+        display: block;
+        padding: 4px 20px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #767676;
+    }
+
+    .kan-samples-sidebar .nav > .active:focus > a, .kan-samples-sidebar .nav > .active:hover > a, .kan-samples-sidebar .nav > .active > a {
+        padding-left: 18px;
+        font-weight: 700;
+        color: $active-color;
+        background-color: transparent;
+        border-left: 2px solid $active-color ;
+    }
+
+    .kan-samples-sidebar .nav > li > a {
+        display: block;
+        padding: 4px 20px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #767676;
+    }
+
+
+    .kan-samples-sidebar .nav .nav>li>a
+    {
+        padding-top: 1px;
+        padding-bottom: 1px;
+        padding-left: 30px;
+        font-size: 12px;
+        font-weight: 400;
+    }
+}

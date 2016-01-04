@@ -9,8 +9,14 @@ module.exports = function ($stateProvider) {
 
     $stateProvider.state('root.shell.samples.charts', {
         url: '/charts',
-        templateUrl: 'kan-samples/partials/charts.html',
-        controller : 'kanCharts',
+        abstract:true,
+        template: '<div ui-view></div>'
+    });
+
+    $stateProvider.state('root.shell.samples.charts.lineChart', {
+        url: '/lineChart',
+        templateUrl: 'kan-samples/partials/charts/line-chart.html',
+        controller : 'kanLineChart',
         controllerAs : 'vm'
     });
 };

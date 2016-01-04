@@ -2,84 +2,55 @@
 
 var _ = require('lodash');
 
-module.exports = function ($timeout, $http) {
+module.exports = function (kanSamplesService) {
     var self = this;
 
-    function data() {
-        var sin = [],
-            cos = [];
 
-        for (var i = 0; i < 100; i++) {
-            sin.push({x: i, y: Math.sin(i / 10)});
-            cos.push({x: i, y: .5 * Math.cos(i / 10)});
+
+    function refreshAll(origin) {
+
+        var loadDataPromise  =  null;
+
+        self.loadingData = true;
+        if (origin === 'demo')
+        {
+            loadDataPromise = kanSamplesService.getDemoData({takeTop10 : self.filters.top10 });
+        }else
+        {
+
         }
 
-        return [
+        if (loadDataPromise )
+        {
+            loadDataPromise.then(function(result)
             {
-                values: sin,
-                key: 'Sine Wave',
-                color: '#ff7f0e'
-            },
+                self.samples.sample1.data = result.data;
+                self.samples.sample1.refresh();
+
+                var yAxisIndex = result.data.length > 1 ? Math.round(result.data.length / 2) : null;
+
+                self.samples.sample2.data = _.map(result.data, function (item, index) {
+                    var yAxisValue = yAxisIndex ? (index + 1 <= yAxisIndex ? 1 : 2) : 1;
+                    return {
+                        key: item.key,
+                        type: 'line',
+                        yAxis: yAxisValue,
+                        values: item.values
+                    };
+                });
+                self.samples.sample2.refresh();
+
+                self.samples.sample3.data = result.data;
+                self.samples.sample3.refresh();
+
+                self.errorMessage = '';
+                self.loadingData = false;
+            },function(reason)
             {
-                values: cos,
-                key: 'Cosine Wave',
-                color: '#2ca02c'
-            }
-        ];
-    }
-
-    function convertToKeyValueArray(data, keyName, valueName, additionalProperties) {
-        var result = _.chain(data).words(/[^;]+/g).map(function (item) {
-            var result = {};
-            if (additionalProperties) {
-                $.extend(result, additionalProperties);
-            }
-            var token = item.split(',');
-            result[keyName] = moment(token[0], 'YYYYMMDD').toDate();
-            result[valueName] = parseFloat(token[1]);
-            return result;
-        });
-
-        if (self.filters.top10) {
-            result = result.take(10);
+                self.errorMessage = "Failed to load data : '" + reason.error + "'";
+            });
         }
-
-
-        return result.value();
     }
-
-    function refreshAll() {
-        // TODO : currently loads data directly from controller instead of from dedicated service
-        $http.post('http://localhost:9911/api_v3/report/getGraphs').then(function (result) {
-
-            self.samples.sample1.data = _.map(result.data, function (item) {
-                return {key: item.id, values: convertToKeyValueArray(item.data, 'x', 'y')};
-            });
-            ;
-            self.samples.sample1.refresh();
-
-            var yAxisIndex = result.data.length > 1 ? Math.round(result.data.length / 2) : null;
-
-            self.samples.sample2.data = _.map(result.data, function (item, index) {
-                var yAxisValue = yAxisIndex ? (index + 1 <= yAxisIndex ? 1 : 2) : 1;
-                return {
-                    key: item.id,
-                    type: 'line',
-                    yAxis: yAxisValue,
-                    values: convertToKeyValueArray(item.data, 'x', 'y')
-                };
-            });
-            self.samples.sample2.refresh();
-
-            self.samples.sample3.data = _.map(result.data, function (item) {
-                return {key: item.id, values: convertToKeyValueArray(item.data, 'x', 'y')};
-            });
-            ;
-            self.samples.sample3.refresh();
-
-        });
-    }
-
 
     // this configuration will be used globally and in the future should be enforced on all charts
     self.config = {
@@ -88,12 +59,14 @@ module.exports = function ($timeout, $http) {
     };
 
     self.filters = {
-        top10: false
+        top10: false,
+        demoServer : true
     };
 
     self.refreshAll = refreshAll;
 
-
+    self.errorMessage = "";
+    self.loadingData = false;
 
     self.samples =
     {
@@ -227,8 +200,4 @@ module.exports = function ($timeout, $http) {
             }
         }
     };
-
-
-    refreshAll();
-
 };
