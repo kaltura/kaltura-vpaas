@@ -1,0 +1,123 @@
+<div>
+    <h1>Bar chart samples</h1>
+    <div class="alert alert-warning" data-ng-show="vm.errorMessage">{{ vm.errorMessage }}</div>
+    <div class="alert kan-alert-brief">
+        <p>This page show various bar charts that are used in Kaltura Analytics 2.0 as described in issue #<a
+            href="https://kaltura.atlassian.net/browse/PLAT-4904" target="_blank">PLAT-4904</a></p>
+    </div>
+
+    <!--<div class="panel panel-default">
+        <div class="panel-heading">
+            Extract data
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+
+                <p>Use one of the below forms to retrieve data for the bar charts.
+                </p></div>
+            <div class="row ">
+                <div class="col-xs-6 ">
+                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.refreshAll('demo')">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p class="form-control-static kan-title">Demo server (recorded responses)</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" data-ng-model="vm.filters.top10"
+                                               data-ng-change="vm.refreshAll()"> Take only 10 values per series
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Load demo data</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-sm-6">
+                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.refreshAll('api')">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <p class="form-control-static kan-title">Kaltura API (Production)</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Partner Id</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Partner Id">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">Partner Secret</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" placeholder="Partner Secret">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <button type="submit" class="btn btn-default">Load API data</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Standard bar chart
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+                <p>This sample demonstrate multiple bar series chart using the same y-axis values with the following
+                    features:</p>
+                <ul>
+                    <li>Toggle on/off interactive tooltip that summaries all series at a specific point.</li>
+                    <li>Toggle on/off view finder that allow the user to focus on specific area of the chart.</li>
+                </ul>
+            </div>
+            <hr>
+            <uib-tabset type="pills">
+                <uib-tab heading="Demo">
+                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
+                    </div>
+                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.data">- No chart data found for this
+                        sample (use one of the forms above to request data) -
+                    </div>
+                    <form class="form-inbar" data-ng-show="vm.samples.sample1.data">
+                        <div class="form-group">
+                            <label><input type="checkbox"
+                                          data-ng-model="vm.samples.sample1.options.chart.useInteractiveGuidebar"
+                                          data-ng-change="vm.samples.sample1.refresh()"> Interactive guidebar</label>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" data-ng-model="vm.samples.sample1.viewData.showViewFinder"
+                                          data-ng-change="vm.samples.sample1.refresh()"> Show view finder</label>
+                        </div>
+                    </form>
+
+                    <nvd3 data-options="vm.samples.sample1.options" data-data="vm.samples.sample1.data"
+                          data-api="vm.samples.sample1.api" data-config="vm.config"></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre>{{vm.samples.sample1.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre>{{vm.samples.sample1.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>-->
+
+</div>
+

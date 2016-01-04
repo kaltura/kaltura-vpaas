@@ -19,5 +19,12 @@ module.exports = function ($stateProvider) {
         controller : 'kanLineChart',
         controllerAs : 'vm'
     });
+
+    $stateProvider.state('root.shell.samples.charts.barChart', {
+        url: '/barChart',
+        templateUrl: 'kan-samples/partials/charts/bar-chart.html',
+        controller : 'kanBarChart',
+        controllerAs : 'vm'
+    });
 };
 
