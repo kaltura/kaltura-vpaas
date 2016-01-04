@@ -1,32 +1,106 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        Simple line chart ( # line-chart-1 )
-    </div>
-    <div class="panel-body">
-        <uib-tabset type="pills" >
-            <uib-tab heading="Demo" >
-                <form class="form-inline">
-                    <div class="form-group">
-                        <label><input type="checkbox" data-ng-model="vm.lineChart.sample1.options.chart.useInteractiveGuideline" data-ng-change="vm.lineChart.sample1.refresh()"> Interactive guideline</label>
-                    </div>
-                    <div class="form-group">
-                        <label><input type="checkbox" data-ng-model="vm.lineChart.sample1.viewData.showViewFinder" data-ng-change="vm.lineChart.sample1.refresh()"> Show view finder</label>
-                    </div>
-                </form>
-
-                <nvd3 data-options="vm.lineChart.sample1.options" data-data="vm.lineChart.sample1.data" data-api="vm.lineChart.sample1.api" data-config="vm.config" ></nvd3>
-            </uib-tab>
-            <uib-tab heading="Configuration">
-                <pre>{{vm.lineChart.sample1.options | json}}</pre>
-            </uib-tab>
-            <uib-tab heading="Data">
-                <pre>{{vm.lineChart.sample1.data | json}}</pre>
-            </uib-tab>
-        </uib-tabset>
+<div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+           Samples data configuration
+        </div>
+        <div class="panel-body">
+            <p>The line chart samples were developed to meet issue <a href="https://kaltura.atlassian.net/browse/PLAT-4900" target="_blank">PLAT-4900</a></p>
+            <hr>
+            <form class="form">
+                <div class="form-group">
+                    <label><input type="checkbox" data-ng-model="vm.filters.top10" data-ng-change="vm.refreshAll()"> take only 10 values per series</label>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Standard line chart
+        </div>
+        <div class="panel-body">
+            <p>This sample demonstrate multiple line series chart using the same y-axis values with the following features:</p>
+            <ul>
+                <li>Toggle on/off interactive tooltip that summaries all series at a specific point</li>
+                <li>Toggle on/off view finder that allow the user to focus on specific area of the chart</li>
+            </ul>
+            <hr>
+            <uib-tabset type="pills" >
+                <uib-tab heading="Demo" >
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label><input type="checkbox" data-ng-model="vm.samples.sample1.options.chart.useInteractiveGuideline" data-ng-change="vm.samples.sample1.refresh()"> Interactive guideline</label>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" data-ng-model="vm.samples.sample1.viewData.showViewFinder" data-ng-change="vm.samples.sample1.refresh()"> Show view finder</label>
+                        </div>
+                    </form>
 
+                    <nvd3 data-options="vm.samples.sample1.options" data-data="vm.samples.sample1.data" data-api="vm.samples.sample1.api" data-config="vm.config" ></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre>{{vm.samples.sample1.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre>{{vm.samples.sample1.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Multi y-axis chart
+        </div>
+        <div class="panel-body">
+            <p>This sample demonstrate multiple line series chart using <b>2 different y-axis values</b></p>
+            <ul>
+                <li>Open issue - At the moment I didn't found a way to show view finder and interactive tooltip for this type of chart.</li>
+            </ul>
+            <hr>
+            <uib-tabset type="pills" >
+                <uib-tab heading="Demo" >
+                    <nvd3 data-options="vm.samples.sample2.options" data-data="vm.samples.sample2.data" data-api="vm.samples.sample2.api" data-config="vm.config" ></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre>{{vm.samples.sample2.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre>{{vm.samples.sample2.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Cumulative line chart
+        </div>
+        <div class="panel-body">
+            <p>This sample demonstrate multiple line series chart using the same y-axis values with the following features:</p>
+            <ul>
+                <li>Ability to change the zero-point against which all values are calculated (drag the red vertical line found on the left-moft area)</li>
+                <li>Toggle on/off interactive tooltip that summaries all series at a specific point</li>
+                <li>Open issue - At the moment I didn't found a way to show view finder for this type of chart.</li>
+            </ul>
+            <hr>
+            <uib-tabset type="pills" >
+                <uib-tab heading="Demo" >
+                    <form class="form-inline">
+                        <div class="form-group">
+                            <label><input type="checkbox" data-ng-model="vm.samples.sample3.options.chart.useInteractiveGuideline" data-ng-change="vm.samples.sample3.refresh()"> Interactive guideline</label>
+                        </div>
+                    </form>
+                    <nvd3 data-options="vm.samples.sample3.options" data-data="vm.samples.sample3.data" data-api="vm.samples.sample3.api" data-config="vm.config" ></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre>{{vm.samples.sample3.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre>{{vm.samples.sample3.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
     </div>
 </div>
 

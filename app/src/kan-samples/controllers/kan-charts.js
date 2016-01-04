@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.exports = function($timeout,$http) {
+module.exports = function ($timeout, $http) {
     var self = this;
 
     function data() {
@@ -28,100 +28,113 @@ module.exports = function($timeout,$http) {
         ];
     }
 
+    function convertToKeyValueArray(data, keyName, valueName, additionalProperties) {
+        var result = _.chain(data).words(/[^;]+/g).map(function (item) {
+            var result = {};
+            if (additionalProperties) {
+                $.extend(result, additionalProperties);
+            }
+            var token = item.split(',');
+            result[keyName] = moment(token[0], 'YYYYMMDD').toDate();
+            result[valueName] = parseFloat(token[1]);
+            return result;
+        });
+
+        if (self.filters.top10) {
+            result = result.take(10);
+        }
+
+
+        return result.value();
+    }
+
+    function refreshAll() {
+        // TODO : currently loads data directly from controller instead of from dedicated service
+        $http.post('http://localhost:9911/api_v3/report/getGraphs').then(function (result) {
+
+            self.samples.sample1.data = _.map(result.data, function (item) {
+                return {key: item.id, values: convertToKeyValueArray(item.data, 'x', 'y')};
+            });
+            ;
+            self.samples.sample1.refresh();
+
+            var yAxisIndex = result.data.length > 1 ? Math.round(result.data.length / 2) : null;
+
+            self.samples.sample2.data = _.map(result.data, function (item, index) {
+                var yAxisValue = yAxisIndex ? (index + 1 <= yAxisIndex ? 1 : 2) : 1;
+                return {
+                    key: item.id,
+                    type: 'line',
+                    yAxis: yAxisValue,
+                    values: convertToKeyValueArray(item.data, 'x', 'y')
+                };
+            });
+            self.samples.sample2.refresh();
+
+            self.samples.sample3.data = _.map(result.data, function (item) {
+                return {key: item.id, values: convertToKeyValueArray(item.data, 'x', 'y')};
+            });
+            ;
+            self.samples.sample3.refresh();
+
+        });
+    }
+
+
     // this configuration will be used globally and in the future should be enforced on all charts
     self.config = {
-        deepWatchOptions : false,
-        refreshDataOnly : false
+        deepWatchOptions: false,
+        refreshDataOnly: false
     };
 
-    self.barChart =
-    {
-        sample1: {
-            data: [{
-                key: "Cumulative Return",
-                values: [
-                    { "label" : "A" , "value" : -29.765957771107 },
-                    { "label" : "B" , "value" : 0 },
-                    { "label" : "C" , "value" : 32.807804682612 },
-                    { "label" : "D" , "value" : 196.45946739256 },
-                    { "label" : "E" , "value" : 0.19434030906893 },
-                    { "label" : "F" , "value" : -98.079782601442 },
-                    { "label" : "G" , "value" : -13.925743130903 },
-                    { "label" : "H" , "value" : -5.1387322875705 }
-                ]
-            }],
-            api : {},
-            options: {
-                chart: {
-                    type: 'discreteBarChart',
-                    height: 450,
-                    margin : {
-                        top: 20,
-                        right: 20,
-                        bottom: 60,
-                        left: 55
-                    },
-                    x: function(d){ return d.label; },
-                    y: function(d){ return d.value; },
-                    showValues: true,
-                    valueFormat: function(d){
-                        return d3.format(',.4f')(d);
-                    },
-                    transitionDuration: 500,
-                    xAxis: {
-                        axisLabel: 'X Axis'
-                    },
-                    yAxis: {
-                        axisLabel: 'Y Axis',
-                        axisLabelDistance: 30
-                    }
-                }
-
-            }
-        }
+    self.filters = {
+        top10: false
     };
 
+    self.refreshAll = refreshAll;
 
-    self.lineChart =
+
+
+    self.samples =
     {
         sample1: {
-            data:null,
-            api : {},
-            viewData : {
-              showViewFinder : false
+            data: null,
+            api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
+            viewData: {
+                showViewFinder: false
             },
-            refresh : function()
-            {
-                var chartType =  self.lineChart.sample1.viewData.showViewFinder ? 'lineWithFocusChart' : 'lineChart';
-                self.lineChart.sample1.options.chart.type = chartType;
-                if (angular.isFunction(self.lineChart.sample1.api.refresh))
-                {
-                    self.lineChart.sample1.api.refresh();
+            refresh: function () {
+                var chartType = self.samples.sample1.viewData.showViewFinder ? 'lineWithFocusChart' : 'lineChart';
+                self.samples.sample1.options.chart.type = chartType;
+
+                // run the refresh api of the actual nvd3 directive
+                if (self.samples.sample1.api.refresh) {
+                    self.samples.sample1.api.refresh();
                 }
             },
             options: {
                 chart: {
                     type: '',
                     height: 450,
-                    margin : {
+                    margin: {
                         top: 20,
                         right: 20,
                         bottom: 60,
                         left: 55
                     },
-                    useInteractiveGuideline : true,
+                    useInteractiveGuideline: true,
                     transitionDuration: 500,
 
                     xAxis: {
                         axisLabel: 'Time',
-                        tickFormat: function(d){
+                        tickFormat: function (d) {
                             return d3.time.format('%b %d')(new Date(d));
                         }
                     },
                     yAxis: {
                         axisLabel: 'Total',
-                        tickFormat: function(d){
-                            return d3.format(',r')(d);
+                        tickFormat: function (d) {
+                            return d3.format(',.1')(d);
                         }
                     }
                 }
@@ -129,40 +142,93 @@ module.exports = function($timeout,$http) {
             }
         },
         sample2: {
-            data: data(),
-            api : {},
+            data: null,
+            api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
+            refresh: function () {
+                // run the refresh api of the actual nvd3 directive
+                if (self.samples.sample2.api.refresh) {
+                    self.samples.sample2.api.refresh();
+                }
+            },
             options: {
-                viewFinder:true,
+                chart: {
+                    type: 'multiChart',
+                    height: 450,
+                    margin: {
+                        top: 30,
+                        right: 60,
+                        bottom: 50,
+                        left: 70
+                    },
+                    useInteractiveGuideline: true,
+                    color: d3.scale.category10().range(),
+                    //useInteractiveGuideline: true,
+                    transitionDuration: 500,
+                    xAxis: {
+                        axisLabel: 'Time',
+                        tickFormat: function (d) {
+                            return d3.time.format('%b %d')(new Date(d));
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: 'Total',
+                        tickFormat: function (d) {
+                            return d3.format(',.0')(d);
+                        }
+                    },
+                    yAxis2: {
+                        axisLabel: 'Total 2',
+                        tickFormat: function (d) {
+                            return d3.format(',.0')(d);
+                        }
+                    }
+                }
+
+            }
+        },
+        sample3: {
+            data: null,
+            api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
+            refresh: function () {
+                // run the refresh api of the actual nvd3 directive
+                if (self.samples.sample3.api.refresh) {
+                    self.samples.sample3.api.refresh();
+                }
+            },
+            options: {
+                chart: {
+                    type: 'cumulativeLineChart',
+                    height: 450,
+                    margin: {
+                        top: 30,
+                        right: 60,
+                        bottom: 50,
+                        left: 70
+                    },
+                    useInteractiveGuideline: true,
+                    y: function (d) {
+                        return d.y / 100;
+                    },
+                    color: d3.scale.category10().range(),
+                    //useInteractiveGuideline: true,
+                    transitionDuration: 500,
+                    xAxis: {
+                        axisLabel: 'Time',
+                        tickFormat: function (d) {
+                            return d3.time.format('%b %d')(new Date(d));
+                        }
+                    },
+                    yAxis: {
+                        axisLabel: 'Total',
+                        tickFormat: d3.format(',.1%')
+                    }
+                }
 
             }
         }
     };
-    self.lineChart.sample1.refresh();
 
 
-    function convertToKeyValueArray(data,keyName,valueName)
-    {
-        return _.words(data,/[^;]+/g).map(function(item)
-        {
-            var result = {};
-            var token = item.split(',');
-            result[keyName] =  moment(token[0],'YYYYMMDD').toDate();
-            result[valueName] = parseInt(token[1]);
-           return result;
-        });
-    }
-    // TODO : currently loads data directly from controller instead of from dedicated service
-    $http.post('http://localhost:9911/api_v3/report/getGraphs').then(function(result)
-    {
-        var lineData = _.map(result.data,function(item)
-        {
-           return {key : item.id, values : convertToKeyValueArray(item.data,'x','y')};
-        });
-        self.lineChart.sample1.data = lineData;
-        self.lineChart.sample1.api.refresh();
-
-        //self.lineChart.sample2.api.refresh();
-
-    });
+    refreshAll();
 
 };
