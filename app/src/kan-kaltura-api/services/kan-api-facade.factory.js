@@ -59,10 +59,10 @@ module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerialize
                 if (data.objectType === "KalturaAPIException") {
                     if (data.code == "INVALID_KS") {
                       // TODO
-                        deferred.reject({errorId : 'invalid-ks'});
+                        deferred.reject({errorId : 'invalid-ks', errorMessage : 'Invalid partner KS'});
                     }
                     else {
-                        deferred.reject(data.message);
+                        deferred.reject({ errorMessage : data.message});
                     }
                 }
                 else {
@@ -74,7 +74,7 @@ module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerialize
             }
         }).error(function(data, status) {
             console.log(data);
-            deferred.reject(data.message);
+            deferred.reject({ errorMessage : data.message});
         });
 
         // Returning the promise object

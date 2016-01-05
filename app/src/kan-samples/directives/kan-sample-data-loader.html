@@ -7,56 +7,34 @@
         <div class="kan-sample-description">
 
             <p>The samples shown below are automatically loaded with demo data. Use the form below to load real data.</p></div>
-        <div class="row ">
-            <div class="col-xs-12" >
-                <button class="btn btn-info" data-ng-click="vm.dataFormType = 'demo'">Demo data</button>
-                <button class="btn btn-info" data-ng-click="vm.dataFormType = 'live'">Live data</button>
-            </div>
-        </div>
-
         <div class="row mt">
-            <div class="col-xs-12" data-ng-show="vm.dataFormType == 'demo'">
-                <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.submit('demo')">
+            <div class="col-xs-12">
+                <form class="form-horizontal kan-filter-form " novalidate>
                     <div class="form-group">
                         <div class="col-sm-12">
                             <p class="form-control-static kan-title">Demo server (recorded responses)</p>
                         </div>
                     </div>
-
-                    <!--<div class="form-group">-->
-                        <!--<div class="col-sm-12">-->
-                            <!--<div class="checkbox">-->
-                                <!--<label>-->
-                                    <!--<input type="checkbox" data-ng-model="vm.filters.top10"-->
-                                           <!--data-ng-change="vm.submit('demo')"> Take only 10 values per series-->
-                                <!--</label>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div class="form-group">
-                        <div class="col-sm-12">
-                            <button type="submit" class="btn btn-warning">Load demo data</button>
+                        <div class="col-xs-offset-9 col-xs-3">
+                        <button  class="btn btn-warning col-xs-12" data-ng-click="vm.submit('demo')">Request Demo Data</button>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="col-xs-12" data-ng-show="vm.dataFormType == 'live'">
-                <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.submit('live')">
                     <div class="form-group">
                         <div class="col-sm-12">
                             <p class="form-control-static kan-title">Kaltura API (live)</p>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Partner KS</label>
-                        <div class="col-sm-9">
-                            <input type="text" data-ng-model="vm.data.ks" class="form-control" placeholder="KS">
+                        <label class="col-sm-2 control-label">Partner KS</label>
+                        <div class="col-sm-10">
+                            <input type="text" data-ng-model="vm.data.ks" class="form-control" placeholder="Partner KS">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <div class="col-sm-offset-3 col-sm-9">
-                            <button type="submit" class="btn btn-warning">Load live data</button>
+                        <div class="col-xs-offset-9 col-xs-3">
+                            <button  class="btn btn-warning col-xs-12" data-ng-click="vm.submit('live')">Request Live Data</button>
                         </div>
                     </div>
 

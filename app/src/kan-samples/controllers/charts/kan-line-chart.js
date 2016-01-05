@@ -30,6 +30,8 @@ module.exports = function (kanSamplesService) {
 
         var origin = context.origin;
 
+        clearChartsData();
+
         self.loadingData = true;
 
         kanSamplesService.getData(origin,'lineChart').then(function(result)
@@ -56,7 +58,8 @@ module.exports = function (kanSamplesService) {
                 self.loadingData = false;
             },function(reason)
             {
-                self.errorMessage = "Failed to load data : '" + reason.error + "'";
+                self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
+                self.loadingData = false;
             });
 
     }

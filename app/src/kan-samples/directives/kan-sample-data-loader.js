@@ -24,7 +24,7 @@ module.exports = function (SessionInfo) {
         }
 
         self.dataFormType = 'live';
-        self.data = {ks : 'djJ8MTk2NjI5MXyruxakcwXo1gIB9bW7cy9seeZJG9hNdXM9kMKiw-mO5raIKWoaLeTNlNSHIJBwTZTxEANaFyRcEREszO5oAQLldKvI3FQA7WkSCnusvTd-l8V25ma3qSI2NxE_Cm5kSX4Vckk8TlSRajT7ZahoJrem'};
+        self.data = {ks : SessionInfo.ks};
         self.submit = submit;
     }
 
