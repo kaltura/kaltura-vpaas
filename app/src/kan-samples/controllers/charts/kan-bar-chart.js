@@ -26,7 +26,9 @@ module.exports = function (kanSamplesService) {
 
     }
 
-    function loadChartsData(origin) {
+    function loadData(context) {
+
+        var origin = context.origin;
 
         var loadDataPromise  =  null;
 
@@ -69,7 +71,7 @@ module.exports = function (kanSamplesService) {
     };
 
     self.refreshChartsLayout = refreshChartsLayout;
-    self.loadChartsData = loadChartsData;
+    self.loadData = loadData;
     self.clearChartsData = clearChartsData;
 
     self.errorMessage = "";

@@ -127,6 +127,11 @@ module.exports = function ($http, $q) {
                 resultData = _.map(serverData, function (item) {
                     return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'labelNumberMultiSeries',filters)};
                 });
+            case 'pieChart':
+                resultData = _.map(serverData, function (item) {
+                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'labelNumberMultiSeries',filters)};
+                });
+                break;
             default:
                 break;
         }

@@ -9,6 +9,6 @@ module.exports = {
     'ui-bootstrap': './bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
     'jquery': './bower_components/jquery/dist/jquery.js',
     'd3': './bower_components/d3/d3.min.js',
-    'nvd3': './bower_components/nvd3/build/nv.d3.min.js',
+    'nvd3': './bower_components/nvd3/build/nv.d3.js',
     'angular-nvd3': './bower_components/angular-nvd3/dist/angular-nvd3.js'
 }

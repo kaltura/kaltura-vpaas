@@ -26,7 +26,9 @@ module.exports = function (kanSamplesService) {
 
     }
 
-    function loadChartsData(origin) {
+    function loadData(context) {
+
+        var origin = context.origin;
 
         var loadDataPromise  =  null;
 
@@ -83,7 +85,7 @@ module.exports = function (kanSamplesService) {
     };
 
     self.refreshChartsLayout = refreshChartsLayout;
-    self.loadChartsData = loadChartsData;
+    self.loadData = loadData;
     self.clearChartsData = clearChartsData;
 
     self.errorMessage = "";
@@ -95,7 +97,7 @@ module.exports = function (kanSamplesService) {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
             viewData: {
-                showViewFinder: false
+                showViewFinder: true
             },
             refresh: function () {
                 var chartType = self.samples.sample1.viewData.showViewFinder ? 'lineWithFocusChart' : 'lineChart';

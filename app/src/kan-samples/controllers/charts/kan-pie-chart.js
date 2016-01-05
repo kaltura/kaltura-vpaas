@@ -35,7 +35,7 @@ module.exports = function (kanSamplesService) {
         self.loadingData = true;
         if (origin === 'demo')
         {
-            loadDataPromise = kanSamplesService.getDemoData({key : 'areaChart'});
+            loadDataPromise = kanSamplesService.getDemoData({key : 'pieChart',take : 5 });
         }else
         {
 
@@ -45,7 +45,7 @@ module.exports = function (kanSamplesService) {
         {
             loadDataPromise.then(function(result)
             {
-                self.samples.sample1.data = result.data;
+                self.samples.sample1.data = result.data[0].values;
 
                 refreshChartsLayout();
 
@@ -92,30 +92,22 @@ module.exports = function (kanSamplesService) {
             },
             options: {
                 chart: {
-                    type: 'stackedAreaChart',
-                    height: 450,
-                    margin : {
-                        top: 20,
-                        right: 20,
-                        bottom: 30,
-                        left: 100
-                    },
-                    x: function(d){return d[0]},
-                    y: function(d){return d[1];},
+                    type: 'pieChart',
+                    height: 500,
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
                     color: d3.scale.category10().range(),
-                    useVoronoi: false,
-                    clipEdge: true,
-                    duration: 100,
-                    useInteractiveGuideline: true,
-                    xAxis: {
-                        showMaxMin: false,
-                        tickFormat: function(d) {
-                            return d3.time.format('%x')(new Date(d))
-                        }
-                    },
-                    yAxis: {
-                        tickFormat: function(d){
-                            return d3.format(',.2f')(d);
+
+                    showLabels: true,
+                    duration: 500,
+                    labelThreshold: 0.01,
+                    labelSunbeamLayout: true,
+                    legend: {
+                        margin: {
+                            top: 5,
+                            right: 35,
+                            bottom: 5,
+                            left: 0
                         }
                     }
                 }
