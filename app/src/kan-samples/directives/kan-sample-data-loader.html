@@ -3,10 +3,10 @@
         Data source
     </div>
     <div class="panel-body">
+        <div class="alert alert-warning" data-ng-show="vm.error">{{vm.error}}</div>
         <div class="kan-sample-description">
 
-            <p>Select between demo data and kaltura
-            </p></div>
+            <p>The samples shown below are automatically loaded with demo data. Use the form below to load real data.</p></div>
         <div class="row ">
             <div class="col-xs-12" >
                 <button class="btn btn-info" data-ng-click="vm.dataFormType = 'demo'">Demo data</button>
@@ -48,17 +48,12 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Partner Id</label>
+                        <label class="col-sm-3 control-label">Partner KS</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Partner Id">
+                            <input type="text" data-ng-model="vm.data.ks" class="form-control" placeholder="KS">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">Partner Secret</label>
-                        <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Partner Secret">
-                        </div>
-                    </div>
+
                     <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-9">
                             <button type="submit" class="btn btn-warning">Load live data</button>

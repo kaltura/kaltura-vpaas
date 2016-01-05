@@ -30,23 +30,11 @@ module.exports = function (kanSamplesService) {
 
         var origin = context.origin;
 
-        var loadDataPromise  =  null;
-
         self.loadingData = true;
-        if (origin === 'demo')
-        {
-            loadDataPromise = kanSamplesService.getDemoData({key : 'lineChart', take : (self.filters.top10 ? 10 : 0) });
-        }else
-        {
 
-        }
-
-        if (loadDataPromise )
-        {
-            loadDataPromise.then(function(result)
+        kanSamplesService.getData(origin,'lineChart').then(function(result)
             {
                 self.samples.sample1.data = result.data;
-
 
                 var yAxisIndex = result.data.length > 1 ? Math.round(result.data.length / 2) : null;
 
@@ -70,7 +58,7 @@ module.exports = function (kanSamplesService) {
             {
                 self.errorMessage = "Failed to load data : '" + reason.error + "'";
             });
-        }
+
     }
 
     // this configuration will be used globally and in the future should be enforced on all charts

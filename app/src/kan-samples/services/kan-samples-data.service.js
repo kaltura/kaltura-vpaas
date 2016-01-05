@@ -1,6 +1,6 @@
 var storage = require('../scripts/kan-samples-repository');
 
-module.exports = function ($http, $q) {
+module.exports = function ($http, $q,kanAPIFacade) {
 
     var self = this;
 
@@ -106,29 +106,26 @@ module.exports = function ($http, $q) {
         return result;
     }
 
-    function getDemoData(filters) {
-        var dataKey = filters ? filters.key : '';
-
-        var resultData = null;
-        var serverData = storage.get(dataKey);
-
-        switch (dataKey) {
+    function parseResponse(requestType, responseData,filters)
+    {
+        var result = null;
+        switch (requestType) {
             case 'areaChart':
-                resultData = _.map(serverData, function (item) {
+                result = _.map(responseData, function (item) {
                     return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'dateNumberArray',filters)};
                 });
                 break;
             case 'lineChart':
-                resultData = _.map(serverData, function (item) {
+                result = _.map(responseData, function (item) {
                     return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'dateNumberMultiSeries',filters)};
                 });
                 break;
             case 'barChart':
-                resultData = _.map(serverData, function (item) {
+                result = _.map(responseData, function (item) {
                     return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'labelNumberMultiSeries',filters)};
                 });
             case 'pieChart':
-                resultData = _.map(serverData, function (item) {
+                result = _.map(responseData, function (item) {
                     return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'labelNumberMultiSeries',filters)};
                 });
                 break;
@@ -136,10 +133,55 @@ module.exports = function ($http, $q) {
                 break;
         }
 
-        return $q.resolve({data: resultData});
-
+        return result;
     }
 
+    function getDemoData(requestType,filters) {
+        var serverData = storage.get(requestType);
+        var resultData = parseResponse(requestType, serverData,filters);
+
+        return $q.resolve({data: resultData});
+    }
+
+    function getLiveData(requestType, filters)
+    {
+        var requestParams ={};
+        switch (requestType) {
+            case 'areaChart':
+
+                break;
+            case 'lineChart':
+                requestParams = {reportType : '1', reportInputFilter:{fromDay : '20151206', toDay:'20160101' },dimension:'count_plays'};
+                break;
+            case 'barChart':
+
+            case 'pieChart':
+
+                break;
+            default:
+                break;
+        }
+
+        return kanAPIFacade.doRequest(requestParams, {service:'report',action:"getGraphs"}).then(function(result)
+        {
+            var resultData = parseResponse(requestType, result.data,filters);
+            return $q.resolve({data: resultData})
+        });
+    }
+
+    function getData(origin, requestType,filters)
+    {
+        if (origin === 'live')
+        {
+            return getLiveData(requestType,filters);
+        }else
+        {
+
+            return getDemoData(requestType,filters);
+        }
+    }
+
+    self.getData = getData;
     self.getDemoData = getDemoData;
 }
 
