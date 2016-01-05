@@ -13,6 +13,13 @@ module.exports = function ($stateProvider) {
         template: '<div ui-view></div>'
     });
 
+
+    $stateProvider.state('root.shell.samples.charts.about', {
+        url: '/about',
+        templateUrl: 'kan-samples/partials/charts/about.html'
+    });
+
+
     $stateProvider.state('root.shell.samples.charts.lineChart', {
         url: '/lineChart',
         templateUrl: 'kan-samples/partials/charts/line-chart.html',

@@ -7,7 +7,24 @@ module.exports = function (kanSamplesService) {
 
 
 
-    function refreshAll(origin) {
+    function clearChartsData()
+    {
+        self.samples.sample1.data = null;
+        self.samples.sample2.data = null;
+        self.samples.sample3.data = null;
+
+        refreshChartsLayout();
+    }
+
+    function refreshChartsLayout()
+    {
+        self.samples.sample1.refresh();
+        self.samples.sample2.refresh();
+        self.samples.sample3.refresh();
+
+    }
+
+    function loadChartsData(origin) {
 
         var loadDataPromise  =  null;
 
@@ -25,7 +42,7 @@ module.exports = function (kanSamplesService) {
             loadDataPromise.then(function(result)
             {
                 self.samples.sample1.data = result.data;
-                self.samples.sample1.refresh();
+
 
                 var yAxisIndex = result.data.length > 1 ? Math.round(result.data.length / 2) : null;
 
@@ -38,10 +55,10 @@ module.exports = function (kanSamplesService) {
                         values: item.values
                     };
                 });
-                self.samples.sample2.refresh();
 
                 self.samples.sample3.data = result.data;
-                self.samples.sample3.refresh();
+
+                refreshChartsLayout();
 
                 self.errorMessage = '';
                 self.loadingData = false;
@@ -63,7 +80,8 @@ module.exports = function (kanSamplesService) {
         demoServer : true
     };
 
-    self.refreshAll = refreshAll;
+    self.refreshChartsLayout = refreshChartsLayout;
+    self.loadChartsData = loadChartsData;
 
     self.errorMessage = "";
     self.loadingData = false;

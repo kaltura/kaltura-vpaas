@@ -74,7 +74,7 @@ module.exports = function (kanSamplesService) {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
             viewData: {
-                showViewFinder: false
+                showViewFinder: true
             },
             refresh: function () {
                 var chartType = self.samples.sample1.viewData.showViewFinder ? 'barWithFocusChart' : 'barChart';

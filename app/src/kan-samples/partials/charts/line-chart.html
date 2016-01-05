@@ -1,23 +1,30 @@
 <div>
     <h1>Line chart samples</h1>
     <div class="alert alert-warning" data-ng-show="vm.errorMessage">{{ vm.errorMessage }}</div>
-    <div class="alert kan-alert-brief">
+
         <p>This page show various line charts that are used in Kaltura Analytics 2.0 as described in issue #<a
             href="https://kaltura.atlassian.net/browse/PLAT-4900" target="_blank">PLAT-4900</a></p>
-    </div>
 
-    <div class="panel panel-default">
+
+    <div class="panel panel-default panel-info">
         <div class="panel-heading">
-            Extract data
+            Charts data source
         </div>
         <div class="panel-body">
             <div class="kan-sample-description">
 
-                <p>Use one of the below forms to retrieve data for the line charts.
+                <p>Select between demo data and kaltura
                 </p></div>
             <div class="row ">
-                <div class="col-xs-6 ">
-                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.refreshAll('demo')">
+                <div class="col-xs-12" >
+                    <button class="btn btn-info" data-ng-click="vm.dataFormType = 'demo'">Demo data</button>
+                    <button class="btn btn-info" data-ng-click="vm.dataFormType = 'live'">Live data</button>
+                    </div>
+                </div>
+
+            <div class="row mt">
+                <div class="col-xs-12" data-ng-show="vm.dataFormType == 'demo'">
+                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.loadChartsData('demo')">
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <p class="form-control-static kan-title">Demo server (recorded responses)</p>
@@ -25,27 +32,27 @@
                         </div>
 
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
+                            <div class="col-sm-12">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" data-ng-model="vm.filters.top10"
-                                               data-ng-change="vm.refreshAll()"> Take only 10 values per series
+                                               data-ng-change="vm.loadChartsData('demo')"> Take only 10 values per series
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-default">Load demo data</button>
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn btn-warning">Load demo data</button>
                             </div>
                         </div>
                     </form>
                 </div>
-                <div class="col-sm-6">
-                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.refreshAll('api')">
+                <div class="col-xs-12" data-ng-show="vm.dataFormType == 'live'">
+                    <form class="form-horizontal kan-filter-form " novalidate data-ng-submit="vm.loadChartsData('live')">
                         <div class="form-group">
                             <div class="col-sm-12">
-                                <p class="form-control-static kan-title">Kaltura API (Production)</p>
+                                <p class="form-control-static kan-title">Kaltura API (live)</p>
                             </div>
                         </div>
                         <div class="form-group">
@@ -62,7 +69,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-sm-9">
-                                <button type="submit" class="btn btn-default">Load API data</button>
+                                <button type="submit" class="btn btn-warning">Load live data</button>
                             </div>
                         </div>
 
@@ -73,7 +80,7 @@
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-info">
         <div class="panel-heading">
             Standard line chart
         </div>
@@ -110,16 +117,16 @@
                           data-api="vm.samples.sample1.api" data-config="vm.config"></nvd3>
                 </uib-tab>
                 <uib-tab heading="Configuration">
-                    <pre>{{vm.samples.sample1.options | json}}</pre>
+                    <pre class="kan-json-code">{{vm.samples.sample1.options | json}}</pre>
                 </uib-tab>
                 <uib-tab heading="Data">
-                    <pre>{{vm.samples.sample1.data | json}}</pre>
+                    <pre class="kan-json-code">{{vm.samples.sample1.data | json}}</pre>
                 </uib-tab>
             </uib-tabset>
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-info">
         <div class="panel-heading">
             Multi y-axis chart
         </div>
@@ -144,16 +151,16 @@
                           data-api="vm.samples.sample2.api" data-config="vm.config"></nvd3>
                 </uib-tab>
                 <uib-tab heading="Configuration">
-                    <pre>{{vm.samples.sample2.options | json}}</pre>
+                    <pre class="kan-json-code">{{vm.samples.sample2.options | json}}</pre>
                 </uib-tab>
                 <uib-tab heading="Data">
-                    <pre>{{vm.samples.sample2.data | json}}</pre>
+                    <pre class="kan-json-code">{{vm.samples.sample2.data | json}}</pre>
                 </uib-tab>
             </uib-tabset>
         </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default panel-info">
         <div class="panel-heading">
             Cumulative line chart
         </div>
@@ -189,10 +196,10 @@
                           data-api="vm.samples.sample3.api" data-config="vm.config"></nvd3>
                 </uib-tab>
                 <uib-tab heading="Configuration">
-                    <pre>{{vm.samples.sample3.options | json}}</pre>
+                    <pre class="kan-json-code">{{vm.samples.sample3.options | json}}</pre>
                 </uib-tab>
                 <uib-tab heading="Data">
-                    <pre>{{vm.samples.sample3.data | json}}</pre>
+                    <pre class="kan-json-code">{{vm.samples.sample3.data | json}}</pre>
                 </uib-tab>
             </uib-tabset>
         </div>
