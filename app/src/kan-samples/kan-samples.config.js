@@ -27,6 +27,27 @@ module.exports = function ($stateProvider) {
         controllerAs : 'vm'
     });
 
+    $stateProvider.state('root.shell.samples.charts.areaChart', {
+        url: '/areaChart',
+        templateUrl: 'kan-samples/partials/charts/area-chart.html',
+        controller : 'kanAreaChart',
+        controllerAs : 'vm'
+    });
+
+    $stateProvider.state('root.shell.samples.charts.pieChart', {
+        url: '/pieChart',
+        templateUrl: 'kan-samples/partials/charts/pie-chart.html',
+        controller : 'kanPieChart',
+        controllerAs : 'vm'
+    });
+
+    $stateProvider.state('root.shell.samples.charts.mapChart', {
+        url: '/mapChart',
+        templateUrl: 'kan-samples/partials/charts/map-chart.html',
+        controller : 'kanMapChart',
+        controllerAs : 'vm'
+    });
+
     $stateProvider.state('root.shell.samples.charts.barChart', {
         url: '/barChart',
         templateUrl: 'kan-samples/partials/charts/bar-chart.html',

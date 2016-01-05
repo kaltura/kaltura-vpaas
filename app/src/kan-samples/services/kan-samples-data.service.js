@@ -9,8 +9,20 @@ module.exports = function ($http, $q) {
         var configuration = null;
 
         switch (key) {
+            case 'dateNumberArray':
+            {
+                configuration = {
+                    itemType : 'array',
+                    keyType: 'date',
+                    keyFormat: 'YYYYMMDD',
+                    valueType: 'number',
+                    valueFormat: ''
+                };
+                break;
+            }
             case 'dateNumberMultiSeries':
                 configuration = {
+                    itemType : 'object',
                     keyName: 'x',
                     keyType: 'date',
                     keyFormat: 'YYYYMMDD',
@@ -21,6 +33,7 @@ module.exports = function ($http, $q) {
                 break;
             case 'labelNumberMultiSeries':
                 configuration = {
+                    itemType : 'object',
                     keyName: 'label',
                     keyType: 'text',
                     keyFormat: '',
@@ -63,14 +76,22 @@ module.exports = function ($http, $q) {
 
         if (angular.isDefined(configuration) && configuration !== null) {
             var parsedResult = _.chain(data).words(/[^;]+/g).map(function (item) {
-                var result = {};
+
 
                 var token = item.split(',');
                 var key = parseAPIToken(token[0], configuration.keyType, {format: configuration.keyFormat});
                 var value = parseAPIToken(token[1], configuration.valueType, {format: configuration.valueFormat});
 
-                result[configuration.keyName] = key;
-                result[configuration.valueName] = value;
+                var result = null;
+                if (configuration.itemType === 'array')
+                {
+                    result = [key,value];
+                }else
+                {
+                    result = {};
+                    result[configuration.keyName] = key;
+                    result[configuration.valueName] = value;
+                }
 
                 return result;
             });
@@ -92,6 +113,11 @@ module.exports = function ($http, $q) {
         var serverData = storage.get(dataKey);
 
         switch (dataKey) {
+            case 'areaChart':
+                resultData = _.map(serverData, function (item) {
+                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'dateNumberArray',filters)};
+                });
+                break;
             case 'lineChart':
                 resultData = _.map(serverData, function (item) {
                     return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'dateNumberMultiSeries',filters)};

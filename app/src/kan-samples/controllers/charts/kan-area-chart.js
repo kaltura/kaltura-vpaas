@@ -33,7 +33,7 @@ module.exports = function (kanSamplesService) {
         self.loadingData = true;
         if (origin === 'demo')
         {
-            loadDataPromise = kanSamplesService.getDemoData({key : 'barChart', take : 3 });
+            loadDataPromise = kanSamplesService.getDemoData({key : 'areaChart', take : 3 });
         }else
         {
 
@@ -44,7 +44,6 @@ module.exports = function (kanSamplesService) {
             loadDataPromise.then(function(result)
             {
                 self.samples.sample1.data = result.data;
-                self.samples.sample2.data = [result.data[0]];
 
                 refreshChartsLayout();
 
@@ -91,71 +90,31 @@ module.exports = function (kanSamplesService) {
             },
             options: {
                 chart: {
-                    type: 'multiBarHorizontalChart',
-                    height: 450,
-                    x: function(d){return d.label;},
-                    y: function(d){return d.value;},
-                    useInteractiveGuideline: true,
-                    margin: {
-                        top: 20,
-                        right: 20,
-                        bottom: 60,
-                        left: 150
-                    },
-                    showControls: true,
-                    showValues: true,
-                    duration: 500,
-                    xAxis: {
-                        showMaxMin: false
-                    },
-                    yAxis: {
-                        axisLabel: 'Values',
-                        tickFormat: function(d){
-                            return d3.format(',.2f')(d);
-                        },
-                    }
-                }
-
-            }
-        },
-        sample2: {
-            data: null,
-            api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
-            viewData: {
-            },
-            refresh: function () {
-
-                // run the refresh api of the actual nvd3 directive
-                if (self.samples.sample2.api.refresh) {
-                    self.samples.sample2.api.refresh();
-                }
-            },
-            options: {
-                chart: {
-                    type: 'discreteBarChart',
+                    type: 'stackedAreaChart',
                     height: 450,
                     margin : {
                         top: 20,
                         right: 20,
-                        bottom: 50,
-                        left: 50
+                        bottom: 30,
+                        left: 100
                     },
-                    staggerLabels : true,
-                    rotateLabels : true,
-                    x: function(d){return d.label;},
-                    y: function(d){return d.value;},
-                    showValues: true,
-                    valueFormat: function(d){
-                        return d3.format(',.4f')(d);
-                    },
-                    duration: 500,
+                    x: function(d){return d[0]},
+                    y: function(d){return d[1];},
+                    color: d3.scale.category10().range(),
+                    useVoronoi: false,
+                    clipEdge: true,
+                    duration: 100,
+                    useInteractiveGuideline: true,
                     xAxis: {
-                        axisLabel: 'Browsers'
+                        showMaxMin: false,
+                        tickFormat: function(d) {
+                            return d3.time.format('%x')(new Date(d))
+                        }
                     },
                     yAxis: {
-                        axisLabel: 'Total',
-                        axisLabelDistance: 0,
-                        showMaxMin : false
+                        tickFormat: function(d){
+                            return d3.format(',.2f')(d);
+                        }
                     }
                 }
 
