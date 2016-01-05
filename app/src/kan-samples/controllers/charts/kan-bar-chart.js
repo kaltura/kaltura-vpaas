@@ -7,14 +7,33 @@ module.exports = function (kanSamplesService) {
 
 
 
-    function refreshAll(origin) {
+    function clearChartsData()
+    {
+        _.each(self.samples,function(sample)
+        {
+            sample.data = null;
+        });
+
+        refreshChartsLayout();
+    }
+
+    function refreshChartsLayout()
+    {
+        _.each(self.samples,function(sample)
+        {
+            sample.refresh();
+        });
+
+    }
+
+    function loadChartsData(origin) {
 
         var loadDataPromise  =  null;
 
         self.loadingData = true;
         if (origin === 'demo')
         {
-            loadDataPromise = kanSamplesService.getDemoData({takeTop10 : self.filters.top10 });
+            loadDataPromise = kanSamplesService.getDemoData({key : 'barChart', take : 3 });
         }else
         {
 
@@ -25,23 +44,9 @@ module.exports = function (kanSamplesService) {
             loadDataPromise.then(function(result)
             {
                 self.samples.sample1.data = result.data;
-                self.samples.sample1.refresh();
+                self.samples.sample2.data = [result.data[0]];
 
-                var yAxisIndex = result.data.length > 1 ? Math.round(result.data.length / 2) : null;
-
-                self.samples.sample2.data = _.map(result.data, function (item, index) {
-                    var yAxisValue = yAxisIndex ? (index + 1 <= yAxisIndex ? 1 : 2) : 1;
-                    return {
-                        key: item.key,
-                        type: 'bar',
-                        yAxis: yAxisValue,
-                        values: item.values
-                    };
-                });
-                self.samples.sample2.refresh();
-
-                self.samples.sample3.data = result.data;
-                self.samples.sample3.refresh();
+                refreshChartsLayout();
 
                 self.errorMessage = '';
                 self.loadingData = false;
@@ -63,7 +68,9 @@ module.exports = function (kanSamplesService) {
         demoServer : true
     };
 
-    self.refreshAll = refreshAll;
+    self.refreshChartsLayout = refreshChartsLayout;
+    self.loadChartsData = loadChartsData;
+    self.clearChartsData = clearChartsData;
 
     self.errorMessage = "";
     self.loadingData = false;
@@ -74,11 +81,8 @@ module.exports = function (kanSamplesService) {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
             viewData: {
-                showViewFinder: true
             },
             refresh: function () {
-                var chartType = self.samples.sample1.viewData.showViewFinder ? 'barWithFocusChart' : 'barChart';
-                self.samples.sample1.options.chart.type = chartType;
 
                 // run the refresh api of the actual nvd3 directive
                 if (self.samples.sample1.api.refresh) {
@@ -87,28 +91,27 @@ module.exports = function (kanSamplesService) {
             },
             options: {
                 chart: {
-                    type: '',
+                    type: 'multiBarHorizontalChart',
                     height: 450,
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
                     margin: {
                         top: 20,
                         right: 20,
                         bottom: 60,
-                        left: 55
+                        left: 150
                     },
-                    useInteractiveGuidebar: true,
-                    transitionDuration: 500,
-
+                    showControls: true,
+                    showValues: true,
+                    duration: 500,
                     xAxis: {
-                        axisLabel: 'Time',
-                        tickFormat: function (d) {
-                            return d3.time.format('%b %d')(new Date(d));
-                        }
+                        showMaxMin: false
                     },
                     yAxis: {
-                        axisLabel: 'Total',
-                        tickFormat: function (d) {
-                            return d3.format(',.1')(d);
-                        }
+                        axisLabel: 'Values',
+                        tickFormat: function(d){
+                            return d3.format(',.2f')(d);
+                        },
                     }
                 }
 
@@ -117,7 +120,10 @@ module.exports = function (kanSamplesService) {
         sample2: {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
+            viewData: {
+            },
             refresh: function () {
+
                 // run the refresh api of the actual nvd3 directive
                 if (self.samples.sample2.api.refresh) {
                     self.samples.sample2.api.refresh();
@@ -125,75 +131,30 @@ module.exports = function (kanSamplesService) {
             },
             options: {
                 chart: {
-                    type: 'multiChart',
+                    type: 'discreteBarChart',
                     height: 450,
-                    margin: {
-                        top: 30,
-                        right: 60,
+                    margin : {
+                        top: 20,
+                        right: 20,
                         bottom: 50,
-                        left: 70
+                        left: 50
                     },
-                    useInteractiveGuidebar: true,
-                    color: d3.scale.category10().range(),
-                    //useInteractiveGuidebar: true,
-                    transitionDuration: 500,
+                    staggerLabels : true,
+                    rotateLabels : true,
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
+                    showValues: true,
+                    valueFormat: function(d){
+                        return d3.format(',.4f')(d);
+                    },
+                    duration: 500,
                     xAxis: {
-                        axisLabel: 'Time',
-                        tickFormat: function (d) {
-                            return d3.time.format('%b %d')(new Date(d));
-                        }
+                        axisLabel: 'Browsers'
                     },
                     yAxis: {
                         axisLabel: 'Total',
-                        tickFormat: function (d) {
-                            return d3.format(',.0')(d);
-                        }
-                    },
-                    yAxis2: {
-                        axisLabel: 'Total 2',
-                        tickFormat: function (d) {
-                            return d3.format(',.0')(d);
-                        }
-                    }
-                }
-
-            }
-        },
-        sample3: {
-            data: null,
-            api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
-            refresh: function () {
-                // run the refresh api of the actual nvd3 directive
-                if (self.samples.sample3.api.refresh) {
-                    self.samples.sample3.api.refresh();
-                }
-            },
-            options: {
-                chart: {
-                    type: 'cumulativeBarChart',
-                    height: 450,
-                    margin: {
-                        top: 30,
-                        right: 60,
-                        bottom: 50,
-                        left: 70
-                    },
-                    useInteractiveGuidebar: true,
-                    y: function (d) {
-                        return d.y / 100;
-                    },
-                    color: d3.scale.category10().range(),
-                    //useInteractiveGuidebar: true,
-                    transitionDuration: 500,
-                    xAxis: {
-                        axisLabel: 'Time',
-                        tickFormat: function (d) {
-                            return d3.time.format('%b %d')(new Date(d));
-                        }
-                    },
-                    yAxis: {
-                        axisLabel: 'Total',
-                        tickFormat: d3.format(',.1%')
+                        axisLabelDistance: 0,
+                        showMaxMin : false
                     }
                 }
 

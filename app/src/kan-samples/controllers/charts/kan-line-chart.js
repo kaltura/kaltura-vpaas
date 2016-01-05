@@ -9,18 +9,20 @@ module.exports = function (kanSamplesService) {
 
     function clearChartsData()
     {
-        self.samples.sample1.data = null;
-        self.samples.sample2.data = null;
-        self.samples.sample3.data = null;
+        _.each(self.samples,function(sample)
+        {
+            sample.data = null;
+        });
 
         refreshChartsLayout();
     }
 
     function refreshChartsLayout()
     {
-        self.samples.sample1.refresh();
-        self.samples.sample2.refresh();
-        self.samples.sample3.refresh();
+        _.each(self.samples,function(sample)
+        {
+            sample.refresh();
+        });
 
     }
 
@@ -31,7 +33,7 @@ module.exports = function (kanSamplesService) {
         self.loadingData = true;
         if (origin === 'demo')
         {
-            loadDataPromise = kanSamplesService.getDemoData({key : 'lineChart', takeTop10 : self.filters.top10 });
+            loadDataPromise = kanSamplesService.getDemoData({key : 'lineChart', take : (self.filters.top10 ? 10 : 0) });
         }else
         {
 
@@ -82,6 +84,7 @@ module.exports = function (kanSamplesService) {
 
     self.refreshChartsLayout = refreshChartsLayout;
     self.loadChartsData = loadChartsData;
+    self.clearChartsData = clearChartsData;
 
     self.errorMessage = "";
     self.loadingData = false;
@@ -115,7 +118,8 @@ module.exports = function (kanSamplesService) {
                     },
                     useInteractiveGuideline: true,
                     transitionDuration: 500,
-
+                    color: d3.scale.category10().range(),
+                    /* Configure chart axis */
                     xAxis: {
                         axisLabel: 'Time',
                         tickFormat: function (d) {
@@ -123,6 +127,19 @@ module.exports = function (kanSamplesService) {
                         }
                     },
                     yAxis: {
+                        axisLabel: 'Total',
+                        tickFormat: function (d) {
+                            return d3.format(',.1')(d);
+                        }
+                    },
+                    /* Configure view finder axis */
+                    x2Axis: {
+                        axisLabel: 'Time',
+                        tickFormat: function (d) {
+                            return d3.time.format('%b %d')(new Date(d));
+                        }
+                    },
+                    y2Axis: {
                         axisLabel: 'Total',
                         tickFormat: function (d) {
                             return d3.format(',.1')(d);
@@ -196,6 +213,7 @@ module.exports = function (kanSamplesService) {
                         bottom: 50,
                         left: 70
                     },
+                    showControls: false, // show/hide additional controls which are context oriented
                     useInteractiveGuideline: true,
                     y: function (d) {
                         return d.y / 100;

@@ -1,43 +1,112 @@
-
 var storage = require('../scripts/kan-samples-repository');
 
-module.exports = function($http,$q)
-{
+module.exports = function ($http, $q) {
 
     var self = this;
 
-    function convertToKeyValueArray(data, keyName, valueName,takeTop10) {
-        var result = _.chain(data).words(/[^;]+/g).map(function (item) {
-            var result = {};
 
-            var token = item.split(',');
-            result[keyName] = moment(token[0], 'YYYYMMDD').toDate();
-            result[valueName] = parseFloat(token[1]);
-            return result;
-        });
+    function getAPIDataConfiguration(key, clone) {
+        var configuration = null;
 
-        if (takeTop10) {
-            result = result.take(10);
+        switch (key) {
+            case 'dateNumberMultiSeries':
+                configuration = {
+                    keyName: 'x',
+                    keyType: 'date',
+                    keyFormat: 'YYYYMMDD',
+                    valueName: 'y',
+                    valueType: 'number',
+                    valueFormat: ''
+                };
+                break;
+            case 'labelNumberMultiSeries':
+                configuration = {
+                    keyName: 'label',
+                    keyType: 'text',
+                    keyFormat: '',
+                    valueName: 'value',
+                    valueType: 'number',
+                    valueFormat: ''
+                };
+                break;
+            default:
+                break;
         }
 
-
-        return result.value();
+        return clone ? $.extend(true, {}, configuration) : configuration;
     }
 
-    function getDemoData(filters)
-    {
-        var dataKey = filters ? filters.key : '';
 
-        if (dataKey)
-        {
-            var serverData = storage.get(dataKey);
+    function parseAPIToken(value, valueType, options) {
+        var result = null;
 
-            var resultData = _.map(serverData, function (item) {
-                return {key: item.id, values: convertToKeyValueArray(item.data, 'x', 'y',filters.takeTop10)};
+        switch (valueType) {
+            case 'date':
+                result = moment(value, options.format || 'YYYYMMDD').toDate();
+                break;
+            case 'number':
+                result = parseFloat(value);
+                break;
+            default:
+                result = value;
+                break;
+        }
+
+        return result;
+    }
+
+
+    function convertAPIDataToKeyValueArray(data, configuration, filters) {
+        var filters = $.extend({}, {take:null}, filters);
+        configuration = angular.isString(configuration) ? getAPIDataConfiguration(configuration) : configuration;
+        var result = null;
+
+        if (angular.isDefined(configuration) && configuration !== null) {
+            var parsedResult = _.chain(data).words(/[^;]+/g).map(function (item) {
+                var result = {};
+
+                var token = item.split(',');
+                var key = parseAPIToken(token[0], configuration.keyType, {format: configuration.keyFormat});
+                var value = parseAPIToken(token[1], configuration.valueType, {format: configuration.valueFormat});
+
+                result[configuration.keyName] = key;
+                result[configuration.valueName] = value;
+
+                return result;
             });
 
-            return $q.resolve({data : resultData});
+            if (filters.take) {
+                parsedResult = parsedResult.sortByOrder([configuration.valueName],['desc']).take(filters.take);
+            }
+
+            result = parsedResult.value();
         }
+
+        return result;
+    }
+
+    function getDemoData(filters) {
+        var dataKey = filters ? filters.key : '';
+
+        var resultData = null;
+        var serverData = storage.get(dataKey);
+
+        switch (dataKey) {
+            case 'lineChart':
+                resultData = _.map(serverData, function (item) {
+                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'dateNumberMultiSeries',filters)};
+                });
+                break;
+            case 'barChart':
+                resultData = _.map(serverData, function (item) {
+                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'labelNumberMultiSeries',filters)};
+                });
+            default:
+                break;
+        }
+
+        return $q.resolve({data: resultData});
+
     }
 
     self.getDemoData = getDemoData;
