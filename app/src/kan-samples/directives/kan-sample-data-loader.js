@@ -9,10 +9,8 @@ module.exports = function (SessionInfo) {
 
             self.error = '';
 
-            if (origin === 'live')
-            {
-                if (!self.data.ks)
-                {
+            if (origin === 'live') {
+                if (!self.data.ks) {
                     self.error = 'Missing partner KS value';
                     return;
                 }
@@ -24,8 +22,9 @@ module.exports = function (SessionInfo) {
         }
 
         self.dataFormType = 'live';
-        self.data = {ks : SessionInfo.ks};
+        self.data = {ks: SessionInfo.ks};
         self.submit = submit;
+
     }
 
 
