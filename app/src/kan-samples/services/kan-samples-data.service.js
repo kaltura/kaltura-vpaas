@@ -1,9 +1,8 @@
 var storage = require('../scripts/kan-samples-repository');
 
-module.exports = function ($http, $q,kanAPIFacade) {
+module.exports = function ($http, $q, kanAPIFacade) {
 
     var self = this;
-
 
     function getAPIDataConfiguration(key, clone) {
         var configuration = null;
@@ -12,7 +11,7 @@ module.exports = function ($http, $q,kanAPIFacade) {
             case 'dateNumberArray':
             {
                 configuration = {
-                    itemType : 'array',
+                    itemType: 'array',
                     keyType: 'date',
                     keyFormat: 'YYYYMMDD',
                     valueType: 'number',
@@ -22,7 +21,7 @@ module.exports = function ($http, $q,kanAPIFacade) {
             }
             case 'dateNumberMultiSeries':
                 configuration = {
-                    itemType : 'object',
+                    itemType: 'object',
                     keyName: 'x',
                     keyType: 'date',
                     keyFormat: 'YYYYMMDD',
@@ -33,7 +32,7 @@ module.exports = function ($http, $q,kanAPIFacade) {
                 break;
             case 'labelNumberMultiSeries':
                 configuration = {
-                    itemType : 'object',
+                    itemType: 'object',
                     keyName: 'label',
                     keyType: 'text',
                     keyFormat: '',
@@ -70,7 +69,7 @@ module.exports = function ($http, $q,kanAPIFacade) {
 
 
     function convertAPIDataToKeyValueArray(data, configuration, filters) {
-        var filters = $.extend({}, {take:null}, filters);
+        var filters = $.extend({}, {take: null}, filters);
         configuration = angular.isString(configuration) ? getAPIDataConfiguration(configuration) : configuration;
         var result = null;
 
@@ -83,11 +82,9 @@ module.exports = function ($http, $q,kanAPIFacade) {
                 var value = parseAPIToken(token[1], configuration.valueType, {format: configuration.valueFormat});
 
                 var result = null;
-                if (configuration.itemType === 'array')
-                {
-                    result = [key,value];
-                }else
-                {
+                if (configuration.itemType === 'array') {
+                    result = [key, value];
+                } else {
                     result = {};
                     result[configuration.keyName] = key;
                     result[configuration.valueName] = value;
@@ -97,7 +94,7 @@ module.exports = function ($http, $q,kanAPIFacade) {
             });
 
             if (filters.take) {
-                parsedResult = parsedResult.sortByOrder([configuration.valueName],['desc']).take(filters.take);
+                parsedResult = parsedResult.sortByOrder([configuration.valueName], ['desc']).take(filters.take);
             }
 
             result = parsedResult.value();
@@ -106,27 +103,39 @@ module.exports = function ($http, $q,kanAPIFacade) {
         return result;
     }
 
-    function parseResponse(requestType, responseData,filters)
-    {
+    function parseResponse(requestType, responseData, filters) {
         var result = null;
         switch (requestType) {
             case 'areaChart':
                 result = _.map(responseData, function (item) {
-                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'dateNumberArray',filters)};
+                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data, 'dateNumberArray', filters)};
                 });
                 break;
             case 'lineChart':
                 result = _.map(responseData, function (item) {
-                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'dateNumberMultiSeries',filters)};
+                    return {
+                        key: item.id,
+                        values: convertAPIDataToKeyValueArray(item.data, 'dateNumberMultiSeries', filters)
+                    };
                 });
                 break;
             case 'barChart':
                 result = _.map(responseData, function (item) {
-                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'labelNumberMultiSeries',filters)};
+                    return {
+                        key: item.id,
+                        values: convertAPIDataToKeyValueArray(item.data, 'labelNumberMultiSeries', filters)
+                    };
                 });
+                break;
+            case 'barChartCompare':
+                result = responseData;
+                break;
             case 'pieChart':
                 result = _.map(responseData, function (item) {
-                    return {key: item.id, values: convertAPIDataToKeyValueArray(item.data,'labelNumberMultiSeries',filters)};
+                    return {
+                        key: item.id,
+                        values: convertAPIDataToKeyValueArray(item.data, 'labelNumberMultiSeries', filters)
+                    };
                 });
                 break;
             default:
@@ -136,25 +145,45 @@ module.exports = function ($http, $q,kanAPIFacade) {
         return result;
     }
 
-    function getDemoData(requestType,filters) {
+    function getDemoData(requestType, filters) {
         var serverData = storage.get(requestType);
-        var resultData = parseResponse(requestType, serverData,filters);
 
-        return $q.resolve({data: resultData});
+        if (serverData) {
+            var resultData = parseResponse(requestType, serverData.data, filters);
+
+            return $q.resolve({description: 'Recorded request\n' + serverData.description, data: resultData});
+        }else
+        {
+            return $q.reject({errorMessage : 'invalid request'});
+        }
     }
 
-    function getLiveData(requestType, filters)
-    {
-        var requestParams ={};
-        switch (requestType) {
-            case 'areaChart':
+    function getLiveData(requestType, filters) {
+        var requestParams = {};
+        var description = 'Live request\n';
 
+        switch (requestType) {
+            case 'barChart':
+                requestParams = {
+                    reportType: '2',
+                    reportInputFilter: {fromDay: '20151201', toDay: '20160101'}
+                };
+                description += 'Report: Content Reports > Content Drop-off\nFilter: from 01/12/2015 - 01/01/2016';
                 break;
             case 'lineChart':
-                requestParams = {reportType : '1', reportInputFilter:{fromDay : '20151206', toDay:'20160101' },dimension:'count_plays'};
+                requestParams = {
+                    reportType: '1',
+                    reportInputFilter: {fromDay: '20151201', toDay: '20160101'}
+                };
+                description += 'Report: Content Reports > Top Content\nMatrics: (determined by response)\nDimension: "Time"\nFilter: from 01/12/2015 - 01/01/2016';
                 break;
-            case 'barChart':
-
+            case 'areaChart':
+                requestParams = {
+                    reportType: '1',
+                    reportInputFilter: {fromDay: '20151201', toDay: '20160101'}
+                };
+                description += 'Report: Content Reports > Top Content\nMatrics: (determined by response)\nDimension: "Time"\nFilter: from 01/12/2015 - 01/01/2016';
+                break;
             case 'pieChart':
 
                 break;
@@ -162,22 +191,60 @@ module.exports = function ($http, $q,kanAPIFacade) {
                 break;
         }
 
-        return kanAPIFacade.doRequest(requestParams, {service:'report',action:"getGraphs"}).then(function(result)
-        {
-            var resultData = parseResponse(requestType, result.data,filters);
-            return $q.resolve({data: resultData})
+        return kanAPIFacade.doRequest(requestParams, {service: 'report', action: "getGraphs"}).then(function (result) {
+            var resultData = parseResponse(requestType, result.data, filters);
+            return $q.resolve({ description : description, data: resultData})
         });
     }
 
-    function getData(origin, requestType,filters)
+    function getLiveBarChartCompare()
     {
-        if (origin === 'live')
-        {
-            return getLiveData(requestType,filters);
-        }else
-        {
+        var deferred = $q.defer();
 
-            return getDemoData(requestType,filters);
+        var tableRequestParams = {
+            reportType: '2',
+            pager : {pageIndex : 1, pageSize : 25},
+            reportInputFilter: {fromDay: '20151201', toDay: '20160101'}
+        };
+
+         kanAPIFacade.doRequest(tableRequestParams, {service: 'report', action: "getTable"}).then(function (result) {
+             var resultData = result.data;
+             var data = _.map(_.words(resultData.data,/[^;]+/g),function(item)
+             {
+                 return  _.zipObject(_.words(resultData.header,/[^,]+/g), _.map(_.words(item,/[^,]+/g),function(item) { return /^[0-9]+$/.test(item) ? parseFloat(item) : item;}));
+             });
+
+             var filteredData = _.chain(data).sortByOrder(['count_plays'], ['desc']).take(3).map(function(item) {
+                 var values = [];
+                 _.forEach(item,function(value,key)
+                 {
+                     if (key.indexOf('count') === 0)
+                     {
+                         values.push({label : key, value : value});
+                     }
+
+                 });
+                return {key : item['entry_name'],values : values}
+             }).value();
+             deferred.resolve({
+                 description: 'Report: Content Reports > Content Drop-off comparison of 3 entries',
+                 data : filteredData});
+        });
+
+        return deferred.promise;
+    }
+
+    function getData(origin, requestType, filters) {
+        if (origin === 'live') {
+            if (requestType === 'barChartCompare')
+            {
+                return getLiveBarChartCompare();
+            }else {
+                return getLiveData(requestType, filters);
+            }
+        } else {
+
+            return getDemoData(requestType, filters);
         }
     }
 

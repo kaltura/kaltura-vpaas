@@ -14,6 +14,8 @@ module.exports = function (kanSamplesService) {
             sample.data = null;
         });
 
+        self.samplesDescription = '';
+
         refreshChartsLayout();
     }
 
@@ -36,6 +38,8 @@ module.exports = function (kanSamplesService) {
 
         kanSamplesService.getData(origin,'lineChart').then(function(result)
             {
+                self.samplesDescription = result.description;
+
                 self.samples.sample1.data = result.data;
 
                 var yAxisIndex = result.data.length > 1 ? Math.round(result.data.length / 2) : null;
@@ -49,7 +53,6 @@ module.exports = function (kanSamplesService) {
                         values: item.values
                     };
                 });
-
                 self.samples.sample3.data = result.data;
 
                 refreshChartsLayout();

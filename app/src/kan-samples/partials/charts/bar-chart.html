@@ -16,6 +16,9 @@
             <div class="kan-sample-description">
                 <p>This sample demonstrate horizontal bar series chart using the same labels.
             </div>
+            <div class="kan-sample-description" data-ng-show="vm.samples.sample1.description">
+                <pre>{{vm.samples.sample1.description}}</pre>
+            </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
@@ -47,6 +50,9 @@
             <div class="kan-sample-description">
                 <p>This sample demonstrate multiple bar series chart using the same labels.
             </div>
+            <div class="kan-sample-description" data-ng-show="vm.samples.sample2.description">
+                <pre>{{vm.samples.sample2.description}}</pre>
+            </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
@@ -65,6 +71,40 @@
                 </uib-tab>
                 <uib-tab heading="Data">
                     <pre class="kan-json-code">{{vm.samples.sample2.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+    <div class="panel panel-default panel-info">
+        <div class="panel-heading">
+            Comparison between several entries
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+                <p>This sample demonstrate comparison between multiple entries
+            </div>
+            <div class="kan-sample-description" data-ng-show="vm.samples.sample3.description">
+                <pre>{{vm.samples.sample3.description}}</pre>
+            </div>
+            <hr>
+            <uib-tabset type="pills">
+                <uib-tab heading="Chart">
+                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
+                    </div>
+                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample3.data">- No chart data found for this
+                        sample (use 'Data Source' widget above to invoke data request) -
+                    </div>
+
+
+                    <nvd3 data-options="vm.samples.sample3.options" data-data="vm.samples.sample3.data"
+                          data-api="vm.samples.sample3.api" data-config="vm.config"></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre class="kan-json-code">{{vm.samples.sample3.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre class="kan-json-code">{{vm.samples.sample3.data | json}}</pre>
                 </uib-tab>
             </uib-tabset>
         </div>

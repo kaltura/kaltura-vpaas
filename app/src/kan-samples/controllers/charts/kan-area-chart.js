@@ -6,21 +6,18 @@ module.exports = function (kanSamplesService) {
     var self = this;
 
 
-
-    function clearChartsData()
-    {
-        _.each(self.samples,function(sample)
-        {
+    function clearChartsData() {
+        _.each(self.samples, function (sample) {
             sample.data = null;
         });
+
+        self.samplesDescription = '';
 
         refreshChartsLayout();
     }
 
-    function refreshChartsLayout()
-    {
-        _.each(self.samples,function(sample)
-        {
+    function refreshChartsLayout() {
+        _.each(self.samples, function (sample) {
             sample.refresh();
         });
 
@@ -30,32 +27,23 @@ module.exports = function (kanSamplesService) {
 
         var origin = context.origin;
 
-        var loadDataPromise  =  null;
+        clearChartsData();
 
         self.loadingData = true;
-        if (origin === 'demo')
-        {
-            loadDataPromise = kanSamplesService.getDemoData({key : 'areaChart'});
-        }else
-        {
 
-        }
+        kanSamplesService.getData(origin, 'areaChart').then(function (result) {
+            self.samplesDescription = result.description;
 
-        if (loadDataPromise )
-        {
-            loadDataPromise.then(function(result)
-            {
-                self.samples.sample1.data = result.data;
+            self.samples.sample1.data = result.data;
 
-                refreshChartsLayout();
+            refreshChartsLayout();
 
-                self.errorMessage = '';
-                self.loadingData = false;
-            },function(reason)
-            {
-                self.errorMessage = "Failed to load data : '" + reason.error + "'";
-            });
-        }
+            self.errorMessage = '';
+            self.loadingData = false;
+        }, function (reason) {
+            self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
+            self.loadingData = false;
+        });
     }
 
     // this configuration will be used globally and in the future should be enforced on all charts
@@ -66,7 +54,7 @@ module.exports = function (kanSamplesService) {
 
     self.filters = {
         top10: false,
-        demoServer : true
+        demoServer: true
     };
 
     self.refreshChartsLayout = refreshChartsLayout;
@@ -81,8 +69,7 @@ module.exports = function (kanSamplesService) {
         sample1: {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
-            viewData: {
-            },
+            viewData: {},
             refresh: function () {
 
                 // run the refresh api of the actual nvd3 directive
@@ -94,14 +81,18 @@ module.exports = function (kanSamplesService) {
                 chart: {
                     type: 'stackedAreaChart',
                     height: 450,
-                    margin : {
+                    margin: {
                         top: 20,
                         right: 20,
                         bottom: 30,
                         left: 100
                     },
-                    x: function(d){return d[0]},
-                    y: function(d){return d[1];},
+                    x: function (d) {
+                        return d[0]
+                    },
+                    y: function (d) {
+                        return d[1];
+                    },
                     color: d3.scale.category10().range(),
                     useVoronoi: false,
                     clipEdge: true,
@@ -109,12 +100,12 @@ module.exports = function (kanSamplesService) {
                     useInteractiveGuideline: true,
                     xAxis: {
                         showMaxMin: false,
-                        tickFormat: function(d) {
+                        tickFormat: function (d) {
                             return d3.time.format('%x')(new Date(d))
                         }
                     },
                     yAxis: {
-                        tickFormat: function(d){
+                        tickFormat: function (d) {
                             return d3.format(',.2f')(d);
                         }
                     }

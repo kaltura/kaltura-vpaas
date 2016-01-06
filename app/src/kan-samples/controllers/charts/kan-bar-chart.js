@@ -11,6 +11,7 @@ module.exports = function (kanSamplesService) {
     {
         _.each(self.samples,function(sample)
         {
+            sample.description = '';
             sample.data = null;
         });
 
@@ -30,22 +31,15 @@ module.exports = function (kanSamplesService) {
 
         var origin = context.origin;
 
-        var loadDataPromise  =  null;
-
+        clearChartsData();
         self.loadingData = true;
-        if (origin === 'demo')
-        {
-            loadDataPromise = kanSamplesService.getDemoData({key : 'barChart', take : 3 });
-        }else
-        {
 
-        }
-
-        if (loadDataPromise )
-        {
-            loadDataPromise.then(function(result)
+        kanSamplesService.getData(origin,'barChart').then(function(result)
             {
+                self.samples.sample1.description = result.description;
                 self.samples.sample1.data = result.data;
+
+                self.samples.sample2.description = result.description;
                 self.samples.sample2.data = [result.data[0]];
 
                 refreshChartsLayout();
@@ -54,9 +48,24 @@ module.exports = function (kanSamplesService) {
                 self.loadingData = false;
             },function(reason)
             {
-                self.errorMessage = "Failed to load data : '" + reason.error + "'";
+                self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
+                self.loadingData = false;
             });
-        }
+
+       kanSamplesService.getData(origin,'barChartCompare',{take:3}).then(function(result)
+        {
+            self.samples.sample3.description = result.description;
+            self.samples.sample3.data = result.data;
+
+            refreshChartsLayout();
+
+            self.errorMessage = '';
+            self.loadingData = false;
+        },function(reason)
+        {
+            self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
+            self.loadingData = false;
+        });
     }
 
     // this configuration will be used globally and in the future should be enforced on all charts
@@ -158,6 +167,47 @@ module.exports = function (kanSamplesService) {
                         axisLabel: 'Total',
                         axisLabelDistance: 0,
                         showMaxMin : false
+                    }
+                }
+
+            }
+        },
+        sample3: {
+            data: null,
+            api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
+            viewData: {
+            },
+            refresh: function () {
+
+                // run the refresh api of the actual nvd3 directive
+                if (self.samples.sample3.api.refresh) {
+                    self.samples.sample3.api.refresh();
+                }
+            },
+            options: {
+                chart: {
+                    type: 'multiBarHorizontalChart',
+                    height: 450,
+                    x: function(d){return d.label;},
+                    y: function(d){return d.value;},
+                    useInteractiveGuideline: true,
+                    margin: {
+                        top: 20,
+                        right: 20,
+                        bottom: 60,
+                        left: 150
+                    },
+                    showControls: true,
+                    showValues: true,
+                    duration: 500,
+                    xAxis: {
+                        showMaxMin: false
+                    },
+                    yAxis: {
+                        axisLabel: 'Values',
+                        tickFormat: function(d){
+                            return d3.format(',.2f')(d);
+                        },
                     }
                 }
 

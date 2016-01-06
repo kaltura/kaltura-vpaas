@@ -14,6 +14,8 @@ module.exports = function (kanSamplesService) {
             sample.data = null;
         });
 
+        self.samplesDescription = '';
+
         refreshChartsLayout();
     }
 
@@ -29,22 +31,13 @@ module.exports = function (kanSamplesService) {
     function loadData(context) {
 
         var origin = context.origin;
-
-        var loadDataPromise  =  null;
-
+        clearChartsData();
         self.loadingData = true;
-        if (origin === 'demo')
-        {
-            loadDataPromise = kanSamplesService.getDemoData({key : 'pieChart',take : 5 });
-        }else
-        {
 
-        }
-
-        if (loadDataPromise )
-        {
-            loadDataPromise.then(function(result)
+        kanSamplesService.getData(origin,'pieChart',{take : 5}).then(function(result)
             {
+                self.samplesDescription = result.description;
+
                 self.samples.sample1.data = result.data[0].values;
 
                 refreshChartsLayout();
@@ -53,9 +46,10 @@ module.exports = function (kanSamplesService) {
                 self.loadingData = false;
             },function(reason)
             {
-                self.errorMessage = "Failed to load data : '" + reason.error + "'";
+                self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
+                self.loadingData = false;
             });
-        }
+
     }
 
     // this configuration will be used globally and in the future should be enforced on all charts
