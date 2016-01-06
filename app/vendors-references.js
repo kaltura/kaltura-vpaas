@@ -3,6 +3,7 @@
 module.exports = {
     'angular': './node_modules/angular/angular.js',
     'moment': './node_modules/moment/moment.js',
+    'ngStorage': './node_modules/ngStorage/ngstorage.min.js',
     'lodash': './bower_components/lodash/lodash.js',
     'angular-animate': './bower_components/angular-animate/angular-animate.js',
     'angular-ui-router': './bower_components/angular-ui-router/release/angular-ui-router.js',

@@ -1,7 +1,6 @@
 'use strict';
 
-
-module.exports = function (SessionInfo) {
+module.exports = function (SessionInfo,$sessionStorage) {
     function Controller() {
         var self = this;
 
@@ -15,6 +14,8 @@ module.exports = function (SessionInfo) {
                     return;
                 }
 
+
+                $sessionStorage.ks = self.data.ks;
                 SessionInfo.setKs(self.data.ks);
             }
 
@@ -22,14 +23,14 @@ module.exports = function (SessionInfo) {
         }
 
         self.dataFormType = 'live';
-        self.data = {ks: SessionInfo.ks};
+        self.data = {ks: SessionInfo.ks || $sessionStorage.ks};
         self.submit = submit;
 
     }
 
 
     function Link(scope, element, attrs, ctrl) {
-
+        scope.$storage = $sessionStorage; // set on the scope to 'force' angular to monitor its' change and update the session storage
     }
 
 
