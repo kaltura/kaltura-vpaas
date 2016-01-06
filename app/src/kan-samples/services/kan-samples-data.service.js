@@ -185,8 +185,12 @@ module.exports = function ($http, $q, kanAPIFacade) {
                 description += 'Report: Content Reports > Top Content\nMatrics: (determined by response)\nDimension: "Time"\nFilter: from 01/12/2015 - 01/01/2016';
                 break;
             case 'pieChart':
-
-                break;
+                requestParams = {
+                    reportType: '22',
+                    reportInputFilter: {fromDay: '20151201', toDay: '20160101'}
+                };
+                description += 'Report: System Reports > Platforms (comparison of 5 platforms)\nFilter: from 01/12/2015 - 01/01/2016';
+                break
             default:
                 break;
         }
@@ -227,7 +231,7 @@ module.exports = function ($http, $q, kanAPIFacade) {
                 return {key : item['entry_name'],values : values}
              }).value();
              deferred.resolve({
-                 description: 'Report: Content Reports > Content Drop-off comparison of 3 entries',
+                 description: 'Report: Content Reports > Content Drop-off (comparison of 3 entries)',
                  data : filteredData});
         });
 
