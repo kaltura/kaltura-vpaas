@@ -2,15 +2,12 @@
 
 var _ = require('lodash');
 
-module.exports = function (kanSamplesService) {
+module.exports = function (kanSamplesService,$q) {
     var self = this;
 
 
-
-    function clearChartsData()
-    {
-        _.each(self.samples,function(sample)
-        {
+    function clearChartsData() {
+        _.each(self.samples, function (sample) {
             sample.description = '';
             sample.data = null;
         });
@@ -18,10 +15,8 @@ module.exports = function (kanSamplesService) {
         refreshChartsLayout();
     }
 
-    function refreshChartsLayout()
-    {
-        _.each(self.samples,function(sample)
-        {
+    function refreshChartsLayout() {
+        _.each(self.samples, function (sample) {
             sample.refresh();
         });
 
@@ -34,35 +29,30 @@ module.exports = function (kanSamplesService) {
         clearChartsData();
         self.loadingData = true;
 
-        kanSamplesService.getData(origin,'barChart').then(function(result)
-            {
-                self.samples.sample1.description = result.description;
-                self.samples.sample1.data = result.data;
+        var promises = [];
 
-                self.samples.sample2.description = result.description;
-                self.samples.sample2.data = [result.data[0]];
+        promises.push(kanSamplesService.getData(origin, 'barChart'));
+        promises.push(kanSamplesService.getData(origin, 'barChartCompare', {take: 3}));
 
-                refreshChartsLayout();
 
-                self.errorMessage = '';
-                self.loadingData = false;
-            },function(reason)
-            {
-                self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
-                self.loadingData = false;
-            });
+        $q.all(promises).then(function (results) {
+            var request1 = results[0];
+            var request2 = results[1];
 
-       kanSamplesService.getData(origin,'barChartCompare',{take:3}).then(function(result)
-        {
-            self.samples.sample3.description = result.description;
-            self.samples.sample3.data = result.data;
+            self.samples.sample1.description = request1.description;
+            self.samples.sample1.data = request1.data;
+
+            self.samples.sample2.description = request1.description;
+            self.samples.sample2.data = [request1.data[0]];
+
+            self.samples.sample3.description = request2.description;
+            self.samples.sample3.data = request2.data;
 
             refreshChartsLayout();
 
             self.errorMessage = '';
             self.loadingData = false;
-        },function(reason)
-        {
+        }, function (reason) {
             self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
             self.loadingData = false;
         });
@@ -76,7 +66,7 @@ module.exports = function (kanSamplesService) {
 
     self.filters = {
         top10: false,
-        demoServer : true
+        demoServer: true
     };
 
     self.refreshChartsLayout = refreshChartsLayout;
@@ -91,8 +81,7 @@ module.exports = function (kanSamplesService) {
         sample1: {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
-            viewData: {
-            },
+            viewData: {},
             refresh: function () {
 
                 // run the refresh api of the actual nvd3 directive
@@ -104,8 +93,12 @@ module.exports = function (kanSamplesService) {
                 chart: {
                     type: 'multiBarHorizontalChart',
                     height: 450,
-                    x: function(d){return d.label;},
-                    y: function(d){return d.value;},
+                    x: function (d) {
+                        return d.label;
+                    },
+                    y: function (d) {
+                        return d.value;
+                    },
                     useInteractiveGuideline: true,
                     margin: {
                         top: 20,
@@ -121,7 +114,7 @@ module.exports = function (kanSamplesService) {
                     },
                     yAxis: {
                         axisLabel: 'Values',
-                        tickFormat: function(d){
+                        tickFormat: function (d) {
                             return d3.format(',.2f')(d);
                         },
                     }
@@ -132,8 +125,7 @@ module.exports = function (kanSamplesService) {
         sample2: {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
-            viewData: {
-            },
+            viewData: {},
             refresh: function () {
 
                 // run the refresh api of the actual nvd3 directive
@@ -145,18 +137,22 @@ module.exports = function (kanSamplesService) {
                 chart: {
                     type: 'discreteBarChart',
                     height: 450,
-                    margin : {
+                    margin: {
                         top: 20,
                         right: 20,
                         bottom: 50,
                         left: 50
                     },
-                    staggerLabels : true,
-                    rotateLabels : true,
-                    x: function(d){return d.label;},
-                    y: function(d){return d.value;},
+                    staggerLabels: true,
+                    rotateLabels: true,
+                    x: function (d) {
+                        return d.label;
+                    },
+                    y: function (d) {
+                        return d.value;
+                    },
                     showValues: true,
-                    valueFormat: function(d){
+                    valueFormat: function (d) {
                         return d3.format(',.4f')(d);
                     },
                     duration: 500,
@@ -166,7 +162,7 @@ module.exports = function (kanSamplesService) {
                     yAxis: {
                         axisLabel: 'Total',
                         axisLabelDistance: 0,
-                        showMaxMin : false
+                        showMaxMin: false
                     }
                 }
 
@@ -175,8 +171,7 @@ module.exports = function (kanSamplesService) {
         sample3: {
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
-            viewData: {
-            },
+            viewData: {},
             refresh: function () {
 
                 // run the refresh api of the actual nvd3 directive
@@ -188,8 +183,12 @@ module.exports = function (kanSamplesService) {
                 chart: {
                     type: 'multiBarHorizontalChart',
                     height: 450,
-                    x: function(d){return d.label;},
-                    y: function(d){return d.value;},
+                    x: function (d) {
+                        return d.label;
+                    },
+                    y: function (d) {
+                        return d.value;
+                    },
                     useInteractiveGuideline: true,
                     margin: {
                         top: 20,
@@ -205,7 +204,7 @@ module.exports = function (kanSamplesService) {
                     },
                     yAxis: {
                         axisLabel: 'Values',
-                        tickFormat: function(d){
+                        tickFormat: function (d) {
                             return d3.format(',.2f')(d);
                         },
                     }
