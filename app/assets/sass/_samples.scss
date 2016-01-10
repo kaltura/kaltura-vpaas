@@ -1,6 +1,23 @@
 
 .kan-samples {
 
+    .kan-map-container {
+        position:relative;
+
+        div.worldmap.box {
+            position: absolute;
+            top: 2em;
+            right: 2em;
+            z-index: 100;
+            padding: 1em;
+            text-align: center;
+        }
+        .worldmap {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+        }
+    }
+
     .kan-json-code
     {
         max-height:300px;
