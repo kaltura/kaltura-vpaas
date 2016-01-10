@@ -14,6 +14,9 @@ window.d3 = d3;
 var moment = require('moment');
 window.moment = moment;
 
+var leaflet = require('leaflet');
+window.L = leaflet;
+
 require('nvd3');
 
 //load src module

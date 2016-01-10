@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.exports = function (kanSamplesService) {
+module.exports = function (kanSamplesDataService) {
     var self = this;
 
 

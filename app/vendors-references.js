@@ -11,5 +11,7 @@ module.exports = {
     'jquery': './bower_components/jquery/dist/jquery.js',
     'd3': './bower_components/d3/d3.min.js',
     'nvd3': './bower_components/nvd3/build/nv.d3.js',
-    'angular-nvd3': './bower_components/angular-nvd3/dist/angular-nvd3.js'
+    'angular-nvd3': './bower_components/angular-nvd3/dist/angular-nvd3.js',
+    'leaflet': './node_modules/leaflet/dist/leaflet.js',
+    'angular-leaflet-directive': './node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js'
 };

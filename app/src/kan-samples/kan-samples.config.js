@@ -20,6 +20,10 @@ module.exports = function ($stateProvider) {
     });
 
 
+    $stateProvider.state('root.shell.samples.maps.about', {
+        url: '/about',
+        templateUrl: 'kan-samples/partials/maps/about.html'
+    });
 
     $stateProvider.state('root.shell.samples.maps.map', {
         url: '/mapChart',
