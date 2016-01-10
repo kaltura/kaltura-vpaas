@@ -1,6 +1,7 @@
 module.exports = function () {
-    function Controller($scope, SessionInfo) {
+    function Controller($scope, SessionInfo,$timeout, kanCountriesGeojson) {
         var self = this;
+
 
         function getColor(d) {
             return d > 1000 ? '#800026' :
@@ -15,7 +16,7 @@ module.exports = function () {
 
         function style(feature) {
             return {
-                fillColor: getColor(feature.properties.density),
+                fillColor: getColor(feature.properties.total),
                 weight: 2,
                 opacity: 1,
                 color: 'white',
@@ -24,17 +25,92 @@ module.exports = function () {
             };
         }
 
-        function rebuildMapOptions() {
-            var markers = {};
-            var overlays = {};
+        function handleCounties(data)
+        {
+            var result = {paths : {}, geojson : {
+                style : style,
+                onEachFeature : function (feature, layer) {
+                    layer.on({
+                        mouseover: highlightFeature,
+                        mouseout: resetHighlight
+                    });
+                },
+                data : []
+            }};
 
-            if (self.options) {
-                overlays = self.options.overlays;
-                markers = self.options.markers;
+
+            var index = 0;
+            _.each(data,function(item)
+            {
+                var geojson = kanCountriesGeojson[item.text.toLowerCase()];
+
+                if (geojson) {
+                    result.geojson.data.push(geojson);
+                }else
+                {
+                    index++;
+                    result['p' + index] = {
+                        type: "circle",
+                        radius: 20000,
+                        color: 'transparent',
+                        fillColor: 'orange',
+                        fillOpacity: 0.8,
+                        latlngs: {lat : parseFloat(item.lat), lng : parseFloat(item.lng)}
+                    }
+                }
+            });
+
+
+            return result;
+        }
+
+
+        function handleCities(data)
+        {
+            var result = { paths : {}, geojson : {}};
+            var index = 0;
+
+            _.each(data,function(item)
+            {
+               index++;
+                result.paths['p' + index] = {
+                    type: "circle",
+                    radius: 20000,
+                    color: 'transparent',
+                    fillColor: 'orange',
+                    fillOpacity: 0.8,
+                    latlngs: {lat : parseFloat(item.lat), lng : parseFloat(item.lng)}
+                }
+
+            });
+
+            return result;
+        }
+
+        function rebuildMapOptions() {
+            var geojson = {};
+              var paths = {};
+
+            if (self.options && self.options.data) {
+
+                if (self.center.zoom > 4)
+                {
+                    // cities
+                    var cities = handleCities(self.options.data.cities);
+                    paths = cities.paths;
+                    geojson = cities.geojson;
+                }else
+                {
+                    // countries
+                    var countries = handleCounties(self.options.data.countries);
+                    paths = countries.paths;
+                    geojson = countries.geojson;
+
+                }
             }
 
-            self.layers.overlays = overlays;
-            self.markers = markers;
+            self.paths =  paths;
+            self.geojson = geojson;
         }
 
         self.center = {
@@ -43,6 +119,7 @@ module.exports = function () {
             zoom: 4
         };
 
+        self.paths = {};
 
         self.layers = {
             baselayers: {
@@ -77,7 +154,8 @@ module.exports = function () {
             layer.setStyle(style(e.target.feature));
         }
 
-        self.geojson = {
+        self.geojson = {};
+        self.geojson2 = {
             style : style,
             onEachFeature : function (feature, layer) {
                 layer.on({
@@ -566,7 +644,11 @@ module.exports = function () {
         };
 
         $scope.$watch('vm.rebind', function () {
-            //  rebuildMapOptions();
+             rebuildMapOptions();
+        });
+
+        $scope.$watch('vm.center.zoom', function () {
+             rebuildMapOptions();
         });
 
     }

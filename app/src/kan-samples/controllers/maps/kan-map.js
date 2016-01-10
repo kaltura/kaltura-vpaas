@@ -6,11 +6,8 @@ module.exports = function (kanSamplesDataService) {
     var self = this;
 
 
-
-    function clearChartsData()
-    {
-        _.each(self.samples,function(sample)
-        {
+    function clearChartsData() {
+        _.each(self.samples, function (sample) {
             sample.data = null;
         });
 
@@ -19,10 +16,8 @@ module.exports = function (kanSamplesDataService) {
         refreshChartsLayout();
     }
 
-    function refreshChartsLayout()
-    {
-        _.each(self.samples,function(sample)
-        {
+    function refreshChartsLayout() {
+        _.each(self.samples, function (sample) {
             sample.refresh();
         });
 
@@ -36,20 +31,17 @@ module.exports = function (kanSamplesDataService) {
 
         self.loadingData = true;
 
-        kanSamplesDataService.getData(origin,'map-s1').then(function(result)
-        {
+        kanSamplesDataService.getData(origin, 'map-s1').then(function (result) {
             self.samplesDescription = result.description;
 
-            self.samples.sample1.data = result.data;
-
+            self.samples.sample1.options.data = result.data;
 
 
             refreshChartsLayout();
 
             self.errorMessage = '';
             self.loadingData = false;
-        },function(reason)
-        {
+        }, function (reason) {
             self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
             self.loadingData = false;
         });
@@ -64,7 +56,7 @@ module.exports = function (kanSamplesDataService) {
 
     self.filters = {
         top10: false,
-        demoServer : true
+        demoServer: true
     };
 
     self.refreshChartsLayout = refreshChartsLayout;
@@ -77,54 +69,12 @@ module.exports = function (kanSamplesDataService) {
     self.samples =
     {
         sample1: {
-            data: null,
             refresh: function () {
-
+                self.samples.sample1.rebind++;
             },
-            rebind : 1,
+            rebind: 1,
             options: {
-                overlays: {
-                    cities: {
-                        name: 'Cities',
-                        type: 'markercluster',
-                        visible: true
-                    }
-                },
-                markers: {
-                    m1: {
-                        lat: 42.20133,
-                        lng: 2.19110,
-                        layer: 'cities',
-                        message: "I'm a moving car"
-                    },
-                    m2: {
-                        lat: 42.21133,
-                        lng: 2.18110,
-                        layer: 'cities',
-                        message: "I'm a car"
-                    },
-                    m3: {
-                        lat: 42.19133,
-                        lng: 2.18110,
-                        layer: 'cities',
-                        message: 'A bike!!'
-                    },
-                    m4: {
-                        lat: 42.3,
-                        lng: 2.16110,
-                        layer: 'cities'
-                    },
-                    m5: {
-                        lat: 42.1,
-                        lng: 2.16910,
-                        layer: 'cities'
-                    },
-                    m6: {
-                        lat: 42.15,
-                        lng: 2.17110,
-                        layer: 'cities'
-                    }
-                }
+                data: null
             }
         }
     };
