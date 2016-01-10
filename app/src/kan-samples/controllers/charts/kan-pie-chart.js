@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.exports = function (kanSamplesService) {
+module.exports = function (kanSamplesDataService) {
     var self = this;
 
 
@@ -34,7 +34,7 @@ module.exports = function (kanSamplesService) {
         clearChartsData();
         self.loadingData = true;
 
-        kanSamplesService.getData(origin,'pie-chart-s1',{take : 5}).then(function(result)
+        kanSamplesDataService.getData(origin,'pie-chart-s1',{take : 5}).then(function(result)
             {
                 self.samplesDescription = result.description;
 

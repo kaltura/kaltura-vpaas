@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.exports = function (kanSamplesService) {
+module.exports = function (kanSamplesDataService) {
     var self = this;
 
 
@@ -36,7 +36,7 @@ module.exports = function (kanSamplesService) {
 
         self.loadingData = true;
 
-        kanSamplesService.getData(origin,'line-chart-s1').then(function(result)
+        kanSamplesDataService.getData(origin,'line-chart-s1').then(function(result)
             {
                 self.samplesDescription = result.description;
 

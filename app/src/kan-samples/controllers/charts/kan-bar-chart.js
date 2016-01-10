@@ -2,7 +2,7 @@
 
 var _ = require('lodash');
 
-module.exports = function (kanSamplesService, $q) {
+module.exports = function (kanSamplesDataService, $q) {
     var self = this;
 
 
@@ -31,8 +31,8 @@ module.exports = function (kanSamplesService, $q) {
 
         var promises = [];
 
-        promises.push(kanSamplesService.getData(origin, 'bar-chart-s1'));
-        promises.push(kanSamplesService.getData(origin, 'bar-chart-s2', {take: 3}));
+        promises.push(kanSamplesDataService.getData(origin, 'bar-chart-s1'));
+        promises.push(kanSamplesDataService.getData(origin, 'bar-chart-s2', {take: 3}));
 
 
         $q.all(promises).then(function (results) {

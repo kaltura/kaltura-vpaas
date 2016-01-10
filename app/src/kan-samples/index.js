@@ -11,7 +11,7 @@ appModule.controller('kanPieChart',require('./controllers/charts/kan-pie-chart')
 
 appModule.controller('kanMap',require('./controllers/maps/kan-map'));
 
-appModule.service('kanSamplesService',require('./services/kan-samples-data.service'));
+appModule.service('kanSamplesDataService',require('./services/kan-samples-data.service'));
 appModule.service('kanSamplesHelper',require('./services/kan-samples-helper.service'));
 
 appModule.run(function(kanSamplesHelper)
