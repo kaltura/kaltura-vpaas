@@ -36,7 +36,7 @@ module.exports = function (kanSamplesService) {
 
         self.loadingData = true;
 
-        kanSamplesService.getData(origin,'lineChart').then(function(result)
+        kanSamplesService.getData(origin,'line-chart-s1').then(function(result)
             {
                 self.samplesDescription = result.description;
 

@@ -13,6 +13,20 @@ module.exports = function ($stateProvider) {
         template: '<div ui-view></div>'
     });
 
+    $stateProvider.state('root.shell.samples.maps', {
+        url: '/maps',
+        abstract:true,
+        template: '<div ui-view></div>'
+    });
+
+
+
+    $stateProvider.state('root.shell.samples.maps.map', {
+        url: '/mapChart',
+        templateUrl: 'kan-samples/partials/maps/map.html',
+        controller : 'kanMap',
+        controllerAs : 'vm'
+    });
 
     $stateProvider.state('root.shell.samples.charts.about', {
         url: '/about',
@@ -41,12 +55,7 @@ module.exports = function ($stateProvider) {
         controllerAs : 'vm'
     });
 
-    $stateProvider.state('root.shell.samples.charts.mapChart', {
-        url: '/mapChart',
-        templateUrl: 'kan-samples/partials/charts/map-chart.html',
-        controller : 'kanMapChart',
-        controllerAs : 'vm'
-    });
+
 
     $stateProvider.state('root.shell.samples.charts.barChart', {
         url: '/barChart',

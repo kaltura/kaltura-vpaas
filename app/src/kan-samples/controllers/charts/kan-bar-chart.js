@@ -31,8 +31,8 @@ module.exports = function (kanSamplesService, $q) {
 
         var promises = [];
 
-        promises.push(kanSamplesService.getData(origin, 'barChart'));
-        promises.push(kanSamplesService.getData(origin, 'barChartCompare', {take: 3}));
+        promises.push(kanSamplesService.getData(origin, 'bar-chart-s1'));
+        promises.push(kanSamplesService.getData(origin, 'bar-chart-s2', {take: 3}));
 
 
         $q.all(promises).then(function (results) {

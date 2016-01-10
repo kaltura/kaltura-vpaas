@@ -31,7 +31,7 @@ module.exports = function (kanSamplesService) {
 
         self.loadingData = true;
 
-        kanSamplesService.getData(origin, 'areaChart').then(function (result) {
+        kanSamplesService.getData(origin, 'area-chart-s1').then(function (result) {
             self.samplesDescription = result.description;
 
             self.samples.sample1.data = result.data;

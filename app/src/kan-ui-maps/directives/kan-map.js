@@ -4,7 +4,7 @@
 
 module.exports = function()
 {
-    function Controller($scope, EntrySvc, SessionInfo) {
+    function Controller($scope,  SessionInfo) {
         var self = this;
         this.mapElement = null;
         this.slider = null;
@@ -422,7 +422,7 @@ module.exports = function()
     restrict: 'A',
     scope: {
     },
-    templateUrl: 'src/kan-ui-maps/directives/kan-maps.html',
+    templateUrl: 'kan-ui-maps/directives/kan-map.html',
     controller: Controller,
     controllerAs: 'vm',
     bindToController: true,

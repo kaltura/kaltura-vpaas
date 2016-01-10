@@ -13,6 +13,7 @@ window.d3 = d3;
 
 var moment = require('moment');
 window.moment = moment;
+
 require('nvd3');
 
 //load src module

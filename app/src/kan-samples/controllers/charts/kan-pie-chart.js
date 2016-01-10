@@ -34,7 +34,7 @@ module.exports = function (kanSamplesService) {
         clearChartsData();
         self.loadingData = true;
 
-        kanSamplesService.getData(origin,'pieChart',{take : 5}).then(function(result)
+        kanSamplesService.getData(origin,'pie-chart-s1',{take : 5}).then(function(result)
             {
                 self.samplesDescription = result.description;
 
