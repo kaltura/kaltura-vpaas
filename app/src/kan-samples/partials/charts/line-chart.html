@@ -21,17 +21,14 @@
                     <li>Toggle on/off view finder that allow the user to focus on specific area of the chart.</li>
                 </ul>
             </div>
-            <div class="kan-sample-description" data-ng-show="vm.samplesDescription">
-                <pre>{{vm.samplesDescription}}</pre>
+            <div class="kan-sample-description" >
+                <pre data-ng-show="vm.samplesDescription">{{vm.samplesDescription}}</pre>
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.data">- Invoke request to show chart -</pre>
             </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
-                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
-                    </div>
-                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.data">- No chart data found for this
-                        sample (use 'Data Source' widget above to invoke data request) -
-                    </div>
                     <form class="form-inline" data-ng-show="vm.samples.sample1.data">
                         <div class="form-group">
                             <label><input type="checkbox"
@@ -70,17 +67,15 @@
                     </li>
                 </ul>
             </div>
-            <div class="kan-sample-description" data-ng-show="vm.samplesDescription">
-                <pre>{{vm.samplesDescription}}</pre>
+            <div class="kan-sample-description" >
+                <pre data-ng-show="vm.samplesDescription">{{vm.samplesDescription}}</pre>
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample2.data">- Invoke request to show chart -</pre>
             </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
-                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
-                    </div>
-                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample2.data">- No chart data found for this
-                        sample (use 'Data Source' widget above to invoke data request) -
-                    </div>
+
                     <nvd3 data-options="vm.samples.sample2.options" data-data="vm.samples.sample2.data"
                           data-api="vm.samples.sample2.api" data-config="vm.config"></nvd3>
                 </uib-tab>
@@ -110,17 +105,14 @@
                     <li>Open issue - At the moment I didn't found a way to show view finder for this type of chart.</li>
                 </ul>
             </div>
-            <div class="kan-sample-description" data-ng-show="vm.samplesDescription">
-                <pre>{{vm.samplesDescription}}</pre>
+            <div class="kan-sample-description" >
+                <pre data-ng-show="vm.samplesDescription">{{vm.samplesDescription}}</pre>
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample3.data">- Invoke request to show chart -</pre>
             </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
-                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
-                    </div>
-                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample3.data">- No chart data found for this
-                        sample (use 'Data Source' widget above to invoke data request) -
-                    </div>
                     <form class="form-inline" data-ng-show="vm.samples.sample3.data">
                         <div class="form-group">
                             <label><input type="checkbox"

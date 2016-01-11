@@ -16,17 +16,15 @@
             <div class="kan-sample-description">
                 <p>This sample demonstrate horizontal bar series chart using the same labels.
             </div>
-            <div class="kan-sample-description" data-ng-show="vm.samples.sample1.description">
-                <pre>{{vm.samples.sample1.description}}</pre>
+            <div class="kan-sample-description" >
+                <pre data-ng-show="vm.samples.sample1.description">{{vm.samples.sample1.description}}</pre>
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.data">- Invoke request to show chart -</pre>
             </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
-                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
-                    </div>
-                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.data">- No chart data found for this
-                        sample (use 'Data Source' widget above to invoke data request) -
-                    </div>
+
 
 
                     <nvd3 data-options="vm.samples.sample1.options" data-data="vm.samples.sample1.data"
@@ -50,19 +48,14 @@
             <div class="kan-sample-description">
                 <p>This sample demonstrate multiple bar series chart using the same labels.
             </div>
-            <div class="kan-sample-description" data-ng-show="vm.samples.sample2.description">
-                <pre>{{vm.samples.sample2.description}}</pre>
+            <div class="kan-sample-description" >
+                <pre data-ng-show="vm.samples.sample2.description">{{vm.samples.sample2.description}}</pre>
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample2.data">- Invoke request to show chart -</pre>
             </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
-                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
-                    </div>
-                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample2.data">- No chart data found for this
-                        sample (use 'Data Source' widget above to invoke data request) -
-                    </div>
-
-
                     <nvd3 data-options="vm.samples.sample2.options" data-data="vm.samples.sample2.data"
                           data-api="vm.samples.sample2.api" data-config="vm.config"></nvd3>
                 </uib-tab>
@@ -84,17 +77,14 @@
             <div class="kan-sample-description">
                 <p>This sample demonstrate comparison between multiple entries
             </div>
-            <div class="kan-sample-description" data-ng-show="vm.samples.sample3.description">
-                <pre>{{vm.samples.sample3.description}}</pre>
+            <div class="kan-sample-description" >
+                <pre data-ng-show="vm.samples.sample3.description">{{vm.samples.sample3.description}}</pre>
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample3.data">- Invoke request to show chart -</pre>
             </div>
             <hr>
             <uib-tabset type="pills">
                 <uib-tab heading="Chart">
-                    <div class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -
-                    </div>
-                    <div class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample3.data">- No chart data found for this
-                        sample (use 'Data Source' widget above to invoke data request) -
-                    </div>
 
 
                     <nvd3 data-options="vm.samples.sample3.options" data-data="vm.samples.sample3.data"
