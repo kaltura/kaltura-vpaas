@@ -113,7 +113,7 @@ module.exports = function () {
         self.center = {
             lat: 37.8,
             lng: -96,
-            zoom: 4
+            zoom: 3
         };
 
         self.paths = {};

@@ -2,7 +2,10 @@ module.exports = function () {
 
     var service = {};
 
-    var model = {};
+    var model = {
+        description : 'Report: Live Real-Time Dashboard > Live Content\nPartner: WEATHER NATION (!)\nEntry: WNTV PRIMARY\nFilter: from 01/11/2016 10:00',
+    data : {"objects":[{"city":{"latitude":"41.390205","longitude":"2.154007","name":"Barcelona","objectType":"KalturaCoordinate"},"country":{"latitude":"31.5","longitude":"34.75","name":"Spain","objectType":"KalturaCoordinate"},"entryId":"1_oorxcge2","peakAudience":"0","peakDvrAudience":"0","audience":"10","dvrAudience":"6","avgBitrate":"679.0","bufferTime":"60.0","plays":"0","secondsViewed":"10","timestamp":"1452502630","objectType":"KalturaGeoTimeLiveStats"},{"city":{"latitude":"33.3796","longitude":"-96.2475","name":"LEONARD","objectType":"KalturaCoordinate"},"country":{"latitude":"38.0","longitude":"-97.0","name":"UNITED STATES","objectType":"KalturaCoordinate"},"entryId":"1_oorxcge2","peakAudience":"0","peakDvrAudience":"0","audience":"1","dvrAudience":"0","avgBitrate":"2096.0","bufferTime":"0.0","plays":"0","secondsViewed":"10","timestamp":"1452502630","objectType":"KalturaGeoTimeLiveStats"}],"totalCount":"2","objectType":"KalturaLiveStatsListResponse"}
+};
 
 
     function parseRequest(request, filters,kanSamplesHelper) {
