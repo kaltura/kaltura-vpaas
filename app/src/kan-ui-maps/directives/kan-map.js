@@ -104,7 +104,7 @@ module.exports = function () {
 
                 }
             }
-            self.hasData = self.options.data.cities || self.options.data.countries;
+            self.hasData = self.options && self.options.data && (self.options.data.cities || self.options.data.countries);
             self.selectedFeature = null;
             self.paths = paths;
             self.geojson = geojson;
