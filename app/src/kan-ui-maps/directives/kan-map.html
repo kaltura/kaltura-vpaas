@@ -2,6 +2,6 @@
     <leaflet lf-center="vm.center" geojson="vm.geojson" legend="vm.legend" paths="vm.paths"  width="100%" height="100%">
     </leaflet>
     <pre>{{vm.selectedFeature}}</pre>
-    <div class="worldmap box"><div data-ng-show="vm.selectedFeature"><p><b>{{ vm.selectedFeature.name }}</b></p><p>Audience: {{ vm.selectedFeature.audience || 0 }} <br/>DVR: {{ vm.selectedFeature.dvr || 0 }} </p></div> <div ng-hide="vm.selectedFeature"><b>Audience</b><p>Hover over a item</p></div></div>
+    <div class="worldmap box"><div data-ng-show="vm.selectedFeature"><p><b>{{ vm.selectedFeature.name || vm.selectedFeature.text }}</b></p><p>Audience: {{ vm.selectedFeature.audience || 0 }} <br/>DVR: {{ vm.selectedFeature.dvr || 0 }} </p></div> <div ng-hide="vm.selectedFeature"><b>Audience</b><p>Hover over a item</p></div></div>
     <div class="info legend"><i style="background:#FFEDA0"></i> 0–10<br><i style="background:#FED976"></i> 10–20<br><i style="background:#FEB24C"></i> 20–50<br><i style="background:#FD8D3C"></i> 50–100<br><i style="background:#FC4E2A"></i> 100–200<br><i style="background:#E31A1C"></i> 200–500<br><i style="background:#BD0026"></i> 500–1000<br><i style="background:#800026"></i> 1000+</div>
 </div>

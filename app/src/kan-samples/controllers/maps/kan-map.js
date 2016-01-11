@@ -78,4 +78,6 @@ module.exports = function (kanSamplesDataService) {
             }
         }
     };
+
+
 };

@@ -1,5 +1,5 @@
 module.exports = function () {
-    function Controller($scope, SessionInfo,$timeout, kanCountriesGeojson) {
+    function Controller($scope, SessionInfo, $timeout, kanCountriesGeojson) {
         var self = this;
 
 
@@ -25,41 +25,45 @@ module.exports = function () {
             };
         }
 
-        function handleCounties(data)
-        {
-            var result = {paths : {}, geojson : {
-                style : style,
-                onEachFeature : function (feature, layer) {
-                    layer.on({
-                        mouseover: highlightFeature,
-                        mouseout: resetHighlight
-                    });
-                },
-                data : []
-            }};
+        function createPath(item) {
+            return {
+                type: "circle",
+                radius: 20000,
+                color: 'transparent',
+                fillColor: 'orange',
+                fillOpacity: 0.8,
+                properties: item,
+                latlngs: {lat: parseFloat(item.lat), lng: parseFloat(item.lng)}
+            }
+        }
+
+        function handleCounties(data) {
+            var result = {
+                paths: {}, geojson: {
+                    style: style,
+                    onEachFeature: function (feature, layer) {
+                        layer.on({
+                            mouseover: highlightFeature,
+                            mouseout: resetHighlight
+                        });
+                    },
+                    data: []
+                }
+            };
 
 
             var index = 0;
-            _.each(data,function(item)
-            {
+            _.each(data, function (item) {
                 var geojson = kanCountriesGeojson[item.text.toLowerCase()];
 
                 if (geojson) {
-                    var newGeojson = $.extend(true, {} ,geojson);
+                    var newGeojson = $.extend(true, {}, geojson);
                     $.extend(newGeojson.properties, item);
 
                     result.geojson.data.push(newGeojson);
-                }else
-                {
+                } else {
                     index++;
-                    result['p' + index] = {
-                        type: "circle",
-                        radius: 20000,
-                        color: 'transparent',
-                        fillColor: 'orange',
-                        fillOpacity: 0.8,
-                        latlngs: {lat : parseFloat(item.lat), lng : parseFloat(item.lng)}
-                    }
+                    result['p' + index] = createPath(item);
                 }
             });
 
@@ -68,22 +72,13 @@ module.exports = function () {
         }
 
 
-        function handleCities(data)
-        {
-            var result = { paths : {}, geojson : {}};
+        function handleCities(data) {
+            var result = {paths: {}, geojson: {}};
             var index = 0;
 
-            _.each(data,function(item)
-            {
-               index++;
-                result.paths['p' + index] = {
-                    type: "circle",
-                    radius: 20000,
-                    color: 'transparent',
-                    fillColor: 'orange',
-                    fillOpacity: 0.8,
-                    latlngs: {lat : parseFloat(item.lat), lng : parseFloat(item.lng)}
-                }
+            _.each(data, function (item) {
+                index++;
+                result.paths['p' + index] = createPath(item);
 
             });
 
@@ -92,18 +87,16 @@ module.exports = function () {
 
         function rebuildMapOptions() {
             var geojson = {};
-              var paths = {};
+            var paths = {};
 
             if (self.options && self.options.data) {
 
-                if (self.center.zoom > 3)
-                {
+                if (self.center.zoom > 3) {
                     // cities
                     var cities = handleCities(self.options.data.cities);
                     paths = cities.paths;
                     geojson = cities.geojson;
-                }else
-                {
+                } else {
                     // countries
                     var countries = handleCounties(self.options.data.countries);
                     paths = countries.paths;
@@ -113,7 +106,7 @@ module.exports = function () {
             }
 
             self.selectedFeature = null;
-            self.paths =  paths;
+            self.paths = paths;
             self.geojson = geojson;
         }
 
@@ -154,10 +147,7 @@ module.exports = function () {
         }
 
 
-
-
-        function resetHighlight(e)
-        {
+        function resetHighlight(e) {
             var layer = e.target;
             layer.setStyle(style(e.target.feature));
 
@@ -168,22 +158,24 @@ module.exports = function () {
         self.selectedFeature = null;
 
         self.geojson = {};
-        //
-        //
-        //self.legend = {
-        //    position: 'bottomleft',
-        //    colors: ['#ff0000', '#28c9ff', '#0000ff', '#ecf386'],
-        //    labels: ['National Cycle Route', 'Regional Cycle Route', 'Local Cycle Network', 'Cycleway']
-        //};
+
 
         $scope.$watch('vm.rebind', function () {
-             rebuildMapOptions();
+            rebuildMapOptions();
         });
 
         $scope.$watch('vm.center.zoom', function () {
-             rebuildMapOptions();
+            rebuildMapOptions();
         });
 
+        $scope.$on('leafletDirectivePath.mouseout', function (e, args) {
+            self.selectedFeature = null;
+        });
+
+
+        $scope.$on('leafletDirectivePath.mouseover', function (e, args) {
+            self.selectedFeature = args.leafletObject.options.properties;
+        });
     }
 
 
