@@ -153,10 +153,19 @@ module.exports = function (grunt) {
                         ]
                     },
                     {
+                        expand: true,
+                        dot: true,
+                        cwd: 'node_modules/leaflet/dist',
+                        dest: '<%= project.dist %>/assets/leaflet',
+                        src: [
+                            '**/*.css',
+                            'images/**/*.*'
+                        ]
+                    },
+                    {
                         dest: '<%= project.dist %>/assets/nvd3/nv.d3.css',
                         src: ['bower_components/nvd3/build/nv.d3.css']
                     },
-
                     {
                         expand: true,
                         cwd: '<%= project.temp %>',
