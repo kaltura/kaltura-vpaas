@@ -1,6 +1,3 @@
 ﻿'use strict';
 
-module.exports = function(){
-    return angular.module('kanShell',['ui.router']);
-};
-
+module.exports = angular.module('kanShell',['ui.router']);

@@ -28,7 +28,7 @@ app.get('/yo',function(req,res)
 
 app.use('/api_v3', apiRouter);
 
-require('./app/routers/getData').initialize(apiRouter);
+require('./app/routers/report').initialize(apiRouter);
 
 app.listen(port);
 console.log('Server is running on port ' + port + '. Try it by navigating to "http://localhost:9911/yo".');

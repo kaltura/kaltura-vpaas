@@ -1,0 +1,47 @@
+<div>
+    <h1>Map chart samples</h1>
+    <div class="alert alert-warning" data-ng-show="vm.errorMessage">{{ vm.errorMessage }}</div>
+
+    <p>Examples for map charts supported in Kaltura Analytics 2.0 as described in issue #<a href="https://kaltura.atlassian.net/browse/PLAT-4901" target="_blank">PLAT-4901</a></p>
+
+
+    <div kan-sample-data-loader k-load-data="vm.loadData(context);"></div>
+
+
+    <div class="panel panel-default panel-info">
+        <div class="panel-heading">
+            Live real-time dashboard
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+                <p>This sample show audience annotation according to geographical information. </p>
+                <p>
+                    <ul>
+                <li>This component load the map from Kaltura dedicated server.</li>
+                <li>There are two types of annotations according to the zoom the user is currently using: Cities when zoomed-in, Countries when zoomed-out.</li>
+                <li>Each annotation is filled with color according to the number of audience as shown in the legend.</li>
+            </ul>
+                </p>
+            </div>
+            <div class="kan-sample-description" >
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.options.data">- Invoke request to show annotations -</pre >
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre data-ng-show="vm.samplesDescription">{{vm.samplesDescription}}</pre>
+            </div>
+            <hr>
+            <uib-tabset type="pills">
+                <uib-tab heading="Chart">
+                    <div kan-map data-k-options="vm.samples.sample1.options" data-k-rebind="vm.samples.sample1.rebind"></div>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre class="kan-json-code">{{vm.samples.sample1.options.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+
+
+</div>
+</div>
+

@@ -3,7 +3,7 @@
 module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $provide) {
 
 
-    $urlRouterProvider.otherwise('');
+    $urlRouterProvider.otherwise('/about');
 
     //add safeApply function for $rootScope - called by $scope.$root.safeApply(fn)
     $provide.decorator('$rootScope', function($delegate) {

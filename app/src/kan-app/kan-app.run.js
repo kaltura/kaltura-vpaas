@@ -1,5 +1,6 @@
 'use strict';
 
-module.exports = function () {
+module.exports = function ($rootScope,$state) {
 
+    $rootScope.$state = $state;
 };

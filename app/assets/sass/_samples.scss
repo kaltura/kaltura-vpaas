@@ -1,0 +1,132 @@
+
+.kan-samples {
+
+    .kan-map-container {
+        position:relative;
+        height:460px;
+
+        div.worldmap.box {
+            position: absolute;
+            bottom: 1em;
+            left: 1em;
+            z-index: 100;
+            padding: 1em;
+            text-align: center;
+            min-width:200px;
+        }
+        .worldmap {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 5px;
+        }
+
+        .info {
+            padding: 6px 8px;
+            font: 14px/18px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+
+        .legend {
+            position:absolute;
+            bottom:3em;
+            right:1em;
+            line-height: 18px;
+            color: #555;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.7;
+        }
+    }
+
+    .kan-json-code
+    {
+        max-height:300px;
+    }
+
+    h1 {
+        margin-top:0px;
+        margin-bottom:30px;
+    }
+
+    .kan-no-data
+    {
+        color:darkred;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .kan-sample-description
+    {
+        color: gray;
+    }
+
+    .form-inline .form-group:not(:first-child)
+    {
+        margin-left:10px;
+    }
+
+    .kan-alert-brief
+    {
+       @include active-panel();
+    }
+
+    .kan-filter-form
+    {
+        border: solid 1px lightgray;
+        background:#F5F5F6;
+        padding:10px;
+
+        .kan-title
+        {
+            font-weight: bolder;
+
+        }
+
+        label
+        {
+            font-weight: inherit;
+            text-align: left;
+        }
+    }
+
+    .kan-samples-sidebar .nav>li>a
+    {
+        display: block;
+        padding: 4px 20px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #767676;
+    }
+
+    .kan-samples-sidebar .nav > .active:focus > a, .kan-samples-sidebar .nav > .active:hover > a, .kan-samples-sidebar .nav > .active > a {
+
+        font-weight: 700;
+        color: $active-color;
+        background-color: transparent;
+        border-left: 2px solid $active-color ;
+    }
+
+    .kan-samples-sidebar .nav > li > a {
+        display: block;
+        padding: 4px 20px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #767676;
+    }
+
+
+    .kan-samples-sidebar .nav .nav>li>a
+    {
+        padding-top: 1px;
+        padding-bottom: 1px;
+        padding-left: 30px;
+        font-size: 12px;
+        font-weight: 400;
+    }
+}

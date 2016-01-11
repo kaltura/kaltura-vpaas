@@ -1,17 +1,17 @@
 ﻿var appConfig = require('../../appConfig');
-var repository = require('../../models/getData/mediaModel');
+var dataModel = require('../../models/report/getGraphs');
 
 module.exports = function()
 {
     function initialize(router) {
 
-        router.route('/getData').get(function (req, res) {
+        router.route('/report/getGraphs').post(function (req, res) {
 
             var result = null;
             var isRequestValid = true; // perform here validations on the request query
 
             if (isRequestValid) {
-                result = repository.get();
+                result = dataModel.get();
 
                 res.json(result);
             } else {
