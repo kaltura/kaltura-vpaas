@@ -10,11 +10,18 @@
 
     <div class="panel panel-default panel-info">
         <div class="panel-heading">
-            Area chart
+            Live real-time dashboard
         </div>
         <div class="panel-body">
             <div class="kan-sample-description">
-                <p>This sample demonstrate horizontal area series chart using the same labels.
+                <p>This sample show audience annotation according to geographical information. </p>
+                <p>
+                    <ul>
+                <li>This component load the map from Kaltura dedicated server.</li>
+                <li>There are two types of annotations according to the zoom the user is currently using: Cities when zoomed-in, Countries when zoomed-out.</li>
+                <li>Each annotation is filled with color according to the number of audience as shown in the legend.</li>
+            </ul>
+                </p>
             </div>
             <div class="kan-sample-description" >
                 <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.options.data">- Invoke request to show annotations -</pre >

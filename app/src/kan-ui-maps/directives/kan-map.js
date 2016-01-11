@@ -104,12 +104,13 @@ module.exports = function () {
 
                 }
             }
-
+            self.hasData = self.options.data.cities || self.options.data.countries;
             self.selectedFeature = null;
             self.paths = paths;
             self.geojson = geojson;
         }
 
+        self.hasData = false;
         self.center = {
             lat: 37.8,
             lng: -96,
@@ -127,7 +128,7 @@ module.exports = function () {
                     layerOptions: {
                         subdomains: ['cf1', 'cf2', 'cf3'],
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                        continuousWorld: true
+                        continuousWorld: false
                     }
                 }
             }
