@@ -13,43 +13,45 @@ module.exports = function () {
         var countriesData = [];
         var citiesData = [];
 
-        for ( var i = 0; i < value.length; i++) {
-            var val = parseInt(value[i].audience, 10) + parseInt(value[i].dvrAudience, 10); // convert string to int
-            if (val == 0) continue; // leave out points where audience is zero - we got them because they have plays)
-            // accumulate data for country-level layer
-            if (!countriesAggregation[value[i].country.name]) {
-                // init - keep whole value for lat/long
-                countriesAggregation[value[i].country.name] = value[i];
-                countriesAggregation[value[i].country.name]['audience'] = parseInt(value[i].audience, 10);
-                countriesAggregation[value[i].country.name]['dvrAudience'] = parseInt(value[i].dvrAudience, 10);
-            }
-            else {
-                // sum audience
-                countriesAggregation[value[i].country.name]['audience'] += parseInt(value[i].audience, 10);
-                countriesAggregation[value[i].country.name]['dvrAudience'] += parseInt(value[i].dvrAudience, 10);
+        if (value) {
+            for (var i = 0; i < value.length; i++) {
+                var val = parseInt(value[i].audience, 10) + parseInt(value[i].dvrAudience, 10); // convert string to int
+                if (val == 0) continue; // leave out points where audience is zero - we got them because they have plays)
+                // accumulate data for country-level layer
+                if (!countriesAggregation[value[i].country.name]) {
+                    // init - keep whole value for lat/long
+                    countriesAggregation[value[i].country.name] = value[i];
+                    countriesAggregation[value[i].country.name]['audience'] = parseInt(value[i].audience, 10);
+                    countriesAggregation[value[i].country.name]['dvrAudience'] = parseInt(value[i].dvrAudience, 10);
+                }
+                else {
+                    // sum audience
+                    countriesAggregation[value[i].country.name]['audience'] += parseInt(value[i].audience, 10);
+                    countriesAggregation[value[i].country.name]['dvrAudience'] += parseInt(value[i].dvrAudience, 10);
+                }
+
+                citiesData.push(
+                    {
+                        lat: value[i].city.latitude,
+                        lng: value[i].city.longitude,
+                        "audience": value[i].audience,
+                        "dvr": value[i].dvrAudience,
+                        "data": val,
+                        "text": value[i].city.name
+                    });
             }
 
-            citiesData.push(
-                {
-                    lat: value[i].city.latitude,
-                    lng: value[i].city.longitude,
-                    "audience": value[i].audience,
-                    "dvr": value[i].dvrAudience,
+            for (var key in countriesAggregation) {
+                var val = countriesAggregation[key].audience + countriesAggregation[key].dvrAudience;
+                countriesData.push({
+                    lat: countriesAggregation[key].country.latitude,
+                    lng: countriesAggregation[key].country.longitude,
+                    "audience": countriesAggregation[key].audience,
+                    "dvr": countriesAggregation[key].dvrAudience,
                     "data": val,
-                    "text": value[i].city.name
+                    "text": countriesAggregation[key].country.name
                 });
-        }
-
-        for (var key in countriesAggregation) {
-            var val = countriesAggregation[key].audience + countriesAggregation[key].dvrAudience;
-            countriesData.push({
-                    lat : countriesAggregation[key].country.latitude,
-                    lng : countriesAggregation[key].country.longitude,
-                    "audience" : countriesAggregation[key].audience,
-                    "dvr" : countriesAggregation[key].dvrAudience,
-                    "data" : val,
-                    "text" : countriesAggregation[key].country.name
-                });
+            }
         }
 
        return { description : request.description, data :{ cities : citiesData, countries : countriesData}};
@@ -62,11 +64,16 @@ module.exports = function () {
     }
 
     function invokeLiveRequest(kanAPIFacade) {
+
+        // simulate request of existing analytics system
+        var d = new Date();
+        var time = Math.floor(d.getTime() / 1000) - 60; //var from = to - (10*60*1000); //36 hours = 129600
+
         var requestParams = {
             'ignoreNull': '1',
             'filter:objectType': 'KalturaLiveReportInputFilter',
-            'filter:fromTime': 1452338730,
-            'filter:toTime': 1452338730,
+            'filter:fromTime': time,
+            'filter:toTime': time,
             'filter:entryIds': '1_oorxcge2',
             'filter:orderBy' : '-audience', //KalturaLiveReportOrderBy.AUDIENCE_DESC
             'pager:objectType': 'KalturaFilterPager',
