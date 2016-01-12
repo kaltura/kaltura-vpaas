@@ -1,8 +1,16 @@
 ﻿'use strict';
 
+
 $(document).ready(function () {
 
     var $html = $('html');
 
-    angular.bootstrap($html, ['kanApp']);
+    $.get('./app-config.json',function(data)
+    {
+        angular.module('kanApp').constant('kanAppConfig',data);
+
+        angular.bootstrap($html, ['kanApp']);
+
+    });
+
 });

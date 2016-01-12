@@ -14,12 +14,12 @@ module.exports = function (grunt) {
         // Project settings
         project: {
             // Configurable paths
+            config : 'config',
             app: 'app',
             dist: 'dist',
             temp: '.tmp'
 
         },
-
         // The actual grunt server settings
         connect: {
             options: {
@@ -69,6 +69,13 @@ module.exports = function (grunt) {
             js: {
                 files: ['<%= project.app %>/src/**/*.js'],
                 tasks: ['jshint', 'kan-browserify:app']
+            },
+            config: {
+                options:{
+                    spawn: false
+                },
+                files: ['<%= project.config %>/*.json'],
+                tasks: ['copy:config']
             },
             html: {
                 files: [
@@ -124,6 +131,13 @@ module.exports = function (grunt) {
 
         // Copies remaining files to places other tasks can use
         copy: {
+            'config':
+            {
+                files: [{
+                    dest: '<%= project.temp %>/app-config.json',
+                    src: '<%= project.config %>/<%= runtime.env %>.json'
+                }]
+            },
             'dist': {
                 files: [{
                     expand: true,
@@ -210,11 +224,15 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['serve']);
 
-    grunt.registerTask('serve', function () {
+    grunt.registerTask('serve', function (env) {
+
+
+        grunt.config('runtime.env',env || 'local');
 
         grunt.task.run([
             'clean:serve',
             'jshint',
+            'copy:config',
             'kan-browserify',
             'kan-app-styles',
             'connect:livereload',
