@@ -1,5 +1,7 @@
 'use strict';
 
+/* browserify-shim temoprary workaround */
+// TODO: should use browserify-shim
 require('angular');
 var lodash = require('lodash');
 window._ = lodash;
@@ -18,7 +20,8 @@ var leaflet = require('leaflet');
 window.L = leaflet;
 
 require('nvd3');
+/* end of browserify-shim temoprary workaround */
 
 //load src module
-require('./kan-app');
+require('./dashboard/kan-app');
 

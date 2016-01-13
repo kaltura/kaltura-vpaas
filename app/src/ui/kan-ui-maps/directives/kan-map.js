@@ -191,7 +191,7 @@ module.exports = function () {
             options: '=kOptions',
             rebind: '=kRebind'
         },
-        templateUrl: 'kan-ui-maps/directives/kan-map.html',
+        templateUrl: 'ui/kan-ui-maps/directives/kan-map.html',
         controller: Controller,
         controllerAs: 'vm',
         bindToController: true,

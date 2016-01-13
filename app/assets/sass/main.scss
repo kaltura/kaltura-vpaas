@@ -1,5 +1,5 @@
 @import '_globals';
-@import '_bootstrap-overrides.scss';
+@import 'theme/bootstrap-overrides';
 @import '_shell';
 @import '_ui_charts';
-@import '_samples';
+@import 'kan-samples/samples';

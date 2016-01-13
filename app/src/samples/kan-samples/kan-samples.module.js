@@ -1,7 +1,9 @@
 'use strict';
 
-require('../kan-ui-maps');
-require('../kan-kaltura-api');
+require('../../ui/kan-ui-maps');
+require('../../ui/kan-ui-charts');
+require('../../core/kan-kaltura-api');
+
 require('ngStorage');
 require('angular-leaflet-directive');
 

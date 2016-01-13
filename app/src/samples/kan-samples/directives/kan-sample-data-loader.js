@@ -37,7 +37,7 @@ module.exports = function (SessionInfo,$sessionStorage) {
         scope: {
             loadData: '&kLoadData'
         },
-        templateUrl: 'kan-samples/directives/kan-sample-data-loader.html',
+        templateUrl: 'samples/kan-samples/directives/kan-sample-data-loader.html',
         controller: Controller,
         controllerAs: 'vm',
         bindToController: true,
