@@ -3,3 +3,9 @@
 @import 'dashboard/shell';
 @import 'ui/ui-charts';
 @import 'samples/_samples';
+@import 'account-usage/account-usage';
+
+body
+{
+    background: #f0eeef;
+}
