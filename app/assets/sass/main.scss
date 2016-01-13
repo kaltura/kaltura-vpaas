@@ -1,5 +1,5 @@
-@import '_globals';
+@import 'globals';
 @import 'theme/bootstrap-overrides';
-@import '_shell';
-@import '_ui_charts';
-@import 'kan-samples/samples';
+@import 'dashboard/shell';
+@import 'ui/ui-charts';
+@import 'samples/_samples';
