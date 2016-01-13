@@ -1,3 +1,5 @@
 'use strict';
 
-module.exports = angular.module('kanAccountUsage',[]);
+require('../../core/kan-kaltura-api');
+
+module.exports = angular.module('kanAccountUsage',['kanKalturaAPI']);

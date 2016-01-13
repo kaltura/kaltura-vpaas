@@ -10,12 +10,15 @@ module.exports = function ($stateProvider) {
 
     $stateProvider.state('root.shell.account-usage.reports', {
         url: '/reports',
-        templateUrl: 'account-usage/partials/reports.html'
+        abstract:true,
+        templateUrl: 'account-usage/kan-account-usage/partials/reports.html'
     });
 
     $stateProvider.state('root.shell.account-usage.reports.plays', {
         url: '/plays',
-        templateUrl: 'account-usage/partials/plays-report.html'
+        templateUrl: 'account-usage/kan-account-usage/partials/plays-report.html',
+        controller : 'kauPlaysReport',
+        controllerAs : 'vm'
     });
 
 

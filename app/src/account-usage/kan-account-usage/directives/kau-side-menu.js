@@ -26,7 +26,7 @@ module.exports = function()
         restrict: 'A',
         scope:true,
         controllerAs:'vm',
-        templateUrl: 'account-usage/kan-account-usage/directives/k-au-side-menu.html',
+        templateUrl: 'account-usage/kan-account-usage/directives/kau-side-menu.html',
         controller: Controller,
         link:Link
     };
