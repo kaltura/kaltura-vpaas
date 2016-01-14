@@ -16,7 +16,7 @@
             &.active {
                 &:before {
                     content: '';
-                    background: blue ;
+                    background: $k-active-color ;
                     height: 100%;
                     width: 7px;
                     display: block;

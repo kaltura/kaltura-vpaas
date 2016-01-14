@@ -7,13 +7,13 @@ module.exports = function()
         var self = this;
 
         self.menuItems = [
-            {name :'Overall Usage Report', state: 'root.shell.account-usage.reports.plays' },
+            {name :'Overall Usage Report', state: 'root.shell.account-usage.reports.overall' },
             {name :'Plays Report', state: 'root.shell.account-usage.reports.plays' },
-            {name :'Storage Report', state: 'root.shell.account-usage.reports.plays' },
-            {name :'Bandwidth Report', state: 'root.shell.account-usage.reports.plays' },
-            {name :'Transcoding Consumption Report', state: 'root.shell.account-usage.reports.plays' },
-            {name :'Media Entries Report', state: 'root.shell.account-usage.reports.plays' },
-            {name :'End Users Report' , state: 'root.shell.account-usage.reports.plays' }];
+            {name :'Storage Report', state: 'root.shell.account-usage.reports.storage' },
+            {name :'Bandwidth Report', state: 'root.shell.account-usage.reports.bankdwidth' },
+            {name :'Transcoding Consumption Report', state: 'root.shell.account-usage.reports.tcr' },
+            {name :'Media Entries Report', state: 'root.shell.account-usage.reports.mer' },
+            {name :'End Users Report' , state: 'root.shell.account-usage.reports.eur' }];
     }
 
     function Link(scope, element, attrs, ctrl) {
