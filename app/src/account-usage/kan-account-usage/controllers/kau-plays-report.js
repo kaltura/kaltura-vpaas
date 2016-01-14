@@ -52,7 +52,7 @@ module.exports = function($scope, kauReportsData)
                     top: 20,
                     right: 20,
                     bottom: 50,
-                    left: 110
+                    left: 130
                 },
                 color : ['#00a1d5'],
                 staggerLabels: true,
@@ -75,7 +75,7 @@ module.exports = function($scope, kauReportsData)
                     tickFormat: function (d) {
                         return d3.format(',')(d);
                     },
-                    axisLabelDistance: -10,
+                    axisLabelDistance: 0,
                     showMaxMin: true
                 }
             }
