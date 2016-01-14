@@ -5,26 +5,26 @@ module.exports = function($scope, kauReportsData)
     var self = this;
 
     function loadData() {
-        self.loadingData = true;
+        self.isLoading = true;
         self.grid.data = null;
         self.table.data = null;
 
-        kauReportsData.getReportData('plays',self.filters.date).then(function (result) {
-            self.grid.data = [{key : '', values : result.data}];
-            self.table.data = result.data;
-            self.errorMessage = '';
-            self.loadingData = false;
-        }, function (reason) {
-            self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
-            self.loadingData = false;
-        });
+
+
+            kauReportsData.getReportData('plays', self.filters.date).then(function (result) {
+                self.grid.data = [{key: '', values: result.data}];
+                self.table.data = result.data;
+                self.errorMessage = '';
+                self.isLoading = false;
+            }, function (reason) {
+                self.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
+                self.isLoading = false;
+            });
     }
 
     self.loadData = loadData;
     self.errorMessage = "";
-    self.loadingData = false;
-
-    self.bla = 1;
+    self.isLoading = false;
 
     self.filters = { date : { startDate: moment().subtract(3, 'month').startOf('month'), endDate: moment().subtract(1, 'month').endOf('month')}};
     self.dateOptions = {
@@ -46,7 +46,8 @@ module.exports = function($scope, kauReportsData)
         options: {
             chart: {
                 type: 'discreteBarChart',
-                height: 450,
+                height: 300,
+                noData : '',
                 margin: {
                     top: 20,
                     right: 20,
