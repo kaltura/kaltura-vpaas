@@ -12,6 +12,7 @@
     "jquery": "~2.1.2",
     "d3": "~3.5.12",
     "nvd3": "~1.8.1",
-    "angular-nvd3": "~1.0.5"
+    "angular-nvd3": "~1.0.5",
+    "angular-daterangepicker": "~0.2.2"
   }
 }

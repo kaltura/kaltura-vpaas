@@ -20,6 +20,8 @@ var leaflet = require('leaflet');
 window.L = leaflet;
 
 require('nvd3');
+require('dateRangePicker');
+
 /* end of browserify-shim temoprary workaround */
 
 //load src module

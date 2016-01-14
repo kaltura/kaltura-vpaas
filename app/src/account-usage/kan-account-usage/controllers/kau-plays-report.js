@@ -1,14 +1,17 @@
 "use strict";
 
-module.exports = function(kauReportsData)
+module.exports = function($scope, kauReportsData)
 {
     var self = this;
 
     function loadData() {
         self.loadingData = true;
+        self.grid.data = null;
+        self.table.data = null;
 
-        kauReportsData.getReportData().then(function (result) {
-            self.grid.data = [{key : 'ss', values : result.data}];
+        kauReportsData.getReportData('plays',self.filters.date).then(function (result) {
+            self.grid.data = [{key : '', values : result.data}];
+            self.table.data = result.data;
             self.errorMessage = '';
             self.loadingData = false;
         }, function (reason) {
@@ -21,6 +24,20 @@ module.exports = function(kauReportsData)
     self.errorMessage = "";
     self.loadingData = false;
 
+    self.bla = 1;
+
+    self.filters = { date : { startDate: moment().subtract(3, 'month').startOf('month'), endDate: moment().subtract(1, 'month').endOf('month')}};
+    self.dateOptions = {
+        ranges: {
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+            'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    };
+
+    self.table = {
+        data : null
+    }
     self.grid = {
         config : {
         },
@@ -34,8 +51,9 @@ module.exports = function(kauReportsData)
                     top: 20,
                     right: 20,
                     bottom: 50,
-                    left: 100
+                    left: 110
                 },
+                color : ['#00a1d5'],
                 staggerLabels: true,
                 rotateLabels: true,
                 x: function (d) {
@@ -62,6 +80,11 @@ module.exports = function(kauReportsData)
             }
         }
     };
+
+    $scope.$watch('vm.filters.date',function()
+    {
+        loadData();
+    });
 
     loadData();
 };

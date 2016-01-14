@@ -1,5 +1,84 @@
 .k-account-usage {
     @import './globals';
     @import './k-au-side-menu';
+
+    .title-text {
+        font-size: 24px;
+        color: #5d5d5d;
+        padding: 0 10px;
+        line-height: 34px;
+        height: 34px;
+    }
+
+    table {
+        outline: 1px solid #d8d7d7;
+    }
+    table:focus {
+        outline: 1px solid #d8d7d7;
+    }
+    table:active {
+        outline: 1px solid #d8d7d7;
+    }
+    table tr td,
+    table tr th {
+        border-left: 1px solid #d8d7d7;
+    }
+    table tr td:first-child,
+    table tr th:first-child {
+        border-left: none;
+    }
+    table.half-width {
+        width: 50%;
+        min-width: 480px;
+    }
+    table.one-third-width {
+        width: 33%;
+        min-width: 320px;
+    }
+
+
+    .usual-table thead {
+        background-image: #efefef;
+        background-image: -khtml-gradient(linear, left top, left bottom, from(#ffffff), to(#efefef));
+        background-image: -webkit-gradient(linear, left top, left bottom, color-stop(25%, #ffffff), color-stop(100%, #efefef));
+        /* Chrome,Safari4+ */
+        background-image: -webkit-linear-gradient(top, #ffffff 25%, #efefef 100%);
+        /* Chrome10+,Safari5.1+ */
+        background-image: -o-linear-gradient(top, #ffffff 25%, #efefef 100%);
+        /* Opera 11.10+ */
+        background-image: -moz-linear-gradient(top, #ffffff 25%, #efefef 100%);
+        /* FF3.6+ */
+        background-image: -ms-linear-gradient(top, #ffffff 25%, #efefef 100%);
+        /* IE10+ */
+        background-image: linear-gradient(to bottom, #ffffff 25%, #efefef 100%);
+        /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#efefef', GradientType=0);
+        /* IE6-9 */
+    }
+    .usual-table thead tr th {
+        padding: 5px 10px 5px 10px;
+        font-size: 12px;
+    }
+    .usual-table tbody tr td {
+        padding: 10px;
+        font-size: 12px;
+    }
+    .usual-table tbody tr.even td {
+        background: #ffffff;
+    }
+    .usual-table tbody tr.odd td {
+        background: #F5F5F5;
+    }
+    .usual-table tbody tr:hover td {
+        background: #eaeaea;
+    }
+    .title-text {
+        font-size: 24px;
+        color: #5d5d5d;
+        padding: 0 10px;
+        margin-bottom:10px;
+        line-height: 34px;
+        height: 34px;
+    }
 }
 

@@ -13,5 +13,7 @@ module.exports = {
     'nvd3': './bower_components/nvd3/build/nv.d3.js',
     'angular-nvd3': './bower_components/angular-nvd3/dist/angular-nvd3.js',
     'leaflet': './node_modules/leaflet/dist/leaflet.js',
-    'angular-leaflet-directive': './node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js'
+    'angular-leaflet-directive': './node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js',
+    'dateRangePicker' : './bower_components/bootstrap-daterangepicker/daterangepicker.js',
+    'angular-daterangepicker' : './bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
 };
