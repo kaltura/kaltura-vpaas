@@ -3,20 +3,35 @@
 
 module.exports = function()
 {
-    function controller($scope, kauReportsData)
+    function controller($scope, kauReportsData, kauReportsConfiguration)
     {
         var self = this;
+        var sections = [];
 
         function loadData() {
             self.isLoading = true;
-            self.grid.data = null;
-            self.table.data = null;
 
+            var filters = {};
+            _.forEach(sections,function(section)
+            {
+                if (section.assignFilters)
+                {
+                    section.assignFilters.call(section,filters);
+                }
+            });
 
+            kauReportsData.getReportData('plays', filters).then(function (result) {
 
-            kauReportsData.getReportData('plays', self.filters.date).then(function (result) {
-                self.grid.data = [{key: '', values: result.data}];
-                self.table.data = result.data;
+                self.reportData = result.data;
+
+                _.forEach(sections,function(section)
+                {
+                    if (section.loadReportData)
+                    {
+                        section.loadReportData.call(section, result.data);
+                    }
+                });
+
                 self.errorMessage = '';
                 self.isLoading = false;
             }, function (reason) {
@@ -25,79 +40,36 @@ module.exports = function()
             });
         }
 
+        function registerSection(section)
+        {
+            sections.push(section);
+
+            if (sections.length=== self.reportConfig.sections.length)
+            {
+                loadData();
+            }
+        }
+
+        function buildReport(reportId)
+        {
+            self.reportConfig = _.findWhere(kauReportsConfiguration,{reportId : reportId});
+        }
+
+        self.reportData = null;
+        self.reportConfig = [];
         self.reportId = '';
-        self.loadData = loadData;
         self.errorMessage = "";
         self.isLoading = false;
 
-        self.filters = { date : { startDate: moment().subtract(3, 'month').startOf('month'), endDate: moment().subtract(1, 'month').endOf('month')}};
-        self.dateOptions = {
-            ranges: {
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                'Last 3 Months': [moment().subtract(3, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            }
-        };
+        self.registerSection = registerSection;
+        self.buildReport = buildReport;
+        self.loadData = loadData;
 
-        self.table = {
-            data : null
-        }
-        self.grid = {
-            config : {
-            },
-            data: null,
-            api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
-            options: {
-                chart: {
-                    type: 'discreteBarChart',
-                    height: 300,
-                    noData : '',
-                    margin: {
-                        top: 20,
-                        right: 20,
-                        bottom: 50,
-                        left: 110
-                    },
-                    color : ['#00a1d5'],
-                    staggerLabels: true,
-                    rotateLabels: true,
-                    x: function (d) {
-                        return moment(d['month_id'],'YYYYMM').format('MMMM, YYYY');
-                    },
-                    y: function (d) {
-                        return parseFloat(d['total_plays']);
-                    },
-                    showValues: true,
-                    valueFormat: function (d) {
-                        return d3.format(',')(d);
-                    },
-                    duration: 500,
-                    xAxis: {
-                    },
-                    yAxis: {
-                        axisLabel: 'Plays (CPM)',
-                        tickFormat: function (d) {
-                            return d3.format(',')(d);
-                        },
-                        axisLabelDistance: -10,
-                        showMaxMin: true
-                    }
-                }
-            }
-        };
-
-        $scope.$watch('vm.filters.date',function()
-        {
-            loadData();
-        });
-
-
-        loadData();
     }
 
     function link(scope,element,attrs,ctrl)
     {
-        ctrl.reportId = attrs.kauReport;
+        ctrl.buildReport(attrs.kauReport);
 
     }
 

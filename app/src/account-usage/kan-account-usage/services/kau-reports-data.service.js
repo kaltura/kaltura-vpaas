@@ -18,7 +18,7 @@ module.exports = function($q, kanAPIFacade, SessionInfo,$sessionStorage)
             var requestParams = {
                 reportType: 26,
                 pager: {pageIndex: 1, pageSize: 100},
-                reportInputFilter: {fromDay: moment(filters.startDate).format('YYYYMMDD'), toDay: moment(filters.endDate).format('YYYYMMDD')}
+                reportInputFilter: {fromDay: moment(filters.date.startDate).format('YYYYMMDD'), toDay: moment(filters.date.endDate).format('YYYYMMDD')}
             };
 
             return kanAPIFacade.doRequest(requestParams, {

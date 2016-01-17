@@ -1,0 +1,17 @@
+<div>
+    <div class="title-text">{{vm.title}}</div>
+    <table class="usual-table row-fluid half-width" ng-class="cls">
+        <thead>
+        <tr>
+            <th>Month</th>
+            <th>Plays (CPM)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vm.reportData" ng-class="{odd:$index%2==1, even:$index%2==0}">
+            <td>{{item['month_id'] | kDate}}</td>
+            <td>{{item['total_plays'] | number}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

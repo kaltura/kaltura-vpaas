@@ -2,18 +2,27 @@
 
 module.exports = function()
 {
-    function Controller()
+    function Controller(kauReportsConfiguration)
     {
         var self = this;
 
-        self.menuItems = [
-            {name :'Overall Usage Report', state: 'root.shell.account-usage.reports.overall' },
-            {name :'Plays Report', state: 'root.shell.account-usage.reports.plays' },
-            {name :'Storage Report', state: 'root.shell.account-usage.reports.storage' },
-            {name :'Bandwidth Report', state: 'root.shell.account-usage.reports.bankdwidth' },
-            {name :'Transcoding Consumption Report', state: 'root.shell.account-usage.reports.tcr' },
-            {name :'Media Entries Report', state: 'root.shell.account-usage.reports.mer' },
-            {name :'End Users Report' , state: 'root.shell.account-usage.reports.eur' }];
+
+        function initialize()
+        {
+            var menus = [];
+            _.chain(kauReportsConfiguration).sortBy(function(item) {
+                return _.at(item,'menu.order') || 100;
+            }).forEach(function(item)
+            {
+                menus.push({state : 'root.shell.account-usage.reports.report({reportId : "' + item.reportId + '"})', title : item.menu.title});
+            }).value();
+
+            self.menuItems = menus;
+        }
+
+        self.menuItems = [];
+
+        initialize();
     }
 
     function Link(scope, element, attrs, ctrl) {

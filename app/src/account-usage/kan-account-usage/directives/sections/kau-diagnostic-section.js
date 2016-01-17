@@ -3,7 +3,7 @@
 
 module.exports = function()
 {
-    function Controller($scope)
+    function Controller()
     {
         var self = this;
 
@@ -13,14 +13,10 @@ module.exports = function()
         }
 
         self.reportData = null;
-        self.title = '';
 
         self.loadReportData = loadReportData;
 
-        $scope.$watch('vm.options',function()
-        {
-            self.title = self.options.title;
-        });
+
     }
 
     function Link(scope, element, attrs, ctrls) {
@@ -35,15 +31,16 @@ module.exports = function()
         });
     }
 
+
     return {
         restrict: 'A',
         scope:{
             options : '=kOptions'
         },
-        require: ['kauTableSection','^kauReport'],
+        require: ['kauDiagnosticSection','^kauReport'],
         controllerAs:'vm',
         bindToController : true,
-        templateUrl: 'account-usage/kan-account-usage/directives/sections/kau-table-section.html',
+        templateUrl: 'account-usage/kan-account-usage/directives/sections/kau-diagnostic-section.html',
         controller: Controller,
         link:Link
     };
