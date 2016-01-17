@@ -1,5 +1,10 @@
 {
     "server" : {
         "apiUri" : "http://localhost:9911/api"
+    },
+    "routing": {
+        "defaultState" : "root.shell.about",
+        "defaultUri" : "/about"
     }
+
 }

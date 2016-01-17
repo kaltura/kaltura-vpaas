@@ -1,9 +1,9 @@
 ﻿'use strict';
 
-module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $provide) {
+module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $provide, kAppConfig) {
 
 
-    $urlRouterProvider.otherwise('/about');
+    $urlRouterProvider.otherwise(kAppConfig.routing.defaultUri);
 
     //add safeApply function for $rootScope - called by $scope.$root.safeApply(fn)
     $provide.decorator('$rootScope', function($delegate) {
@@ -27,11 +27,11 @@ module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $p
         template: '<div ui-view></div>'
     });
 
-    /*$httpProvider.interceptors.push(function ($q, kanAppConfig, $log) {
+    /*$httpProvider.interceptors.push(function ($q, kAppConfig, $log) {
      return {
      'response': function (response) {
 
-     if (response.config.url.indexOf(kanAppConfig.server.apiUri) === 0) {
+     if (response.config.url.indexOf(kAppConfig.server.apiUri) === 0) {
      if (response.data.error) {
      $log.warn('KAN API request resulted with error: "' + (response.data.error || '{empty}'));
      }

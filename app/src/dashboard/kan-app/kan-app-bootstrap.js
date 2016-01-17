@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     $.get('./app-config.json',function(data)
     {
-        angular.module('kanApp').constant('kanAppConfig',data);
+        angular.module('kanApp').constant('kAppConfig',data);
 
         angular.bootstrap($html, ['kanApp']);
 
