@@ -3,21 +3,19 @@
 module.exports = function($q, kanAPIFacade, SessionInfo,$sessionStorage)
 {
     var self = this;
+    var requireFiltersProperties = ["reportType","date.startDate","date.endDate"];
 
-
-
-
-    function getReportData(reportType, filters)
+    function getReportData(filters)
     {
         // temporary bypass to ks
         SessionInfo.setKs($sessionStorage.ks);
 
         // currently reportType = 'plays'
 
-        if (filters) {
+        if (filters && _.every(requireFiltersProperties, _.partial(_.has,filters))) {
             var requestParams = {
-                reportType: 26,
-                pager: {pageIndex: 1, pageSize: 100},
+                reportType: filters.reportType,
+                pager: {pageIndex: 1, pageSize: 1000},
                 reportInputFilter: {fromDay: moment(filters.date.startDate).format('YYYYMMDD'), toDay: moment(filters.date.endDate).format('YYYYMMDD')}
             };
 
@@ -34,7 +32,7 @@ module.exports = function($q, kanAPIFacade, SessionInfo,$sessionStorage)
             });
         }else
         {
-            return $q.reject({errorMessage: 'missing date filter'});
+            return $q.reject({errorMessage: 'get report was invoked with partial/missing required filters'});
 
         }
     }

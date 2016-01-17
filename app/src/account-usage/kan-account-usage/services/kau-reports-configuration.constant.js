@@ -12,7 +12,9 @@ var repository = [
             title: 'Plays Report',
             order: 0,
         },
-        dataSource: {},
+        data: {
+            reportType: 26
+        },
         sections: [
             {
                 type: 'filters'

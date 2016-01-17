@@ -7,11 +7,12 @@ module.exports = function()
     {
         var self = this;
         var sections = [];
+        var requiredReportConfigParameters =["reportId", "data.reportType"];
 
         function loadData() {
             self.isLoading = true;
 
-            var filters = {};
+            var filters = { reportType : self.reportConfig.data.reportType };
             _.forEach(sections,function(section)
             {
                 if (section.assignFilters)
@@ -20,7 +21,7 @@ module.exports = function()
                 }
             });
 
-            kauReportsData.getReportData('plays', filters).then(function (result) {
+            kauReportsData.getReportData(filters).then(function (result) {
 
                 self.reportData = result.data;
 
@@ -52,7 +53,15 @@ module.exports = function()
 
         function buildReport(reportId)
         {
-            self.reportConfig = _.findWhere(kauReportsConfiguration,{reportId : reportId});
+            var reportConfig = _.findWhere(kauReportsConfiguration,{reportId : reportId});
+
+            if (reportConfig && _.every(requiredReportConfigParameters, _.partial(_.has, reportConfig)))
+            {
+                self.reportConfig = reportConfig;
+            }else
+            {
+                console.error('Report configuration with id "' + reportId + '" is missing or has missing required information');
+            }
         }
 
         self.reportData = null;
