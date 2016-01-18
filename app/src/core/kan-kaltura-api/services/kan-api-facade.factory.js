@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerializer) {
+module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerializer,kAPIResponseParser,kAppConfig) {
     var KApi = {};
 
     KApi.redirectToLoginOnInvalidKS = true;
@@ -18,41 +18,44 @@ module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerialize
 
 
     /**
-     * @param request 	request params
+     * @param userParams 	user request params
      * @returns	promise object
      */
-    KApi.doRequest = function doRequest (request,options) {
+    KApi.doRequest = function doRequest (userParams,queryParams) {
         // Creating a deferred object
         var deferred = $q.defer();
-        // add required params
-        request.ks = SessionInfo.ks;
-        var method = "post";
-        var sParams;
-        var params;
+
+        var requestData;
+        var method;
+
         if (KApi.IE < 10) {
-            request['callback'] = 'JSON_CALLBACK';
-            request['format'] = '9';
-            params = request;
             method = 'jsonp';
+            requestData = $.extend(true,{},userParams,{
+                ks : SessionInfo.ks,
+                'callback' : 'JSON_CALLBACK',
+                'format' : '9'
+            });
         }
         else {
-            params = {'format' : '1'};
-            sParams = this.serializeParams(request);
+            method = "post";
+            requestData = $.extend(true,{},userParams,{
+                ks : SessionInfo.ks,
+                'format' : '1'
+            });
         }
 
-        // TODO - use options service=report&action=getGraphs
-        var url = "https://www.kaltura.com/api_v3/index.php";
-        if (options)
+        var url = kAppConfig.server.apiUri;
+        if (queryParams)
         {
-            var qs = $httpParamSerializer(options);
+            var qs = $httpParamSerializer(queryParams);
             url = url + '?' + qs;
         }
 
         $http({
-            data: sParams,
+            data: (method === 'post' ? this.serializeParams(requestData) : null),
             url: url,
             method: method,
-            params: params,
+            params: (method === 'jsonp' ? requestData : null),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }).success(function (data, status) {
             if (KApi.redirectToLoginOnInvalidKS) {
@@ -66,7 +69,9 @@ module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerialize
                     }
                 }
                 else {
-                    deferred.resolve({data : data});
+                    var parserContext = $.extend({},queryParams,requestData);
+                    var parsedData = kAPIResponseParser.parse(data,parserContext);
+                    deferred.resolve({data : parsedData});
                 }
             }
             else {

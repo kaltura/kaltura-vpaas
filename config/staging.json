@@ -1,0 +1,10 @@
+{
+    "server" : {
+        "apiUri" : "https://www.kaltura.com/api_v3/index.php"
+    },
+    "routing": {
+        "defaultState" : "root.shell.about",
+        "defaultUri" : "/about"
+    }
+
+}

@@ -227,7 +227,7 @@ module.exports = function (grunt) {
     grunt.registerTask('serve', function (env) {
 
 
-        grunt.config('runtime.env',env || 'local');
+        grunt.config('runtime.env',env || 'staging');
 
         grunt.task.run([
             'clean:serve',
