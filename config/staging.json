@@ -5,6 +5,12 @@
     "routing": {
         "defaultState" : "root.shell.about",
         "defaultUri" : "/about"
+    },
+    "debug" :{
+        "enabled" : true,
+        "kau-app" : {
+            "reportDiagnostic" : true
+        }
     }
 
 }

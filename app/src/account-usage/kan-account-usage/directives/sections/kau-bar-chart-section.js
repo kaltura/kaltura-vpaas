@@ -32,10 +32,20 @@ module.exports = function()
                     staggerLabels: true,
                     rotateLabels: true,
                     x: function (d) {
-                        return kFormatterUtils.formatByType(d[self.reportOptions.xValue.name],self.reportOptions.xValue.type,self.reportOptions.xValue.format);
+                        var result = d[self.reportOptions.xValue.name];
+                        if (self.reportOptions.xValue.format)
+                        {
+                            result = kFormatterUtils.formatByType(result,self.reportOptions.xValue.type,self.reportOptions.xValue.format);
+                        }
+                        return result;
                     },
                     y: function (d) {
-                        return kFormatterUtils.formatByType(d[self.reportOptions.yValue.name],self.reportOptions.yValue.type);
+                        var result = d[self.reportOptions.yValue.name];
+                        if (self.reportOptions.yValue.format)
+                        {
+                            result = kFormatterUtils.formatByType(result,self.reportOptions.yValue.type,self.reportOptions.yValue.format);
+                        }
+                        return result;
                     },
                     showValues: true,
                     valueFormat: function (d) {

@@ -2,7 +2,7 @@
 
 
 
-module.exports = function(kAPIResponseDescriptor)
+module.exports = function(kAPIResponseDescriptor, kFormatterUtils)
 {
     var self = this;
     var descriptorsMapping = {};
@@ -27,16 +27,34 @@ module.exports = function(kAPIResponseDescriptor)
 
     function parse(response, context)
     {
+        // TODO this function can be improved in respect to performance. should be handled after we will cover more scenarios
         var result = response;
         var responseKey = generateItemKey(context);
 
         var descriptor = descriptorsMapping[responseKey];
 
+        // check for existance of descriptor matching the response provided
         if (descriptor && descriptor.response.type === 'header-data')
         {
+            // has response descriptor, use it to parse the response while handling properties types
+
+            // convert header/data properties into object { header : data_value }
             var headers = _.words(response.header, /[^,]+/g);
             result = _.chain(response.data).words(/[^;]+/g).compact().map(function (item) {
-                return _.zipObject(headers, _.words(item, /[^,]+/g));
+                var result = _.zipObject(headers,_.words(item, /[^,]+/g));
+
+                // traverse on result properties and handle known properties types
+                _.forIn(result,function(value,key,obj)
+                {
+                    var fieldDescriptor =_.find(descriptor.response.fields,{name : key});
+                    if (fieldDescriptor)
+                    {
+                        obj[key] =kFormatterUtils.parseByType(value, fieldDescriptor.type, fieldDescriptor.format);
+                    }
+                });
+
+                return result;
+
             }).value();
 
         }

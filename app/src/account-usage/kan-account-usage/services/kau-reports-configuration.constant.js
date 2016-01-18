@@ -25,8 +25,8 @@ var repository = [
             {
                 type: 'barChart',
                 options: {
-                    xValue : {name : 'month_id', type : 'date', format: 'YYYYMM', title : 'Month'},
-                    yValue : {name : 'total_plays', type : 'number', format : ',',  title : 'Plays (CPM)'}
+                    xValue : {name : 'month_id', type : 'date', format: 'MMMM, YYYY', title : 'Month'},
+                    yValue : {name : 'total_plays', type : 'number',  title : 'Plays (CPM)'}
                 }
             },
             {
@@ -34,7 +34,7 @@ var repository = [
                 options: {
                     title: 'Monthly Usage Breakdown',
                     order: '-month_id',
-                    fields : [{name : 'month_id', type : 'date', format: 'YYYYMM', title : 'Month'},{name : 'total_plays', type : 'number', format : ',',  title : 'Plays (CPM)'}]
+                    fields : [{name : 'month_id', type : 'date', format: 'MMMM, YYYY', title : 'Month'},{name : 'total_plays', type : 'number', format : ',',  title : 'Plays (CPM)'}]
                 }
             }
         ]
