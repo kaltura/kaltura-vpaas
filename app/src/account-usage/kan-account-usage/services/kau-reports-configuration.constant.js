@@ -23,7 +23,11 @@ var repository = [
                 type: 'diagnostic'
             },
             {
-                type: 'barChart'
+                type: 'barChart',
+                options: {
+                    xValue : {name : 'month_id', type : 'date', format: 'YYYYMM', title : 'Month'},
+                    yValue : {name : 'total_plays', type : 'number', format : ',',  title : 'Plays (CPM)'}
+                }
             },
             {
                 type: 'table',

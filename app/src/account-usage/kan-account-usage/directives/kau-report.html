@@ -7,10 +7,10 @@
         <div data-ng-repeat="section in vm.reportConfig.sections" >
             <div class="row">
                 <div class="col-xs-12">
-                    <div data-ng-if="section.type === 'filters'"  k-data="vm.reportData"  data-kau-filters-section></div>
-                    <div data-ng-if="section.type === 'barChart'"  k-data="vm.reportData" data-kau-bar-chart-section></div>
-                    <div data-ng-if="section.type === 'table'" k-data="vm.reportData" k-options="section.options" data-kau-table-section></div>
-                    <div data-ng-if="section.type === 'diagnostic'"  k-data="vm.reportData" data-kau-diagnostic-section></div>
+                    <div data-ng-if="section.type === 'filters'"  k-options="section.options" data-kau-filters-section></div>
+                    <div data-ng-if="section.type === 'barChart'" k-options="section.options" data-kau-bar-chart-section></div>
+                    <div data-ng-if="section.type === 'table'" k-options="section.options" data-kau-table-section></div>
+                    <div data-ng-if="section.type === 'diagnostic'" k-options="section.options" data-kau-diagnostic-section></div>
                 </div>
             </div>
         </div>

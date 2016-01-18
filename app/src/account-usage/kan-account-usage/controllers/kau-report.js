@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function($stateParams, kAppConfig, kRouting)
+module.exports = function($stateParams, kAppConfig, kRoutingUtils)
 {
 
     var self = this;
@@ -9,7 +9,7 @@ module.exports = function($stateParams, kAppConfig, kRouting)
     {
         if (!self.reportId)
         {
-            kRouting.goToDefault();
+            kRoutingUtils.goToDefault();
         }
     }
 

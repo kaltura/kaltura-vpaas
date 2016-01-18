@@ -3,15 +3,20 @@
 
 module.exports = function()
 {
-    function Controller($scope)
+    function Controller($scope,kFormatterUtils)
     {
         var self = this;
+        var defaultOptions = {
+            xValue : {},
+            yValue : {}
+        };
 
         function loadReportData(reportData)
         {
             self.grid.data = [{key: '', values: reportData}];
         }
 
+        self.reportOptions = null;
         self.grid = {
             config : {
             },
@@ -27,10 +32,10 @@ module.exports = function()
                     staggerLabels: true,
                     rotateLabels: true,
                     x: function (d) {
-                        return moment(d['month_id'],'YYYYMM').format('MMMM, YYYY');
+                        return kFormatterUtils.formatByType(d[self.reportOptions.xValue.name],self.reportOptions.xValue.type,self.reportOptions.xValue.format);
                     },
                     y: function (d) {
-                        return parseFloat(d['total_plays']);
+                        return kFormatterUtils.formatByType(d[self.reportOptions.yValue.name],self.reportOptions.yValue.type);
                     },
                     showValues: true,
                     valueFormat: function (d) {
@@ -51,19 +56,24 @@ module.exports = function()
         };
 
         self.loadReportData = loadReportData;
+
+        $scope.$watch('vm.options',function()
+        {
+            self.reportOptions = $.extend({},defaultOptions,self.options);
+        });
     }
 
     function Link(scope, element, attrs, ctrls) {
         var ctrl = ctrls[0];
         var reportCtrl = ctrls[1];
 
+        // write section API
         var sectionReportAPI = {
             loadReportData : function(reportData)
             {
                 ctrl.loadReportData(reportData);
             }
         };
-
         reportCtrl.addSection(sectionReportAPI);
     }
 
