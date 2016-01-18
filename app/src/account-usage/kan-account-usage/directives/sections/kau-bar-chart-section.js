@@ -22,12 +22,7 @@ module.exports = function()
                     type: 'discreteBarChart',
                     height: 300,
                     noData : '',
-                    margin: {
-                        top: 20,
-                        right: 20,
-                        bottom: 50,
-                        left: 110
-                    },
+
                     color : ['#00a1d5'],
                     staggerLabels: true,
                     rotateLabels: true,
@@ -49,7 +44,6 @@ module.exports = function()
                         tickFormat: function (d) {
                             return d3.format(',')(d);
                         },
-                        axisLabelDistance: -10,
                         showMaxMin: true
                     }
                 }

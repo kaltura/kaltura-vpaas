@@ -10,8 +10,6 @@ module.exports = function($q, kanAPIFacade, SessionInfo,$sessionStorage)
         // temporary bypass to ks
         SessionInfo.setKs($sessionStorage.ks);
 
-        // currently reportType = 'plays'
-
         if (filters && _.every(requireFiltersProperties, _.partial(_.has,filters))) {
             var requestParams = {
                 reportType: filters.reportType,

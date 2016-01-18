@@ -1,8 +1,8 @@
 'use strict';
 
-var appModule = require('./kan-account-usage.module.js');
-appModule.config(require('./kan-account-usage.config.js'));
-appModule.run(require('./kan-account-usage.run.js'));
+var appModule = require('./kan-account-usage.module');
+appModule.config(require('./kan-account-usage.config'));
+appModule.run(require('./kan-account-usage.run'));
 
 
 appModule.controller('kauReport',require('./controllers/kau-report'));
@@ -20,6 +20,7 @@ appModule.directive('kauTableSection',require('./directives/sections/kau-table-s
 appModule.directive('kauTotalsSection',require('./directives/sections/kau-totals-section'));
 appModule.directive('kauDiagnosticSection',require('./directives/sections/kau-diagnostic-section'));
 
+appModule.filter('kauDynamicFilter',require('./filters/kau-dynamic-filter'));
 
 // todo: move to core ui module
 appModule.filter('kDate',function()

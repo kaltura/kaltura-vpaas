@@ -1,16 +1,14 @@
 <div>
     <div class="title-text">{{vm.title}}</div>
-    <table class="usual-table row-fluid half-width" ng-class="cls">
+    <table class="usual-table row-fluid half-width" ng-class="cls" data-ng-if="vm.tableHeaders" >
         <thead>
         <tr>
-            <th>Month</th>
-            <th>Plays (CPM)</th>
+            <th data-ng-repeat="header in vm.tableHeaders">{{header}}</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in vm.reportData" ng-class="{odd:$index%2==1, even:$index%2==0}">
-            <td>{{item['month_id'] | kDate}}</td>
-            <td>{{item['total_plays'] | number}}</td>
+        <tr ng-repeat="item in vm.reportData | orderBy : vm.reportOptions.order" ng-class="{odd:$index%2==1, even:$index%2==0}">
+            <td ng-repeat="field in vm.reportOptions.fields">{{ item[field.name] |  kauDynamicFilter:field.type : field.format }}</td>
         </tr>
         </tbody>
     </table>

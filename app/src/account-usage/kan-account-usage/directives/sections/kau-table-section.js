@@ -6,20 +6,31 @@ module.exports = function()
     function Controller($scope)
     {
         var self = this;
+        var defaultOptions = {
+            title : '',
+            order : '',
+            fields : []
+        }
 
         function loadReportData(reportData)
         {
             self.reportData = reportData;
         }
 
+        self.tableHeaders = null;
         self.reportData = null;
+        self.reportOptions = null;
         self.title = '';
 
         self.loadReportData = loadReportData;
 
         $scope.$watch('vm.options',function()
         {
-            self.title = self.options.title;
+            self.reportOptions = $.extend({},defaultOptions,self.options);
+            self.title = self.reportOptions.title;
+
+            self.tableHeaders = _.map(self.reportOptions.fields, function(item) { return item.title;});
+
         });
     }
 
