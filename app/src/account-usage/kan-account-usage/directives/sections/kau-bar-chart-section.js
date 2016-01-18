@@ -57,12 +57,14 @@ module.exports = function()
         var ctrl = ctrls[0];
         var reportCtrl = ctrls[1];
 
-        reportCtrl.registerSection({
+        var sectionReportAPI = {
             loadReportData : function(reportData)
             {
-              ctrl.loadReportData(reportData);
+                ctrl.loadReportData(reportData);
             }
-        });
+        };
+
+        reportCtrl.addSection(sectionReportAPI);
     }
 
 

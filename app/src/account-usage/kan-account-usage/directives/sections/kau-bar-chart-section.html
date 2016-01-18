@@ -1,4 +1,5 @@
 <div class="k-report-chart">
-    <nvd3 data-options="vm.grid.options" data-data="vm.grid.data" data-api="vm.grid.api"
-          data-config="vm.grid.config"></nvd3>
+    <div ng-if="vm.grid.data">
+        <nvd3 data-options="vm.grid.options" data-data="vm.grid.data" data-api="vm.grid.api" data-config="vm.grid.config"></nvd3>
+    </div>
 </div>

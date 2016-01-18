@@ -41,10 +41,14 @@ module.exports = function()
             });
         }
 
-        function registerSection(section)
+        function addSection(section)
         {
             sections.push(section);
 
+            // extend section api with functions that can trigger report actions
+            $.extend(section,{refreshReport : loadData});
+
+            // wait until all sections were added to load data
             if (sections.length=== self.reportConfig.sections.length)
             {
                 loadData();
@@ -70,7 +74,7 @@ module.exports = function()
         self.errorMessage = "";
         self.isLoading = false;
 
-        self.registerSection = registerSection;
+        self.addSection = addSection;
         self.buildReport = buildReport;
         self.loadData = loadData;
 

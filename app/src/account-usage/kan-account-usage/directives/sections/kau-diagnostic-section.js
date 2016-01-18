@@ -23,7 +23,7 @@ module.exports = function()
         var ctrl = ctrls[0];
         var reportCtrl = ctrls[1];
 
-        reportCtrl.registerSection({
+        reportCtrl.addSection({
             loadReportData : function(reportData)
             {
                 ctrl.loadReportData(reportData);

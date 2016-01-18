@@ -19,21 +19,24 @@ module.exports = function()
 
         $scope.$watch('vm.filters.date',function()
         {
-
+            if (self.reportAPI.refreshReport) {
+                self.reportAPI.refreshReport.call(null);
+            }
         });
+
+        self.reportAPI = {
+            assignFilters : function(filters)
+            {
+                $.extend(filters, self.filters);
+            }
+        };
     }
 
     function Link(scope, element, attrs, ctrls) {
         var ctrl = ctrls[0];
         var reportCtrl = ctrls[1];
 
-        reportCtrl.registerSection({
-            assignFilters : function(filters)
-            {
-                $.extend(filters, ctrl.filters);
-            }
-        });
-
+        reportCtrl.addSection(ctrl.reportAPI);
     }
 
 
