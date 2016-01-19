@@ -47,8 +47,8 @@ var repository = [
                 showOnLoading : false,
                 showOnError : false,  // todo - should be false by default
                 options: {
-                    xValue : {name : 'month_id', type : 'date', format: 'MMMM, YYYY', title : 'Month'},
-                    yValue : {name : 'total_plays', type : 'number',  title : 'Plays (CPM)'}
+                    xValue : {name : 'month_id', type : 'date', labelFormat: 'MMMM, YYYY', title : 'Month'},
+                    yValue : {name : 'total_plays', type : 'number', labelFormat : '',  title : 'Plays (CPM)'}
                 }
             },
             {
@@ -59,14 +59,65 @@ var repository = [
                 options: {
                     title: 'Monthly Usage Breakdown',
                     order: '-month_id',
-                    fields : [{name : 'month_id', type : 'date', format: 'MMMM, YYYY', title : 'Month'},{name : 'total_plays', type : 'number', format : ',',  title : 'Plays (CPM)'}]
+                    fields : [{name : 'month_id', type : 'date', valueFormat: 'MMMM, YYYY', title : 'Month'},{name : 'total_plays', type : 'number', valueFormat : ',',  title : 'Plays (CPM)'}]
                 }
             }
         ]
     },
     {
         reportId: 'storage',
-        menu: {title: 'Storage Report', order: 0}
+        menu: {title: 'Storage Report', order: 0},
+        data: {
+            reportType: 26
+        },
+        sections: [
+            {
+                type: 'diagnostic',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : true
+            },
+            {
+                type: 'status',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : true,
+                options: {
+                    showErrors : true
+                }
+            },
+            {
+                type: 'filters',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : false,  // todo - should be false by default
+            },
+            {
+                type: 'status',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : true,
+                options: {
+                    showLoading : true
+                }
+            },
+            {
+                type: 'barChart',
+                showOnLoading : false,
+                showOnError : false,  // todo - should be false by default
+                options: {
+                    xValue : {name : 'month_id', type : 'date', labelFormat: 'MMMM, YYYY', title : 'Month'},
+                    yValue : {name : 'avg_storage_gb', type: 'number', labelFormat: ',.2f', title : 'Average Storage (GB)'}
+                }
+            },
+            {
+                type: 'table',
+                showOnLoading : false,
+                showOnError : false,  // todo - should be false by default
+
+                options: {
+                    title: 'Monthly Usage Breakdown',
+                    order: '-month_id',
+                    fields : [{name : 'month_id', type : 'date', valueFormat: 'MMMM, YYYY', title : 'Month'},{name : 'avg_storage_gb', type : 'number', valueFormat : ',.2f',  title : 'Average Storage (GB)'}]
+                }
+            }
+        ]
     },
     {
         reportId: 'bandwidth',

@@ -27,6 +27,6 @@ var descriptor =[
         }
 
     }
-] ;
+];
 
 module.exports = descriptor;

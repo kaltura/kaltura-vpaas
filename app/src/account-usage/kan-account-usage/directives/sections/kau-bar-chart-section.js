@@ -32,20 +32,11 @@ module.exports = function()
                     staggerLabels: true,
                     rotateLabels: true,
                     x: function (d) {
-                        var result = d[self.reportOptions.xValue.name];
-                        if (self.reportOptions.xValue.format)
-                        {
-                            result = kFormatterUtils.formatByType(result,self.reportOptions.xValue.type,self.reportOptions.xValue.format);
-                        }
-                        return result;
+                        return d[self.reportOptions.xValue.name];
                     },
                     y: function (d) {
-                        var result = d[self.reportOptions.yValue.name];
-                        if (self.reportOptions.yValue.format)
-                        {
-                            result = kFormatterUtils.formatByType(result,self.reportOptions.yValue.type,self.reportOptions.yValue.format);
-                        }
-                        return result;
+                        return d[self.reportOptions.yValue.name];
+
                     },
                     showValues: true,
                     valueFormat: function (d) {
@@ -53,11 +44,22 @@ module.exports = function()
                     },
                     duration: 500,
                     xAxis: {
+                        tickFormat: function (d) {
+                            if (self.reportOptions.xValue.labelFormat)
+                            {
+                                return kFormatterUtils.formatByType(d,self.reportOptions.xValue.type,self.reportOptions.xValue.labelFormat);
+                            }
+                            return d;
+                        }
                     },
                     yAxis: {
-                        axisLabel: 'Plays (CPM)',
+                        axisLabel: '',
                         tickFormat: function (d) {
-                            return d3.format(',')(d);
+                            if (self.reportOptions.yValue.labelFormat)
+                            {
+                                return kFormatterUtils.formatByType(d,self.reportOptions.yValue.type,self.reportOptions.yValue.labelFormat);
+                            }
+                            return d;
                         },
                         showMaxMin: true
                     }
@@ -70,6 +72,7 @@ module.exports = function()
         $scope.$watch('vm.options',function()
         {
             self.reportOptions = $.extend({},defaultOptions,self.options);
+            self.grid.options.chart.yAxis.axisLabel = self.reportOptions.yValue.title;
         });
     }
 
