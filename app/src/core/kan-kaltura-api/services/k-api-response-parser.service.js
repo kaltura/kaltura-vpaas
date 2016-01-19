@@ -46,10 +46,17 @@ module.exports = function(kAPIResponseDescriptor, kFormatterUtils)
                 // traverse on result properties and handle known properties types
                 _.forIn(result,function(value,key,obj)
                 {
-                    var fieldDescriptor =_.find(descriptor.response.fields,{name : key});
+                    var fieldDescriptor =_.find(descriptor.response.fields,function (item)
+                    {
+                        return item.indexOf(key + ',') ===0;
+                    });
+
                     if (fieldDescriptor)
                     {
-                        obj[key] =kFormatterUtils.parseByType(value, fieldDescriptor.type, fieldDescriptor.format);
+                        var descriptorToken = fieldDescriptor.split(',');
+                        var type = descriptorToken[1];
+                        var format = descriptorToken.length >= 3 ? descriptorToken[2] : null;
+                        obj[key] =kFormatterUtils.parseByType(value, type, format);
                     }
                 });
 

@@ -61,7 +61,7 @@ module.exports = function()
                             }
                             return d;
                         },
-                        showMaxMin: true
+                        showMaxMin: false
                     }
                 }
             }

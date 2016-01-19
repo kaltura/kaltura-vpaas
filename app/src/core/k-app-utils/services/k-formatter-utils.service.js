@@ -7,7 +7,8 @@ module.exports = function()
     function parseByType(input,type,format)
     {
         var result = input;
-        if (input && type) {
+
+        if (type) {
             switch (type) {
                 case 'date':
                     if (format) {
@@ -15,6 +16,10 @@ module.exports = function()
                     }
                     break;
                 case 'number':
+                    if (angular.isUndefined(input) || input === null)
+                    {
+                        input = 0;
+                    }
                     result = parseFloat(input);
                     break;
                 default:

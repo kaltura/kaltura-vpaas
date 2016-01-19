@@ -13,16 +13,13 @@ var descriptor =[
         response : {
             type : 'header-data',
             fields :[
-                {
-                    name : 'month_id',
-                    type : 'date',
-                    format : 'YYYYMM'
-                },
-                {
-                    name : 'total_plays',
-                    type : 'number',
-                    format : 'float'
-                }
+                'month_id,date,YYYYMM',
+                'total_plays,number',
+                'bandwidth_gb,number',
+                'avg_storage_gb,number',
+                'transcoding_gb,number',
+                'total_media_entries,number',
+                'total_end_users,number'
             ]
         }
 
