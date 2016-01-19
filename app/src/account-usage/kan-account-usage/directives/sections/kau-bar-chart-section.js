@@ -91,7 +91,8 @@ module.exports = function()
     return {
         restrict: 'A',
         scope:{
-            options : '=kOptions'
+            options : '=kOptions',
+            reportStatus : '=kReportStatus'
         },
         require: ['kauBarChartSection','^kauReport'],
         controllerAs:'vm',

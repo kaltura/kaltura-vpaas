@@ -21,29 +21,15 @@ module.exports = function()
             });
         }
 
-        function notifyLoading(loading)
-        {
-            self.isLoading = loading;
-
-            notifyOnEvent('report:loading',{isLoading : loading});
-        }
-
-        function notifyError(message)
-        {
-            self.errorMessage = message;
-
-            notifyOnEvent('report:error',{errorMessage : message});
-        }
-
-
         function loadData() {
             if (!areAllSectionsLoaded)
             {
                 return;
             }
 
-            notifyLoading(true);
-            notifyError('');
+            self.reportStatus.isLoading = true;
+            self.reportStatus.errorMessage = '';
+
 
             var filters = { reportType : self.reportConfig.data.reportType };
 
@@ -67,10 +53,10 @@ module.exports = function()
                     }
                 });
 
-                notifyLoading(false);
+                self.reportStatus.isLoading = false;
             }, function (reason) {
-                notifyError("Failed to load data : '" + reason.errorMessage + "'");
-                notifyLoading(false);
+                self.reportStatus.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
+                self.reportStatus.isLoading = false;
             });
         }
 
@@ -117,24 +103,17 @@ module.exports = function()
                 return false;
             }
 
-            if (self.isLoading)
-            {
-                return section.showOnLoading;
-            }
-
-            if (self.errorMessage)
-            {
-                return section.showOnError;
-            }
-
             return true;
         }
+
+        self.reportStatus = {
+            isLoading : true,
+            errorMessage : ''
+        };
 
         self.reportData = null;
         self.reportConfig = [];
         self.reportId = '';
-        self.isLoading = false; // TODO : default to 'true' so the sections not needed to be seens willl not appear before the first data loading
-        self.errorMessage = '';
 
         self.shouldShow = shouldShow;
         self.addSection = addSection;

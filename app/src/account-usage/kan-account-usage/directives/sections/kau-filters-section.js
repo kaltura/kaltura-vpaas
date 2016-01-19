@@ -42,7 +42,7 @@ module.exports = function()
 
     return {
         restrict: 'A',
-        scope:false,
+        scope:{},
         require: ['kauFiltersSection','^kauReport'],
         controllerAs:'vm',
         bindToController : true,

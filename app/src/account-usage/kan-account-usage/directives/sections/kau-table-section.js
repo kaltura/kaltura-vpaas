@@ -49,7 +49,8 @@ module.exports = function()
     return {
         restrict: 'A',
         scope:{
-            options : '=kOptions'
+            options : '=kOptions',
+            reportStatus : '=kReportStatus'
         },
         require: ['kauTableSection','^kauReport'],
         controllerAs:'vm',

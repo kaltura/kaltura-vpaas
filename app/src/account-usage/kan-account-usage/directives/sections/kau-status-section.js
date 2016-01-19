@@ -13,28 +13,9 @@ module.exports = function()
         };
 
         self.reportAPI = {
-            on : function(event,context)
-            {
-                switch (event)
-                {
-                    case 'report:loading':
-                        if (self.reportOptions.showLoading)
-                        {
-                            self.isLoading = context.isLoading;
-                        }
-                        break;
-                    case 'report:error':
-                        if (self.reportOptions.showErrors)
-                        {
-                            self.errorMessage = context.errorMessage;
-                        }
-                        break;
-                }
-            }
+
         };
 
-        self.isLoading = false;
-        self.errorMessage = '';
         self.reportOptions = null;
 
         $scope.$watch('vm.options',function()
@@ -54,7 +35,8 @@ module.exports = function()
     return {
         restrict: 'A',
         scope:{
-            options : '=kOptions'
+            options : '=kOptions',
+            reportStatus : '=kReportStatus'
         },
         require: ['kauStatusSection','^kauReport'],
         controllerAs:'vm',

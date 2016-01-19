@@ -16,11 +16,11 @@ var repository = [
             reportType: 26
         },
         sections: [
-            {
-                type: 'diagnostic',
-                showOnLoading : true, // todo - should be true by default
-                showOnError : true
-            },
+            //{
+            //    type: 'diagnostic',
+            //    showOnLoading : true, // todo - should be true by default
+            //    showOnError : true
+            //},
             {
                 type: 'status',
                 showOnLoading : true, // todo - should be true by default
