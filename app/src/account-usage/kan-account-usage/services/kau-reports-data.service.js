@@ -1,9 +1,10 @@
 "use strict";
 
-module.exports = function($q, kanAPIFacade, SessionInfo,$sessionStorage)
+module.exports = function($q, kanAPIFacade, SessionInfo,$sessionStorage,kauReportsConfiguration)
 {
     var self = this;
     var requireFiltersProperties = ["reportType","date.startDate","date.endDate"];
+    var cachedReportsConfiguration;
 
     function getReportData(filters)
     {
@@ -28,7 +29,20 @@ module.exports = function($q, kanAPIFacade, SessionInfo,$sessionStorage)
         }
     }
 
+    function getReportsConfiguration()
+    {
+        if (cachedReportsConfiguration)
+        {
+            return cachedReportsConfiguration;
+        }
+
+        cachedReportsConfiguration = _.chain(kauReportsConfiguration).value();
+
+        return cachedReportsConfiguration;
+    }
+
     self.getReportData = getReportData;
+    self.getReportsConfiguration = getReportsConfiguration;
 
 
 

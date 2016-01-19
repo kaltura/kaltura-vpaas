@@ -15,5 +15,6 @@ module.exports = {
     'leaflet': './node_modules/leaflet/dist/leaflet.js',
     'angular-leaflet-directive': './node_modules/angular-leaflet-directive/dist/angular-leaflet-directive.js',
     'dateRangePicker' : './bower_components/bootstrap-daterangepicker/daterangepicker.js',
+    'spin' : './libs/spin/spin.min.js',
     'angular-daterangepicker' : './bower_components/angular-daterangepicker/js/angular-daterangepicker.js'
 };

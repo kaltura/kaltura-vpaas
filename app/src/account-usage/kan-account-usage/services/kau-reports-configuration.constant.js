@@ -17,13 +17,35 @@ var repository = [
         },
         sections: [
             {
-                type: 'filters'
+                type: 'diagnostic',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : true
             },
             {
-                type: 'diagnostic'
+                type: 'status',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : true,
+                options: {
+                    showErrors : true
+                }
+            },
+            {
+                type: 'filters',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : false,  // todo - should be false by default
+            },
+            {
+                type: 'status',
+                showOnLoading : true, // todo - should be true by default
+                showOnError : true,
+                options: {
+                    showLoading : true
+                }
             },
             {
                 type: 'barChart',
+                showOnLoading : false,
+                showOnError : false,  // todo - should be false by default
                 options: {
                     xValue : {name : 'month_id', type : 'date', format: 'MMMM, YYYY', title : 'Month'},
                     yValue : {name : 'total_plays', type : 'number',  title : 'Plays (CPM)'}
@@ -31,6 +53,9 @@ var repository = [
             },
             {
                 type: 'table',
+                showOnLoading : false,
+                showOnError : false,  // todo - should be false by default
+
                 options: {
                     title: 'Monthly Usage Breakdown',
                     order: '-month_id',

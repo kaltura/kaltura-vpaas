@@ -19,6 +19,7 @@ appModule.directive('kauBarChartSection',require('./directives/sections/kau-bar-
 appModule.directive('kauTableSection',require('./directives/sections/kau-table-section'));
 appModule.directive('kauTotalsSection',require('./directives/sections/kau-totals-section'));
 appModule.directive('kauDiagnosticSection',require('./directives/sections/kau-diagnostic-section'));
+appModule.directive('kauStatusSection',require('./directives/sections/kau-status-section'));
 
 appModule.filter('kauDynamicFilter',require('./filters/kau-dynamic-filter'));
 
