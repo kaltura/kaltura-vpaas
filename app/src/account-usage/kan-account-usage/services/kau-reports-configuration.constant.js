@@ -48,7 +48,7 @@ var repository = [
                     showOnError: false,  // todo - should be false by default
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
-                        yValue: {name: 'total_plays', type: 'number', labelFormat: '', title: 'Plays (CPM)'}
+                        yValue: {name: 'total_plays', type: 'number', labelFormat: ',', title: 'Plays (CPM)'}
                     }
                 },
                 {

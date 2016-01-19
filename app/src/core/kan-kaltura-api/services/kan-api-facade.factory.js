@@ -65,6 +65,7 @@ module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerialize
                         deferred.reject({errorId : 'invalid-ks', errorMessage : 'Invalid partner KS'});
                     }
                     else {
+                        var errorMessage = data.message || 'Failed to invoke request';
                         deferred.reject({ errorMessage : data.message});
                     }
                 }
@@ -78,8 +79,9 @@ module.exports = function ($http, $q, $location, SessionInfo,$httpParamSerialize
                 deferred.resolve({data : data});
             }
         }).error(function(data, status) {
-            console.log(data);
-            deferred.reject({ errorMessage : data.message});
+            var errorMessage = (data ? data.message : '') || 'unkown error';
+            console.log(errorMessage);
+            deferred.reject({ errorMessage : errorMessage});
         });
 
         // Returning the promise object
