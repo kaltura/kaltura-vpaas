@@ -2,7 +2,8 @@
     <div class="form-group">
         <label>Date Range:
             <input date-range-picker class="form-control date-picker" options="vm.dateOptions" type="text"
-                   ng-model="vm.filters.date"/></div>
-    </label>
-    <div class="pull-right"><a href="#" data-ng-click="vm.export()">Export to CSV</a></div>
+                   ng-model="vm.filters.date"/>
+        </label>
+    </div>
+    <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading"><a href="#" data-ng-click="vm.export()" >Export to CSV</a></div>
 </form>
