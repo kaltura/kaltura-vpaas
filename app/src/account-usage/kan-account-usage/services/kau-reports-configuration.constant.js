@@ -108,7 +108,7 @@ var repository = [
                     showOnError: false,  // todo - should be false by default
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
-                        yValue: {name: 'avg_storage_gb', type: 'number', labelFormat: ',.2f', title: 'Average Storage (GB)'}
+                        yValue: {name: 'avg_storage_gb', type: 'number', labelFormat: ',.0f', title: 'Average Storage (GB)'}
                     }
                 },
                 {
@@ -171,7 +171,7 @@ var repository = [
                         yValue: {
                             name: 'bandwidth_gb',
                             type: 'number',
-                            labelFormat: ',.2f',
+                            labelFormat: ',.0f',
                             title: 'Bandwidth Consumption (GB)'
                         }
                     }
@@ -235,7 +235,7 @@ var repository = [
                         yValue: {
                             name: 'transcoding_gb',
                             type: 'number',
-                            labelFormat: ',.2f',
+                            labelFormat: ',.0f',
                             title: 'Transcoding Consumption (GB)'
                         }
                     }

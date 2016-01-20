@@ -7,10 +7,10 @@ appModule.config(require('./kan-kaltura-api.config.js'));
 
 
 appModule.factory('SessionInfo',require('./services/kan-session-info.factory'));
-appModule.factory('kanAPIFacade',require('./services/kan-api-facade.factory'));
 
 appModule.constant('kAPIResponseDescriptor',require('./services/k-api-response-descriptor.constant'));
 
-appModule.service('kAPIResponseParser',require('./services/k-api-response-parser.service'));
+appModule.service('kanAPIFacade',require('./services/kan-api-facade.service'));
+appModule.service('kAPIRequestsHandler',require('./services/k-api-requests-handler.service'));
 
 
