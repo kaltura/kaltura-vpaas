@@ -20,7 +20,7 @@ module.exports = function(kaAPIFacadeProvider)
             ]
         };
         var defaultRequestData = {
-            pager: {pageIndex: 1, pageSize: 1000}
+            pager: {pageIndex: 1, pageSize: 1}
         }
 
         function prepareRequestData(requestParams) {

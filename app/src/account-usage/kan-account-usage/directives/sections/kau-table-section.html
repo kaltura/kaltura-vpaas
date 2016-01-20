@@ -1,9 +1,9 @@
 <div data-ng-if="!vm.reportStatus.isLoading && !vm.reportStatus.errorMessage">
-    <div class="title-text">{{vm.title}}</div>
-    <table class="usual-table row-fluid half-width" ng-class="cls" data-ng-if="vm.tableHeaders" >
+    <div class="title-text" data-ng-if="vm.reportOptions.title">{{vm.reportOptions.title}}</div>
+    <table class="usual-table row-fluid "  ng-style="{width : vm.reportOptions.width}" data-ng-if="vm.tableHeaders" >
         <thead>
         <tr>
-            <th data-ng-repeat="header in vm.tableHeaders">{{header}}</th>
+            <th data-ng-repeat="header in vm.tableHeaders">{{header.name}}</th>
         </tr>
         </thead>
         <tbody>

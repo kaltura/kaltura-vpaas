@@ -4,7 +4,80 @@ var repository = [
 
         {
             reportId: 'overall',
-            menu: {title: 'Overall Usage Report', order: 0}
+            menu: {title: 'Overall Usage Report', order: 0},
+            data: {
+                reportType: 26
+            },
+            sections: [
+                //{
+                //    type: 'diagnostic',
+                //    showOnLoading: true, // todo - should be true by default
+                //    showOnError: true
+                //},
+                {
+                    type: 'filters',
+                    showOnLoading: true, // todo - should be true by default
+                    showOnError: false,  // todo - should be false by default
+                    options: {
+                        title: 'Month to Date Usage Summary'
+
+                    }
+                },
+                {
+                    type: 'status',
+                    showOnLoading: true, // todo - should be true by default
+                    showOnError: true,
+                    options: {
+                        showErrors: true,
+                        showLoading: true
+                    }
+                },
+                {
+                    type: 'totals',
+                    showOnLoading: false,
+                    showOnError: false,  // todo - should be false by default
+                    options: {
+                    }
+                },
+                {
+                    type: 'table',
+                    showOnLoading: false,
+                    showOnError: false,  // todo - should be false by default
+
+                    options: {
+                        title: 'Monthly Usage Breakdown',
+                        order: '-month_id',
+                        width : '100%',
+                        fields: [{
+                            name: 'month_id',
+                            type: 'date',
+                            valueFormat: 'MMMM, YYYY',
+                            title: 'Month'
+                            },
+                            {name: 'total_plays', type: 'number', valueFormat: ',', title: 'Plays (CPM)'},
+                            {name: 'avg_storage_gb', type: 'number', valueFormat: ',.2f', title: 'Average Storage (GB)'},
+                            {
+                                name: 'transcoding_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Transcoding Consumption (GB)'
+                            },
+                            {name: 'bandwidth_gb', type: 'number', valueFormat: ',.2f', title: 'Bandwidth Consumption (GB)'},
+                            {
+                                name: 'total_media_entries',
+                                type: 'number',
+                                valueFormat: ',',
+                                title: 'Media Entries'
+                            }, {
+                                name: 'total_end_users',
+                                type: 'number',
+                                valueFormat: ',',
+                                title: 'End Users'
+                            }
+                        ]
+                    }
+                }
+            ]
         },
         {
             reportId: 'play',
@@ -22,23 +95,21 @@ var repository = [
                 //    showOnError: true
                 //},
                 {
-                    type: 'status',
-                    showOnLoading: true, // todo - should be true by default
-                    showOnError: true,
-                    options: {
-                        showErrors: true
-                    }
-                },
-                {
                     type: 'filters',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: false,  // todo - should be false by default
+                    options: {
+                        filters : {
+                            dateRange : true
+                        }
+                    }
                 },
                 {
                     type: 'status',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: true,
                     options: {
+                        showErrors: true,
                         showLoading: true
                     }
                 },
@@ -59,6 +130,7 @@ var repository = [
                     options: {
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
+                        width : '50%',
                         fields: [{
                             name: 'month_id',
                             type: 'date',
@@ -82,23 +154,21 @@ var repository = [
                 //    showOnError: true
                 //},
                 {
-                    type: 'status',
-                    showOnLoading: true, // todo - should be true by default
-                    showOnError: true,
-                    options: {
-                        showErrors: true
-                    }
-                },
-                {
                     type: 'filters',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: false,  // todo - should be false by default
+                    options: {
+                        filters : {
+                            dateRange : true
+                        }
+                    }
                 },
                 {
                     type: 'status',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: true,
                     options: {
+                        showErrors: true,
                         showLoading: true
                     }
                 },
@@ -119,12 +189,15 @@ var repository = [
                     options: {
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
+                        width : '50%',
                         fields: [{
                             name: 'month_id',
                             type: 'date',
                             valueFormat: 'MMMM, YYYY',
                             title: 'Month'
-                        }, {name: 'avg_storage_gb', type: 'number', valueFormat: ',.2f', title: 'Average Storage (GB)'}]
+                        },
+                            {name: 'avg_storage_gb', type: 'number', valueFormat: ',.2f', title: 'Average Storage (GB)'}
+                        ]
                     }
                 }
             ]
@@ -141,24 +214,23 @@ var repository = [
                 //    showOnLoading : true, // todo - should be true by default
                 //    showOnError : true
                 //},
-                {
-                    type: 'status',
-                    showOnLoading: true, // todo - should be true by default
-                    showOnError: true,
-                    options: {
-                        showErrors: true
-                    }
-                },
+
                 {
                     type: 'filters',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: false,  // todo - should be false by default
+                    options: {
+                        filters : {
+                            dateRange : true
+                        }
+                    }
                 },
                 {
                     type: 'status',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: true,
                     options: {
+                        showErrors: true,
                         showLoading: true
                     }
                 },
@@ -184,12 +256,15 @@ var repository = [
                     options: {
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
+                        width : '50%',
                         fields: [{
                             name: 'month_id',
                             type: 'date',
                             valueFormat: 'MMMM, YYYY',
                             title: 'Month'
-                        }, {name: 'bandwidth_gb', type: 'number', valueFormat: ',.2f', title: 'Bandwidth Consumption (GB)'}]
+                        },
+                            {name: 'bandwidth_gb', type: 'number', valueFormat: ',.2f', title: 'Bandwidth Consumption (GB)'}
+                        ]
                     }
                 }]
         },
@@ -206,23 +281,21 @@ var repository = [
                 //    showOnError : true
                 //},
                 {
-                    type: 'status',
-                    showOnLoading: true, // todo - should be true by default
-                    showOnError: true,
-                    options: {
-                        showErrors: true
-                    }
-                },
-                {
                     type: 'filters',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: false,  // todo - should be false by default
+                    options: {
+                        filters : {
+                            dateRange : true
+                        }
+                    }
                 },
                 {
                     type: 'status',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: true,
                     options: {
+                        showErrors: true,
                         showLoading: true
                     }
                 },
@@ -275,23 +348,21 @@ var repository = [
                 //    showOnError : true
                 //},
                 {
-                    type: 'status',
-                    showOnLoading: true, // todo - should be true by default
-                    showOnError: true,
-                    options: {
-                        showErrors: true
-                    }
-                },
-                {
                     type: 'filters',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: false,  // todo - should be false by default
+                    options: {
+                        filters : {
+                            dateRange : true
+                        }
+                    }
                 },
                 {
                     type: 'status',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: true,
                     options: {
+                        showErrors: true,
                         showLoading: true
                     }
                 },
@@ -317,6 +388,8 @@ var repository = [
                     options: {
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
+                        width : '50%',
+
                         fields: [{
                             name: 'month_id',
                             type: 'date',
@@ -344,23 +417,21 @@ var repository = [
                 //    showOnError : true
                 //},
                 {
-                    type: 'status',
-                    showOnLoading: true, // todo - should be true by default
-                    showOnError: true,
-                    options: {
-                        showErrors: true
-                    }
-                },
-                {
                     type: 'filters',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: false,  // todo - should be false by default
+                    options: {
+                        filters : {
+                            dateRange : true
+                        }
+                    }
                 },
                 {
                     type: 'status',
                     showOnLoading: true, // todo - should be true by default
                     showOnError: true,
                     options: {
+                        showErrors: true,
                         showLoading: true
                     }
                 },
@@ -386,6 +457,8 @@ var repository = [
                     options: {
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
+                        width : '50%',
+
                         fields: [{
                             name: 'month_id',
                             type: 'date',

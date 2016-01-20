@@ -27,9 +27,8 @@ module.exports = function()
         $scope.$watch('vm.options',function()
         {
             self.reportOptions = $.extend({},defaultOptions,self.options);
-            self.title = self.reportOptions.title;
 
-            self.tableHeaders = _.map(self.reportOptions.fields, function(item) { return item.title;});
+            self.tableHeaders = _.map(self.reportOptions.fields, function(item) { return {name : item.title};});
 
         });
     }
