@@ -8,9 +8,9 @@ appModule.config(require('./kan-kaltura-api.config.js'));
 
 appModule.factory('SessionInfo',require('./services/kan-session-info.factory'));
 
-appModule.constant('kAPIResponseDescriptor',require('./services/k-api-response-descriptor.constant'));
+appModule.provider('kaAPIFacade',require('./services/ka-api-facade.provider'));
 
-appModule.service('kanAPIFacade',require('./services/kan-api-facade.service'));
-appModule.service('kAPIRequestsHandler',require('./services/k-api-requests-handler.service'));
+appModule.service('kaRequestsHandlerUtils',require('./services/ka-requests-handler-utils.service'));
 
-
+appModule.config(require('./config/handlers/report-service/get-url-for-report-as-csv.config'));
+appModule.config(require('./config/handlers/report-service/get-table.config'));

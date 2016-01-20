@@ -27,14 +27,14 @@ module.exports = function () {
         return deferred.promise;
     }
 
-    function invokeLiveRequest(kanAPIFacade) {
+    function invokeLiveRequest(kaAPIFacade) {
         var requestParams = {
             reportType: '2',
             reportInputFilter: {fromDay: '20151201', toDay: '20160101'}
         };
         var description = 'Report: Content Reports > Content Drop-off\nFilter: from 01/12/2015 - 01/01/2016';
 
-        return kanAPIFacade.doRequest(requestParams, {service: 'report', action: "getGraphs"}).then(function (result) {
+        return kaAPIFacade.doRequest(requestParams, {service: 'report', action: "getGraphs"}).then(function (result) {
             return { description : description, data: result.data};
         });
     }

@@ -1,16 +1,15 @@
 "use strict";
 
 
-module.exports = function($q, kAPIRequestsHandler)
+module.exports = function(kaAPIFacadeProvider)
 {
     var handlerInfo = {service: 'report', action: 'getUrlForReportAsCsv'};
 
-    function RequestHandler() {
+    function RequestHandler($q) {
         var self = this;
-        var requiredProperties = ['headers'];
         var defaultRequestData = {
             pager: {pageIndex: 1, pageSize: 1000}
-        }
+        };
 
 
         /*
@@ -51,7 +50,6 @@ module.exports = function($q, kAPIRequestsHandler)
             {
                 var parsedRequestData = prepareRequestData(data);
 
-                kAPIRequestsHandler
             }else
             {
                 deferred.reject({error: 'k-api-request-data-invalid'});
@@ -64,5 +62,5 @@ module.exports = function($q, kAPIRequestsHandler)
         self.prepareRequestData = prepareRequestData;
     }
 
-    kAPIRequestsHandler.registerHandler(handlerInfo,RequestHandler);
+    kaAPIFacadeProvider.registerHandler(handlerInfo,RequestHandler);
 };

@@ -1,5 +1,5 @@
 
-module.exports = function ($http, $q, kanAPIFacade, kanSamplesHelper,$injector) {
+module.exports = function ($http, $q, kaAPIFacade, kanSamplesHelper,$injector) {
 
     var self = this;
 
