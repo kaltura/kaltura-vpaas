@@ -1,5 +1,5 @@
 ﻿'use strict';
 
-require('../../core/k-app-utils');
+require('../../core/ka-core-utils');
 
 module.exports = angular.module('kaKalturaAPI',['kAppUtils']);
