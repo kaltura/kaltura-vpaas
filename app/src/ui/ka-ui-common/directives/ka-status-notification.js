@@ -66,7 +66,7 @@ module.exports = function()
     return {
         restrict : 'A',
         link : link,
-        template: '<div class="k-status-notification"></div>'
+        template: '<div class="ka-status-notification"></div>'
     }
 
 };
