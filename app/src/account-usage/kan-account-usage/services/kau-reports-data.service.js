@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function($q, kaAPIFacade, kauReportsConfiguration)
+module.exports = function($q, kaKalturaAPIFacade, kauReportsConfiguration)
 {
     var self = this;
     var requireFiltersProperties = ["reportType","date.startDate","date.endDate"];
@@ -15,7 +15,7 @@ module.exports = function($q, kaAPIFacade, kauReportsConfiguration)
                 reportInputFilter: {fromDay: moment(filters.date.startDate).format('YYYYMMDD'), toDay: moment(filters.date.endDate).format('YYYYMMDD')}
             };
 
-            return kaAPIFacade.invoke('report','getUrlForReportAsCsv',requestParams);
+            return kaKalturaAPIFacade.invoke('report','getUrlForReportAsCsv',requestParams);
         }else
         {
             return $q.reject({errorMessage: 'get report csv uri was invoked with partial/missing required filters'});
@@ -31,7 +31,7 @@ module.exports = function($q, kaAPIFacade, kauReportsConfiguration)
                 reportInputFilter: {fromDay: moment(filters.date.startDate).format('YYYYMMDD'), toDay: moment(filters.date.endDate).format('YYYYMMDD')}
             };
 
-            return kaAPIFacade.invoke('report','getTable',requestParams);
+            return kaKalturaAPIFacade.invoke('report','getTable',requestParams);
         }else
         {
             return $q.reject({errorMessage: 'get report was invoked with partial/missing required filters'});

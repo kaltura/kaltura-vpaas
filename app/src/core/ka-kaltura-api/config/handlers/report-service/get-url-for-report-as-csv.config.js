@@ -1,6 +1,6 @@
 "use strict";
 
-module.exports = function(kaAPIFacadeProvider)
+module.exports = function(kaKalturaAPIFacadeProvider)
 {
     var handlerInfo = {service: 'report', action: 'getUrlForReportAsCsv'};
 
@@ -53,6 +53,6 @@ module.exports = function(kaAPIFacadeProvider)
         self.prepareRequestData = prepareRequestData;
     }
 
-    kaAPIFacadeProvider.registerHandler(handlerInfo,RequestHandler);
+    kaKalturaAPIFacadeProvider.registerHandler(handlerInfo,RequestHandler);
 };
 

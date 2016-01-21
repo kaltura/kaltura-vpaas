@@ -45,7 +45,7 @@ module.exports = function () {
         return deferred.promise;
     }
 
-    function invokeLiveRequest($q,kaAPIFacade) {
+    function invokeLiveRequest($q,kaKalturaAPIFacade) {
         var deferred = $q.defer();
 
         var tableRequestParams = {
@@ -54,7 +54,7 @@ module.exports = function () {
             reportInputFilter: {fromDay: '20151201', toDay: '20160101'}
         };
 
-        kaAPIFacade.doRequest(tableRequestParams, {service: 'report', action: "getTable"}).then(function (result) {
+        kaKalturaAPIFacade.doRequest(tableRequestParams, {service: 'report', action: "getTable"}).then(function (result) {
             var resultData = result.data;
             var data = _.map(_.words(resultData.data,/[^;]+/g),function(item)
             {

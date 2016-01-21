@@ -321,6 +321,7 @@ var repository = [
                     options: {
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
+                        width: '100%',
                         fields: [{
                             name: 'month_id',
                             type: 'date',

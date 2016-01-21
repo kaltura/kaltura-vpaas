@@ -66,7 +66,7 @@ module.exports = function () {
         return deferred.promise;
     }
 
-    function invokeLiveRequest(kaAPIFacade) {
+    function invokeLiveRequest(kaKalturaAPIFacade) {
 
         // simulate request of existing analytics system
         var d = new Date();
@@ -89,7 +89,7 @@ module.exports = function () {
 
         var description = 'Report: Live Real-Time Dashboard > Live Content\nPartner: WEATHER NATION (!)\nEntry: WNTV PRIMARY';
 
-        return kaAPIFacade.doRequest(requestParams,null).then(function (result) {
+        return kaKalturaAPIFacade.doRequest(requestParams,null).then(function (result) {
             return { description : description, data: result.data};
         });
     }
