@@ -14,7 +14,7 @@ module.exports = function()
                 return _.at(item,'menu.order') || 100;
             }).forEach(function(item)
             {
-                menus.push({state : 'root.shell.account-usage.reports.report({reportId : "' + item.reportId + '"})', title : item.menu.title});
+                menus.push({state : 'root.shell.reports.report({reportId : "' + item.reportId + '"})', title : item.menu.title});
             }).value();
 
             self.menuItems = menus;
@@ -35,7 +35,7 @@ module.exports = function()
         restrict: 'A',
         scope:true,
         controllerAs:'vm',
-        templateUrl: 'account-usage/kau-reports/directives/kau-side-menu.html',
+        templateUrl: 'account-usage/kau-app/directives/kau-side-menu.html',
         controller: Controller,
         link:Link
     };

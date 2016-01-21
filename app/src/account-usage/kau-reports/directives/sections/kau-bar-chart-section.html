@@ -1,4 +1,4 @@
-<div class="k-report-chart" data-ng-if="!vm.reportStatus.isLoading && !vm.reportStatus.errorMessage">
+<div class="k-report-chart" data-ng-if="vm.reportStatus.hasData">
     <div ng-if="vm.grid.data">
         <nvd3 data-options="vm.grid.options" data-data="vm.grid.data" data-api="vm.grid.api" data-config="vm.grid.config"></nvd3>
     </div>

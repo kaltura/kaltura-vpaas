@@ -4,11 +4,12 @@ module.exports = function(kaKalturaAPIFacadeProvider)
 {
     var handlerInfo = {service: 'report', action: 'getUrlForReportAsCsv'};
 
-    function RequestHandler($q, kaRequestsHandlerUtils, kFormatterUtils) {
+    function RequestHandler($q, kaRequestsHandlerUtils) {
         var self = this;
 
         var defaultRequestData = {
             pager: {pageIndex: 1, pageSize: 1},
+            headers:";month,plays,bandwidth,avg_storage,transcoding,entries,users",
             reportText:''
         }
 

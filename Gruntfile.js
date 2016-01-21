@@ -202,7 +202,7 @@ module.exports = function (grunt) {
                     debug: true,
                     vendors: require('./app/vendors-references'),
                     appFiles: {
-                        '.tmp/app.js': ['app/src/index.js']
+                        '.tmp/app.js': ['app/src/account-usage/kau-app/index.js']
                     }
 
                 }

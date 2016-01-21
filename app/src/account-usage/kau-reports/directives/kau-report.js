@@ -21,6 +21,19 @@ module.exports = function()
             });
         }
 
+        function updateStatus(statusType, context)
+        {
+            switch (statusType)
+            {
+                case "error":
+                    self.reportStatus.errorMessage = context.errorMessage;
+                    break;
+                case "loading":
+                    self.reportStatus.isLoading = context.isLoading;
+                    break;
+            }
+        }
+
         function loadData() {
             if (!areAllSectionsLoaded)
             {
@@ -44,6 +57,7 @@ module.exports = function()
             kauReportsData.getReportData(filters).then(function (result) {
 
                 self.reportData = result.data;
+                self.reportStatus.hasData = true;
 
                 _.forEach(sections,function(section)
                 {
@@ -55,6 +69,8 @@ module.exports = function()
 
                 self.reportStatus.isLoading = false;
             }, function (reason) {
+                self.reportData = null;
+                self.reportStatus.hasData = false;
                 self.reportStatus.errorMessage = "Failed to load data : '" + reason.errorMessage + "'";
                 self.reportStatus.isLoading = false;
             });
@@ -65,7 +81,7 @@ module.exports = function()
             sections.push(section);
 
             // extend section api with functions that can trigger report actions
-            $.extend(section,{refreshReport : loadData});
+            $.extend(section,{refreshReport : loadData,updateStatus : 'Error occurred while trying to create csv file'});
 
             // wait until all sections were added to load data
             if (sections.length=== self.reportConfig.sections.length)
@@ -108,7 +124,8 @@ module.exports = function()
 
         self.reportStatus = {
             isLoading : true,
-            errorMessage : ''
+            errorMessage : '',
+            hasData : false
         };
 
         self.reportData = null;

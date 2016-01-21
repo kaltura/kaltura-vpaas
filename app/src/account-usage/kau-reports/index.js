@@ -5,13 +5,10 @@ appModule.config(require('./kau-reports.config'));
 appModule.run(require('./kau-reports.run'));
 
 
-appModule.controller('kauReport',require('./controllers/kau-report'));
 
 appModule.service('kauReportsData',require('./services/kau-reports-data.service'));
 
-appModule.constant('kauReportsConfiguration',require('./services/kau-reports-configuration.constant'));
 
-appModule.directive('kauSideMenu',require('./directives/kau-side-menu'));
 appModule.directive('kauReport',require('./directives/kau-report'));
 
 appModule.directive('kauFiltersSection',require('./directives/sections/kau-filters-section'));

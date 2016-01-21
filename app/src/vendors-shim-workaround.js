@@ -21,6 +21,3 @@ require('dateRangePicker');
 
 /* end of browserify-shim temoprary workaround */
 
-//load src module
-require('./dashboard/kan-app');
-

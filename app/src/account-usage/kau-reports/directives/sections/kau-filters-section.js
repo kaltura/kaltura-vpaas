@@ -12,17 +12,17 @@ module.exports = function()
             // TODO - should get report type from report configuration
             var requestParams = _.defaults({
                 reportType : 26,
-                headers:";month,plays,bandwidth,avg_storage,transcoding,entries,users",
                 reportTitle: 'Usage report'
             },self.filters);
 
+            self.reportStatus.isLoading = true;
+            self.reportStatus.errorMessage = false;
             kauReportsData.getReportCSVUri(requestParams).then(function (result) {
+                self.reportStatus.isLoading = false;
                 $window.location.replace(result.csvUri);
             }, function (reason) {
-                if (self.reportAPI.showError)
-                {
-                    self.reportAPI.showError.call(null,'Error occurred while trying to create csv file');
-                }
+                self.reportStatus.isLoading = false;
+                self.reportStatus.errorMessage = 'Error occurred while trying to create csv file';
             });
 
         }

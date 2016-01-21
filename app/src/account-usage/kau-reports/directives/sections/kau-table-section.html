@@ -1,4 +1,4 @@
-<div data-ng-if="!vm.reportStatus.isLoading && !vm.reportStatus.errorMessage">
+<div data-ng-if="vm.reportStatus.hasData">
     <div class="title-text" data-ng-if="vm.reportOptions.title">{{vm.reportOptions.title}}</div>
     <table class="usual-table row-fluid "  ng-style="{width : vm.reportOptions.width}" data-ng-if="vm.tableHeaders" >
         <thead>

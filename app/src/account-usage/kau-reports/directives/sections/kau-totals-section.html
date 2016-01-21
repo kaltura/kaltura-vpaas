@@ -1,4 +1,4 @@
-<div class="ka-totals-section"  data-ng-if="!vm.reportStatus.isLoading && !vm.reportStatus.errorMessage">
+<div class="ka-totals-section"  data-ng-if="vm.reportStatus.hasData">
     <div class="title-text" data-ng-if="vm.reportOptions.title">{{vm.reportOptions.title}}</div>
     <div class="ka-table " ng-if="vm.currentMonth">
         <div class="ka-col">
