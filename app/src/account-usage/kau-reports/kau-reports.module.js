@@ -7,4 +7,4 @@ require('../../ui/ka-ui-common');
 require('../../ui/ka-ui-charts');
 
 
-module.exports = angular.module('kanAccountUsage',['kaKalturaAPI','kaCommonUtils','daterangepicker','kaUICommon','kaUICharts']);
+module.exports = angular.module('kauReports',['kaKalturaAPI','kaCommonUtils','daterangepicker','kaUICommon','kaUICharts']);

@@ -100,7 +100,7 @@ module.exports = function()
         require: ['kauBarChartSection','^kauReport'],
         controllerAs:'vm',
         bindToController : true,
-        templateUrl: 'account-usage/kan-account-usage/directives/sections/kau-bar-chart-section.html',
+        templateUrl: 'account-usage/kau-reports/directives/sections/kau-bar-chart-section.html',
         controller: Controller,
         link:Link
     };

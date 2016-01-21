@@ -54,7 +54,7 @@ module.exports = function()
         require: ['kauTableSection','^kauReport'],
         controllerAs:'vm',
         bindToController : true,
-        templateUrl: 'account-usage/kan-account-usage/directives/sections/kau-table-section.html',
+        templateUrl: 'account-usage/kau-reports/directives/sections/kau-table-section.html',
         controller: Controller,
         link:Link
     };

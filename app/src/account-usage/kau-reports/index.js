@@ -1,8 +1,8 @@
 'use strict';
 
-var appModule = require('./kan-account-usage.module');
-appModule.config(require('./kan-account-usage.config'));
-appModule.run(require('./kan-account-usage.run'));
+var appModule = require('./kau-reports.module');
+appModule.config(require('./kau-reports.config'));
+appModule.run(require('./kau-reports.run'));
 
 
 appModule.controller('kauReport',require('./controllers/kau-report'));

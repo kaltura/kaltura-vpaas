@@ -35,7 +35,7 @@ module.exports = function()
         restrict: 'A',
         scope:true,
         controllerAs:'vm',
-        templateUrl: 'account-usage/kan-account-usage/directives/kau-side-menu.html',
+        templateUrl: 'account-usage/kau-reports/directives/kau-side-menu.html',
         controller: Controller,
         link:Link
     };

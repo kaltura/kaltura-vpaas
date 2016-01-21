@@ -40,7 +40,7 @@ module.exports = function()
         require: ['kauDiagnosticSection','^kauReport'],
         controllerAs:'vm',
         bindToController : true,
-        templateUrl: 'account-usage/kan-account-usage/directives/sections/kau-diagnostic-section.html',
+        templateUrl: 'account-usage/kau-reports/directives/sections/kau-diagnostic-section.html',
         controller: Controller,
         link:Link
     };
