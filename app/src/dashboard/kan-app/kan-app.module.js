@@ -7,7 +7,7 @@ require('ui-bootstrap');
 require('../kan-shell');
 require('../../samples/kan-samples');
 require('../../account-usage/kan-account-usage');
-require('../../core/ka-core-utils');
+require('../../core/ka-common-utils');
 
 
-module.exports =angular.module('kanApp',['ui.router', 'kanShell','kanSamples','nvd3','ui.bootstrap','kanAccountUsage','kAppUtils']);
+module.exports =angular.module('kanApp',['ui.router', 'kanShell','kanSamples','nvd3','ui.bootstrap','kanAccountUsage','kaCommonUtils']);
