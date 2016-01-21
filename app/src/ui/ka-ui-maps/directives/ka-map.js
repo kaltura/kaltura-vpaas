@@ -1,5 +1,5 @@
 module.exports = function () {
-    function Controller($scope, SessionInfo, $timeout, kanCountriesGeojson) {
+    function Controller($scope, SessionInfo, $timeout, kaCountriesGeojson) {
         var self = this;
 
 
@@ -54,7 +54,7 @@ module.exports = function () {
 
             var index = 0;
             _.each(data, function (item) {
-                var geojson = kanCountriesGeojson[item.text.toLowerCase()];
+                var geojson = kaCountriesGeojson[item.text.toLowerCase()];
 
                 if (geojson) {
                     var newGeojson = $.extend(true, {}, geojson);
@@ -128,7 +128,7 @@ module.exports = function () {
                     layerOptions: {
                         subdomains: ['cf1', 'cf2', 'cf3'],
                         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-                        continuousWorld: false
+                        continuousWorld: true
                     }
                 }
             }
@@ -191,7 +191,7 @@ module.exports = function () {
             options: '=kOptions',
             rebind: '=kRebind'
         },
-        templateUrl: 'ui/kan-ui-maps/directives/kan-map.html',
+        templateUrl: 'ui/ka-ui-maps/directives/ka-map.html',
         controller: Controller,
         controllerAs: 'vm',
         bindToController: true,
