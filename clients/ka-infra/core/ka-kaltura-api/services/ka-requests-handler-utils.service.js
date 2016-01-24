@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($http, $q, SessionInfo, $httpParamSerializer, kAppConfig, $sessionStorage) {
+module.exports = function ($http, $q, kaKMCConfig, $httpParamSerializer, kAppConfig) {
 
     var self = this;
     var isIE = (!!window.ActiveXObject && +(/msie\s(\d+)/i.exec(navigator.userAgent)[1])) || NaN;
@@ -36,8 +36,7 @@ module.exports = function ($http, $q, SessionInfo, $httpParamSerializer, kAppCon
 
 
     function invokeAPIRequest(requestParams,queryParams) {
-        // temporary bypass to ks
-        SessionInfo.setKs($sessionStorage.ks);
+
 
         // Creating a deferred object
         var deferred = $q.defer();
@@ -48,7 +47,7 @@ module.exports = function ($http, $q, SessionInfo, $httpParamSerializer, kAppCon
         if (isIE < 10) {
             method = 'jsonp';
             parsedRequestParams = $.extend(true, {}, requestParams, {
-                ks: SessionInfo.ks,
+                ks: kaKMCConfig.ks,
                 'callback': 'JSON_CALLBACK',
                 'format': '9'
             });
@@ -56,7 +55,7 @@ module.exports = function ($http, $q, SessionInfo, $httpParamSerializer, kAppCon
         else {
             method = "post";
             parsedRequestParams = $.extend(true, {}, requestParams, {
-                ks: SessionInfo.ks,
+                ks: kaKMCConfig.ks,
                 'format': '1'
             });
         }
