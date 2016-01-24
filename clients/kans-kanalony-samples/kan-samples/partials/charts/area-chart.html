@@ -1,0 +1,47 @@
+<div>
+    <h1>Area chart samples</h1>
+    <div class="alert alert-warning" data-ng-show="vm.errorMessage">{{ vm.errorMessage }}</div>
+
+    <p>Examples for area charts supported in Kaltura Analytics 2.0 as described in issue #<a href="https://kaltura.atlassian.net/browse/PLAT-4902" target="_blank">PLAT-4902</a></p>
+
+
+    <div kan-sample-data-loader k-load-data="vm.loadData(context);"></div>
+
+
+    <div class="panel panel-default panel-info">
+        <div class="panel-heading">
+            Area chart
+        </div>
+        <div class="panel-body">
+            <div class="kan-sample-description">
+                <p>This sample demonstrate horizontal area series chart using the same labels.
+            </div>
+            <div class="kan-sample-description" >
+                <pre data-ng-show="vm.samplesDescription">{{vm.samplesDescription}}</pre>
+                <pre class="kan-no-data" data-ng-show="vm.loadingData"> -Loading data -</pre>
+                <pre class="kan-no-data" data-ng-hide="vm.loadingData || vm.samples.sample1.data">- Invoke request to show chart -</pre>
+            </div>
+            <hr>
+            <uib-tabset type="pills">
+                <uib-tab heading="Chart">
+
+
+
+                    <nvd3 data-options="vm.samples.sample1.options" data-data="vm.samples.sample1.data"
+                          data-api="vm.samples.sample1.api" data-config="vm.config"></nvd3>
+                </uib-tab>
+                <uib-tab heading="Configuration">
+                    <pre class="kan-json-code">{{vm.samples.sample1.options | json}}</pre>
+                </uib-tab>
+                <uib-tab heading="Data">
+                    <pre class="kan-json-code">{{vm.samples.sample1.data | json}}</pre>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+
+
+</div>
+</div>
+
