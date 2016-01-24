@@ -15,7 +15,8 @@ module.exports = function (grunt) {
         project: {
             // Configurable paths
             config : 'config',
-            app: 'app',
+            app: 'clients/kau-account-usage',
+            assets: '<%= project.app %>/assets',
             dist: 'dist',
             temp: '.tmp'
 
@@ -83,13 +84,13 @@ module.exports = function (grunt) {
                 ]
             },
             scss: {
-                files: ['<%= project.app %>/assets/**/*.scss'],
+                files: ['<%= project.assets %>/**/*.scss'],
                 tasks: ['kan-app-styles:app']
 
             },
             assets: {
                 files: [
-                    '<%= project.app %>/assets/*.*',
+                    '<%= project.assets %>/*.*',
                     '!**/*.scss'
                 ]
             }
@@ -184,7 +185,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%= project.temp %>',
                         dest: '<%= project.dist %>',
-                        src: ['app.js', 'vendors.js', 'assets/**/*.*']
+                        src: ['app.js', 'vendors.js', '<%= project.assets %>/**/*.*']
                     }]
             }
         },
@@ -192,7 +193,7 @@ module.exports = function (grunt) {
         'kan-app-styles': {
             app: {
                 files: {
-                    '<%= project.temp %>/assets/main.css': '<%= project.app %>/assets/sass/main.scss'
+                    '<%= project.temp %>/assets/main.css': '<%= project.assets %>/sass/main.scss'
                 }
             }
         },
@@ -200,9 +201,9 @@ module.exports = function (grunt) {
             app: {
                 options: {
                     debug: true,
-                    vendors: require('./app/vendors-references'),
+                    vendors: require('./<%= project.app %>/vendors-references'),
                     appFiles: {
-                        '.tmp/app.js': ['app/src/account-usage/kau-app/index.js']
+                        '.tmp/app.js': ['./<%= project.app %>/kau-app/index.js']
                     }
 
                 }
@@ -210,7 +211,7 @@ module.exports = function (grunt) {
             vendors: {
                 options: {
                     debug: true,
-                    vendors: require('./app/vendors-references'),
+                    vendors: require('./<%= project.app %>/vendors-references'),
                     vendorFiles: {
                         '.tmp/vendors.js': ['.']
                     }
