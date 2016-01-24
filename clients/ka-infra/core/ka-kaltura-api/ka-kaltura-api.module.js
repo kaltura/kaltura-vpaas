@@ -1,5 +1,7 @@
 ﻿'use strict';
 
-require('../ka-common-utils/index');
+require('../ka-common-utils');
+require('../ka-kmc-hoster');
 
-module.exports = angular.module('kaKalturaAPI',['kaCommonUtils']);
+
+module.exports = angular.module('kaKalturaAPI',['kaCommonUtils','kaKMCHoster']);
