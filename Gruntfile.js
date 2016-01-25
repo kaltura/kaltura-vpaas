@@ -170,6 +170,24 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
+                        cwd: 'bower_components/jquery/dist',
+                        dest: '<%= project.dist %>',
+                        src: [
+                            'jquery.js'
+                        ]
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'bower_components/bootstrap-daterangepicker',
+                        dest: '<%= project.dist %>/assets/bootstrap-daterangepicker',
+                        src: [
+                            'daterangepicker.css'
+                        ]
+                    },
+                    {
+                        expand: true,
+                        dot: true,
                         cwd: 'node_modules/leaflet/dist',
                         dest: '<%= project.dist %>/assets/leaflet',
                         src: [
@@ -185,7 +203,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%= project.temp %>',
                         dest: '<%= project.dist %>',
-                        src: ['app.js', 'vendors.js', '<%= project.assets %>/**/*.*']
+                        src: ['app.js', 'vendors.js', 'assets/**/*.*','app-config.json']
                     }]
             }
         },
@@ -241,14 +259,20 @@ module.exports = function (grunt) {
         ]);
     });
 
+    grunt.registerTask('build', function (env) {
 
-    grunt.registerTask('build', [
-        'clean:dist',
-        'jshint',
-        'kan-browserify',
-        'kan-app-styles',
-        'copy:dist'
-    ]);
+
+        grunt.config('runtime.env',env || 'staging');
+
+        grunt.task.run([
+            'clean:dist',
+            'jshint',
+            'kan-browserify',
+            'copy:config',
+            'kan-app-styles',
+            'copy:dist'
+        ]);
+    });
 
 };
 
