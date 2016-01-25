@@ -1,10 +1,10 @@
 'use strict';
 
-require('../../core/ka-kaltura-api');
+require('../../../ka-infra/core/ka-kaltura-api');
 require('angular-daterangepicker');
-require('../../core/ka-common-utils');
-require('../../ui/ka-ui-common');
-require('../../ui/ka-ui-charts');
+require('../../../ka-infra/core/ka-common-utils');
+require('../../../ka-infra/ui/ka-ui-common');
+require('../../../ka-infra/ui/ka-ui-charts');
 
 
 module.exports = angular.module('kauReports',['kaKalturaAPI','kaCommonUtils','daterangepicker','kaUICommon','kaUICharts']);

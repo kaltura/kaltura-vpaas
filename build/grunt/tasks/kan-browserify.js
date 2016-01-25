@@ -11,6 +11,8 @@ module.exports = function (grunt) {
     {
         var debug = this.data.options.debug || false;
         var vendors = this.data.options.vendors;
+        // var vendors = grunt.template.process(this.data.options.vendors);
+
 
         grunt.config.set('browserify.kan-app', {
             options: {

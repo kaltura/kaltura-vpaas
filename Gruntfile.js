@@ -14,8 +14,8 @@ module.exports = function (grunt) {
         // Project settings
         project: {
             // Configurable paths
-            config : 'config',
             app: 'clients/kau-account-usage',
+            config : '<%= project.app %>/config',
             assets: '<%= project.app %>/assets',
             dist: 'dist',
             temp: '.tmp'
@@ -201,9 +201,9 @@ module.exports = function (grunt) {
             app: {
                 options: {
                     debug: true,
-                    vendors: require('./<%= project.app %>/vendors-references'),
+                    vendors: require('./clients/kau-account-usage/vendors-references'),
                     appFiles: {
-                        '.tmp/app.js': ['./<%= project.app %>/kau-app/index.js']
+                        '.tmp/app.js': ['./<%= project.app %>/src/kau-app/index.js']
                     }
 
                 }
@@ -211,7 +211,7 @@ module.exports = function (grunt) {
             vendors: {
                 options: {
                     debug: true,
-                    vendors: require('./<%= project.app %>/vendors-references'),
+                    vendors: require('./clients/kau-account-usage/vendors-references'),
                     vendorFiles: {
                         '.tmp/vendors.js': ['.']
                     }

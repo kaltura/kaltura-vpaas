@@ -41,7 +41,7 @@ module.exports = function()
         require: ['kauTotalsSection','^kauReport'],
         controllerAs:'vm',
         bindToController : true,
-        templateUrl: 'account-usage/kau-reports/directives/sections/kau-totals-section.html',
+templateUrl: 'kau-reports/directives/sections/kau-totals-section.html',
         controller: Controller,
         link:Link
     };

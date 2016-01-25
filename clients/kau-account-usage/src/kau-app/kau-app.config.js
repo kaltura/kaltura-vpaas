@@ -30,18 +30,18 @@ module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $p
     $stateProvider.state('root.shell', {
         url: '',
         abstract:true,
-        templateUrl: 'account-usage/kau-app/partials/kau-shell.html'
+templateUrl: 'kau-app/partials/kau-shell.html'
     });
 
     $stateProvider.state('root.shell.reports', {
         url: '/reports',
         abstract:true,
-        templateUrl: 'account-usage/kau-app/partials/kau-reports.html'
+templateUrl: 'kau-app/partials/kau-reports.html'
     });
 
     $stateProvider.state('root.shell.reports.report', {
         url: '/{reportId}',
-        templateUrl: 'account-usage/kau-app/partials/kau-report.html',
+templateUrl: 'kau-app/partials/kau-report.html',
         controller : 'kauReport',
         controllerAs : 'vm'
     });

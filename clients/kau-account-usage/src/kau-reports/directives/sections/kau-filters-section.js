@@ -73,7 +73,7 @@ module.exports = function()
         require: ['kauFiltersSection','^kauReport'],
         controllerAs:'vm',
         bindToController : true,
-        templateUrl: 'account-usage/kau-reports/directives/sections/kau-filters-section.html',
+templateUrl: 'kau-reports/directives/sections/kau-filters-section.html',
         controller: Controller,
         link:Link
     };

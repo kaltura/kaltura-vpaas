@@ -1,8 +1,8 @@
 'use strict';
 
-require('../../ui/ka-ui-maps');
-require('../../ui/ka-ui-charts');
-require('../../core/ka-kaltura-api');
+require('../../../ka-infra/ui/ka-ui-maps');
+require('../../../ka-infra/ui/ka-ui-charts');
+require('../../../ka-infra/core/ka-kaltura-api');
 
 require('ngStorage');
 require('angular-leaflet-directive');

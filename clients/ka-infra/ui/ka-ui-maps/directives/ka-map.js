@@ -191,7 +191,7 @@ module.exports = function () {
             options: '=kOptions',
             rebind: '=kRebind'
         },
-        templateUrl: 'ui/ka-ui-maps/directives/ka-map.html',
+        templateUrl: 'ks-infra/ui/ka-ui-maps/directives/ka-map.html',
         controller: Controller,
         controllerAs: 'vm',
         bindToController: true,

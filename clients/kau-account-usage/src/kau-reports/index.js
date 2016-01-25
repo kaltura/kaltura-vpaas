@@ -21,10 +21,13 @@ appModule.directive('kauStatusSection',require('./directives/sections/kau-status
 appModule.filter('kauDynamicFilter',require('./filters/kau-dynamic-filter'));
 
 // todo: move to core ui module
+
+var moment = require('moment');
+
 appModule.filter('kDate',function()
 {
     return function(value)
     {
         return value ? moment(value,'YYYYMM').format('MMMM, YYYY') : value;
-    }
-})
+    };
+});
