@@ -22,14 +22,14 @@ module.exports = function (grunt) {
             bowerLicense.init({directory: options.bowerDirectory}, function (data) {
                 for (var entry in data) {
                     var item = {
-                        licenses: "",
+                        licenses: [],
                         repository: "",
                         homepage: ""
                     };
 
                     for (var prop in data[entry]) {
                         if (prop === 'licenses') {
-                            item.licenses = data[entry][prop];
+                            item.licenses.push(data[entry][prop]);
                         } else if (prop === 'repository') {
                             item.repository = data[entry][prop];
                             if (item.repository.constructor === Object) {
@@ -53,16 +53,36 @@ module.exports = function (grunt) {
                             name: entry.name,
                             version: entry.version,
                             repository: entry.repository,
-                            licenses: "",
+                            licenses: [],
                             homepage: ""
                         };
 
                         if (entry.licenseSources) {
                             if (entry.licenseSources.package && entry.licenseSources.package.sources) {
                                 _.each(entry.licenseSources.package.sources, function (source) {
-                                    item.licenses += source.license;
+                                    item.licenses.push(source.license + ' (package file)');
                                 });
                             }
+                            if (entry.licenseSources.license && entry.licenseSources.license.sources) {
+                                _.each(entry.licenseSources.license.sources, function (source) {
+                                    var license = nlf.licenseFind(source.text);
+                                    if (license !== 'undefined') {
+                                        item.licenses.push(license  + ' (license file)');
+                                    }
+                                });
+                            }
+                            if (entry.licenseSources.readme && entry.licenseSources.readme.sources) {
+                                _.each(entry.licenseSources.readme.readme, function (source) {
+                                    var license = nlf.licenseFind(source.text);
+
+                                    if (license !== 'undefined') {
+                                        item.licenses.push(license + ' (readme file)');
+                                    }
+
+                                });
+
+                            }
+
                         }
                         items.push(item);
                     });
@@ -76,7 +96,16 @@ module.exports = function (grunt) {
 
                     _.chain(items).sortBy('name').each(function (item) {
                         var formattedVersion = item.version && item.version !== 'undefined' ? item.version : '{unknown version}';
-                        var formattedLicenses = item.licenses ? item.licenses : '{unknown license}';
+                        var formattedLicenses = '';
+                        var uniqueLicenseList = _.chain(item.licenses).flattenDeep().uniq().value();
+                        if (uniqueLicenseList.length)
+                        {
+                            formattedLicenses = _.join(uniqueLicenseList,', ');
+                        }else
+                        {
+                            formattedLicenses = '{unknown license}';
+                        }
+
 
                         fileContent += util.format('| %s | %s | %s | %s |\n', item.name, formattedVersion, formattedLicenses, item.repository);
                     }).value();
@@ -93,7 +122,7 @@ module.exports = function (grunt) {
                     done();
                 });
             });
-        }else {
+        } else {
             done(new Error('missing output path'));
         }
     });

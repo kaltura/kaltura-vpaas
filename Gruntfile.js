@@ -241,6 +241,7 @@ module.exports = function (grunt) {
             all: {
                 options: {
                     bowerDirectory: 'bower_components',
+                    libsDirectory: 'libs',
                     output: 'open-source-libraries.md'
                 }
             }
