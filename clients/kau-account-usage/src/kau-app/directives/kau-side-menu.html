@@ -1,0 +1,11 @@
+<div class='side-menu row'>
+    <ul>
+        <li ng-repeat='menuItem in vm.menuItems' data-ui-sref-active="active">
+					<span>
+						<a data-ui-sref="{{menuItem.state}}" >
+                            {{menuItem.title}}
+                        </a>
+					</span>
+        </li>
+    </ul>
+</div>

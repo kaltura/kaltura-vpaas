@@ -1,0 +1,7 @@
+<div >
+    <div data-ng-if="vm.reportOptions.showErrors" class="alert alert-warning" data-ng-show="vm.reportStatus.errorMessage">{{ vm.reportStatus.errorMessage }}</div>
+    <div class="ka-status-notification-container">
+        <div data-ng-if="vm.reportOptions.showLoading" data-ka-status-notification is-loading="vm.reportStatus.isLoading"></div>
+    </div>
+</div>
+

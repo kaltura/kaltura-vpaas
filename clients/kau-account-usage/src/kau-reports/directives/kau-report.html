@@ -1,0 +1,16 @@
+<div class="row" ka-status-notification-container>
+    <div class="col-xs-12">
+        <div data-ng-repeat="section in vm.reportConfig.sections" >
+            <div class="row ka-report-section">
+                <div class="col-xs-12">
+                    <div data-ng-if="section.type === 'filters'" k-report-status="vm.reportStatus"  k-options="section.options" data-kau-filters-section></div>
+                    <div data-ng-if="section.type === 'barChart'" k-report-status="vm.reportStatus" k-options="section.options" data-kau-bar-chart-section></div>
+                    <div data-ng-if="section.type === 'table'" k-report-status="vm.reportStatus" k-options="section.options" data-kau-table-section></div>
+                    <div data-ng-if="section.type === 'totals'" k-report-status="vm.reportStatus" k-options="section.options" data-kau-totals-section></div>
+                    <div data-ng-if="section.type === 'diagnostic'" k-report-status="vm.reportStatus" k-options="section.options" data-kau-diagnostic-section></div>
+                    <div data-ng-if="section.type === 'status'" k-report-status="vm.reportStatus" k-options="section.options" data-kau-status-section></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
