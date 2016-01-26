@@ -170,7 +170,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
-                        cwd: 'bower_components/jquery/dist',
+                        cwd: 'node_modules/jquery/dist',
                         dest: '<%= project.dist %>',
                         src: [
                             'jquery.js'
@@ -179,7 +179,7 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
-                        cwd: 'bower_components/bootstrap-daterangepicker',
+                        cwd: 'node_modules/bootstrap-daterangepicker',
                         dest: '<%= project.dist %>/assets/bootstrap-daterangepicker',
                         src: [
                             'daterangepicker.css'
@@ -197,7 +197,7 @@ module.exports = function (grunt) {
                     },
                     {
                         dest: '<%= project.dist %>/assets/nvd3/nv.d3.css',
-                        src: ['bower_components/nvd3/build/nv.d3.css']
+                        src: ['node_modules/nvd3/build/nv.d3.css']
                     },
                     {
                         expand: true,

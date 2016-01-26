@@ -2,17 +2,6 @@
   "name": "kAnalony",
   "version": "0.0.1",
   "dependencies": {
-    "font-awesome": "*",
-    "lodash": "*",
-    "angular-resource": "*",
-    "angular-mocks": "*",
-    "angular-ui-router": "~0.2.13",
-    "angular-bootstrap": "*",
-    "angular-animate": "*",
-    "jquery": "~2.1.2",
-    "d3": "~3.5.12",
-    "nvd3": "~1.8.1",
-    "angular-nvd3": "~1.0.5",
-    "angular-daterangepicker": "~0.2.2"
+    "lodash": "~4.0.1"
   }
 }

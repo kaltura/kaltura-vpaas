@@ -101,7 +101,7 @@ module.exports = function()
         function buildReport(reportId)
         {
             var kauReportsConfiguration = kauReportsData.getReportsConfiguration();
-            var reportConfig = _.findWhere(kauReportsConfiguration,{reportId : reportId});
+            var reportConfig = _.find(kauReportsConfiguration,{reportId : reportId});
 
             if (reportConfig && _.every(requiredReportConfigParameters, _.partial(_.has, reportConfig)))
             {
