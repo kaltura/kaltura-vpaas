@@ -1,0 +1,17 @@
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Kaltura Analytics 2.0</a>
+            <ul class="nav navbar-nav">
+                <li data-ui-sref-active="active"><a  data-ui-sref="root.shell.about">About</a></li>
+                <li data-ng-class="{active : $state.includes('root.shell.samples')}"><a  data-ui-sref="root.shell.samples.charts.about">Charts Components</a></li>
+                <li data-ng-class="{active : $state.includes('root.shell.account-usage')}"><a  data-ui-sref="root.shell.account-usage.reports.report({reportId : 'play'})">Account Usage</a></li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid app-container">
+    <div data-ui-view></div>
+</div>

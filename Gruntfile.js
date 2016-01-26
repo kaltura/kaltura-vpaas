@@ -14,8 +14,9 @@ module.exports = function (grunt) {
         // Project settings
         project: {
             // Configurable paths
-            config : 'config',
-            app: 'app',
+            app: 'clients/kau-account-usage',
+            config : '<%= project.app %>/config',
+            assets: '<%= project.app %>/assets',
             dist: 'dist',
             temp: '.tmp'
 
@@ -83,13 +84,13 @@ module.exports = function (grunt) {
                 ]
             },
             scss: {
-                files: ['<%= project.app %>/assets/**/*.scss'],
+                files: ['<%= project.assets %>/**/*.scss'],
                 tasks: ['kan-app-styles:app']
 
             },
             assets: {
                 files: [
-                    '<%= project.app %>/assets/*.*',
+                    '<%= project.assets %>/*.*',
                     '!**/*.scss'
                 ]
             }
@@ -169,6 +170,24 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
+                        cwd: 'node_modules/jquery/dist',
+                        dest: '<%= project.dist %>',
+                        src: [
+                            'jquery.js'
+                        ]
+                    },
+                    {
+                        expand: true,
+                        dot: true,
+                        cwd: 'node_modules/bootstrap-daterangepicker',
+                        dest: '<%= project.dist %>/assets/bootstrap-daterangepicker',
+                        src: [
+                            'daterangepicker.css'
+                        ]
+                    },
+                    {
+                        expand: true,
+                        dot: true,
                         cwd: 'node_modules/leaflet/dist',
                         dest: '<%= project.dist %>/assets/leaflet',
                         src: [
@@ -178,13 +197,13 @@ module.exports = function (grunt) {
                     },
                     {
                         dest: '<%= project.dist %>/assets/nvd3/nv.d3.css',
-                        src: ['bower_components/nvd3/build/nv.d3.css']
+                        src: ['node_modules/nvd3/build/nv.d3.css']
                     },
                     {
                         expand: true,
                         cwd: '<%= project.temp %>',
                         dest: '<%= project.dist %>',
-                        src: ['app.js', 'vendors.js', 'assets/**/*.*']
+                        src: ['app.js', 'vendors.js', 'assets/**/*.*','app-config.json']
                     }]
             }
         },
@@ -192,7 +211,7 @@ module.exports = function (grunt) {
         'kan-app-styles': {
             app: {
                 files: {
-                    '<%= project.temp %>/assets/main.css': '<%= project.app %>/assets/sass/main.scss'
+                    '<%= project.temp %>/assets/main.css': '<%= project.assets %>/sass/main.scss'
                 }
             }
         },
@@ -200,9 +219,9 @@ module.exports = function (grunt) {
             app: {
                 options: {
                     debug: true,
-                    vendors: require('./app/vendors-references'),
+                    vendors: require('./clients/kau-account-usage/vendors-references'),
                     appFiles: {
-                        '.tmp/app.js': ['app/src/index.js']
+                        '.tmp/app.js': ['./<%= project.app %>/src/kau-app/index.js']
                     }
 
                 }
@@ -210,10 +229,20 @@ module.exports = function (grunt) {
             vendors: {
                 options: {
                     debug: true,
-                    vendors: require('./app/vendors-references'),
+                    vendors: require('./clients/kau-account-usage/vendors-references'),
                     vendorFiles: {
                         '.tmp/vendors.js': ['.']
                     }
+                }
+            }
+        },
+
+        'kan-license-crwaler':{
+            all: {
+                options: {
+                    bowerDirectory: 'bower_components',
+                    libsDirectory: 'libs',
+                    output: 'open-source-libraries.md'
                 }
             }
         }
@@ -224,10 +253,10 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['serve']);
 
+    grunt.registerTask('generate-license',['kan-license-crwaler']);
+
     grunt.registerTask('serve', function (env) {
-
-
-        grunt.config('runtime.env',env || 'local');
+        grunt.config('runtime.env',env || 'staging');
 
         grunt.task.run([
             'clean:serve',
@@ -235,19 +264,24 @@ module.exports = function (grunt) {
             'copy:config',
             'kan-browserify',
             'kan-app-styles',
+            'kan-license-crwaler',
             'connect:livereload',
             'watch'
         ]);
     });
 
+    grunt.registerTask('build', function (env) {
+        grunt.config('runtime.env',env || 'staging');
 
-    grunt.registerTask('build', [
-        'clean:dist',
-        'jshint',
-        'kan-browserify',
-        'kan-app-styles',
-        'copy:dist'
-    ]);
-
+        grunt.task.run([
+            'clean:dist',
+            'jshint',
+            'kan-browserify',
+            'copy:config',
+            'kan-app-styles',
+            'kan-license-crwaler',
+            'copy:dist'
+        ]);
+    });
 };
 

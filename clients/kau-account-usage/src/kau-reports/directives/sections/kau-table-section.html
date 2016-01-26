@@ -1,0 +1,15 @@
+<div data-ng-if="vm.reportStatus.hasData">
+    <div class="title-text" data-ng-if="vm.reportOptions.title">{{vm.reportOptions.title}}</div>
+    <table class="usual-table row-fluid "  ng-style="{width : vm.reportOptions.width}" data-ng-if="vm.tableHeaders" >
+        <thead>
+        <tr>
+            <th data-ng-repeat="header in vm.tableHeaders">{{header.name}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="item in vm.reportData | orderBy : vm.reportOptions.order" ng-class="{odd:$index%2==1, even:$index%2==0}">
+            <td ng-repeat="field in vm.reportOptions.fields">{{ item[field.name] |  kauDynamicFilter:field.type : field.valueFormat }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

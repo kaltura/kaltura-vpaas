@@ -78,6 +78,8 @@ To make sure it works, just run the following url in your browser *'http://local
 {"name":"kAnalony demo (local) server","version":"v3"}
 ```
 
+
+
 ## Technical information
 kAnalony application is based on many third party libraries. You can review the full list in the wiki (TBD). 
 
@@ -90,6 +92,12 @@ There is no way to bypass them, you should fix them in order to continue.
 That being said, you can use the _--force_ flag to temoprary force the process to continue but I strongly advice you not doing so because it might affect other failures.
 
 
-## License and Copyright Information
-   
-TBD
+
+# License and Copyright Information
+All code in this project is released under the [AGPLv3 license](http://www.gnu.org/licenses/agpl-3.0.html) unless a different license for a particular library is specified in the applicable library path.   
+
+Copyright © Kaltura Inc. All rights reserved.   
+Authors and contributors: See [GitHub contributors list](https://github.com/kaltura/kanalony-front-end/graphs/contributors).  
+
+### Open Source Libraries
+Review the [list of Open Source 3rd party libraries](open-source-libraries.md) used in this project.

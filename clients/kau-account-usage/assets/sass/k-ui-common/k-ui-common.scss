@@ -1,0 +1,11 @@
+
+
+.ka-status-notification-container {
+    position:relative;
+
+    .ka-status-notification {
+        position: absolute;
+        top: 50px;
+        left : 50%
+    }
+}
