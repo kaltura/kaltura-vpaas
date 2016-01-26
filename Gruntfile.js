@@ -235,6 +235,15 @@ module.exports = function (grunt) {
                     }
                 }
             }
+        },
+
+        'kan-license-crwaler':{
+            all: {
+                options: {
+                    bowerDirectory: 'bower_components',
+                    output: 'open-source-libraries.md'
+                }
+            }
         }
     });
 
@@ -243,9 +252,9 @@ module.exports = function (grunt) {
 
     grunt.registerTask('default', ['serve']);
 
+    grunt.registerTask('generate-license',['kan-license-crwaler']);
+
     grunt.registerTask('serve', function (env) {
-
-
         grunt.config('runtime.env',env || 'staging');
 
         grunt.task.run([
@@ -254,14 +263,13 @@ module.exports = function (grunt) {
             'copy:config',
             'kan-browserify',
             'kan-app-styles',
+            'kan-license-crwaler',
             'connect:livereload',
             'watch'
         ]);
     });
 
     grunt.registerTask('build', function (env) {
-
-
         grunt.config('runtime.env',env || 'staging');
 
         grunt.task.run([
@@ -270,9 +278,9 @@ module.exports = function (grunt) {
             'kan-browserify',
             'copy:config',
             'kan-app-styles',
+            'kan-license-crwaler',
             'copy:dist'
         ]);
     });
-
 };
 

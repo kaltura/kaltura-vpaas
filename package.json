@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "angular-leaflet-directive": "^0.10.0",
+    "bower-license": "^0.4.1",
     "browserify": "^12.0.1",
     "browserify-shim": "^3.8.11",
     "debowerify": "*",
@@ -34,6 +35,8 @@
     "grunt-contrib-uglify": "*",
     "grunt-contrib-watch": "*",
     "grunt-karma": "*",
+    "grunt-license": "^0.1.5",
+    "grunt-license-finder": "^1.2.2",
     "grunt-modernizr": "*",
     "grunt-newer": "*",
     "grunt-node-inspector": "^0.4.1",
@@ -52,6 +55,7 @@
     "karma-script-launcher": "*",
     "leaflet": "^0.7.7",
     "load-grunt-tasks": "*",
+    "nlf": "^1.4.0",
     "time-grunt": "*"
   },
   "engines": {
