@@ -15,6 +15,7 @@ module.exports = function (grunt) {
         project: {
             // Configurable paths
             app: 'clients/kau-account-usage',
+            infra : 'clients/ka-infra',
             config : '<%= project.app %>/config',
             assets: '<%= project.app %>/assets',
             dist: 'dist',
@@ -68,7 +69,7 @@ module.exports = function (grunt) {
                 }
             },
             js: {
-                files: ['<%= project.app %>/src/**/*.js'],
+                files: ['<%= project.app %>/src/**/*.js','<%= project.infra %>/src/**/*.js'],
                 tasks: ['jshint', 'kan-browserify:app']
             },
             config: {
