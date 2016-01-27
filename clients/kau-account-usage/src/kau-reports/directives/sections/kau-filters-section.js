@@ -3,7 +3,7 @@
 
 module.exports = function()
 {
-    function Controller($scope, kauReportsData,$window)
+    function Controller($scope,kaAppRoutingUtils,  kauReportsData,$window)
     {
         var self = this;
 
@@ -19,7 +19,8 @@ module.exports = function()
             self.reportStatus.errorMessage = false;
             kauReportsData.getReportCSVUri(requestParams).then(function (result) {
                 self.reportStatus.isLoading = false;
-                $window.location.replace(result.csvUri);
+                kaAppRoutingUtils.openExternalUri(result.csvUri);
+
             }, function (reason) {
                 self.reportStatus.isLoading = false;
                 self.reportStatus.errorMessage = 'Error occurred while trying to create csv file';
