@@ -14,12 +14,33 @@ module.exports = function()
         function loadReportData(reportData)
         {
             self.grid.data = [{key: '', values: reportData}];
+
+            if (reportData )
+            {
+                var itemsNumber = reportData.length;
+
+                if (itemsNumber > 5)
+                {
+                    self.grid.options.chart.showValues = false;
+                    self.grid.options.chart.xAxis.rotateLabels = -90;
+                }else
+                {
+                    self.grid.options.chart.showValues = true;
+                    self.grid.options.chart.xAxis.rotateLabels = 0;
+                }
+            }
+
+            if (self.grid.api.updateWithData)
+            {
+                self.grid.api.updateWithData(self.grid.data);
+            }
         }
 
         self.reportOptions = null;
         self.grid = {
             config : {
-                deepWatchDataDepth : 0
+                deepWatchDataDepth : 0,
+                deepWatchData : false
             },
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
@@ -46,7 +67,7 @@ module.exports = function()
                     },
                     duration: 500,
                     xAxis: {
-                        rotateLabels:90,
+                        rotateLabels:-90,
                         tickFormat: function (d) {
                             if (self.reportOptions.xValue.labelFormat)
                             {
