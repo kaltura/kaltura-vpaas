@@ -10,7 +10,10 @@ module.exports = function(kaKalturaAPIFacadeProvider)
         var defaultRequestData = {
             pager: {pageIndex: 1, pageSize: 1},
             headers:";month,plays,bandwidth,avg_storage,transcoding,entries,users",
-            reportText:''
+            reportText:'',
+            reportInputFilter: {
+                timeZoneOffset: -moment().utcOffset()
+            }
         }
 
         function prepareRequestData(requestParams) {

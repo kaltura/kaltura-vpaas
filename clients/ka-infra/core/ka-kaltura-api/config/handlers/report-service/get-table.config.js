@@ -20,8 +20,11 @@ module.exports = function(kaKalturaAPIFacadeProvider)
             ]
         };
         var defaultRequestData = {
-            pager: {pageIndex: 1, pageSize: 1}
-        }
+            pager: {pageIndex: 1, pageSize: 1},
+            reportInputFilter: {
+                timeZoneOffset: -moment().utcOffset()
+            }
+        };
 
         function prepareRequestData(requestParams) {
             var result = _.defaultsDeep({}, defaultRequestData, requestParams);
