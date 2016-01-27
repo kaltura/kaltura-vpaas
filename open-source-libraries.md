@@ -41,6 +41,7 @@
 | grunt-usemin | 3.1.1 | BSD-2-Clause (package file),  (license file) | git+https://github.com/yeoman/grunt-usemin |
 | jquery | 2.1.4 | MIT (package file),  (license file) | git+https://github.com/jquery/jquery |
 | jshint-stylish | 2.1.0 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/jshint-stylish |
+| json.sortify | 1.0.2 | Apache-2.0 (package file), Apache (license file) | git+https://github.com/ThomasR/JSON.sortify |
 | kAnalony | 0.9.1 | GPL (license file),  (license file) | git+https://github.com/kaltura/kanalony-front-end |
 | leaflet | 0.7.7 |  (license file) | http://github.com/Leaflet/Leaflet |
 | load-grunt-tasks | 3.4.0 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/load-grunt-tasks |
