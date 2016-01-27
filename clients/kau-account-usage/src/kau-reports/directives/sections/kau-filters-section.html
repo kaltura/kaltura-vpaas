@@ -3,7 +3,7 @@
     <form class="form-inline">
         <div class="form-group" data-ng-if="vm.reportOptions.filters.dateRange">
             <label>Date Range:
-                <input date-range-picker class="form-control date-picker" options="vm.dateOptions" type="text"
+                <input date-range-picker class="form-control date-picker" min="vm.dateOptions.min" max="vm.dateOptions.max" options="vm.dateOptions" type="text"
                        ng-model="vm.filters.date"/>
             </label>
         </div>

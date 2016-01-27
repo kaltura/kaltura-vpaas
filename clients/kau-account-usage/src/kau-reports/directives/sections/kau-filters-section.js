@@ -23,7 +23,7 @@ module.exports = function()
 
             }, function (reason) {
                 self.reportStatus.isLoading = false;
-                self.reportStatus.errorMessage = 'Error occurred while trying to create csv file';
+                self.reportStatus.errorMessage = 'Error occurred while trying to create cvs file';
             });
 
         }
@@ -31,6 +31,7 @@ module.exports = function()
         self.filters = { date : { startDate: moment().subtract(2, 'month').startOf('month'), endDate: moment().endOf('month')}};
 
         self.dateOptions = {
+            max: moment().format('MM-DD-YYYY'),
             ranges: {
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Previous Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
