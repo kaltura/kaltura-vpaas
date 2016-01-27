@@ -3,7 +3,7 @@
 
 module.exports = function()
 {
-    function Controller($scope,kFormatterUtils)
+    function Controller($scope,kFormatterUtils,$timeout)
     {
         var self = this;
         var defaultOptions = {
@@ -19,18 +19,20 @@ module.exports = function()
         self.reportOptions = null;
         self.grid = {
             config : {
+                deepWatchDataDepth : 0
             },
             data: null,
             api: {}, /* this object will be modified by nvd3 directive to have invokation functions */
             options: {
                 chart: {
                     type: 'discreteBarChart',
-                    height: 300,
+                    height: 450,
                     noData : '',
-
                     color : ['#00a1d5'],
-                    staggerLabels: true,
-                    rotateLabels: true,
+                    margin :{
+                        bottom: 150
+                    },
+                    staggerLabels: false,
                     x: function (d) {
                         return d[self.reportOptions.xValue.name];
                     },
@@ -38,12 +40,13 @@ module.exports = function()
                         return d[self.reportOptions.yValue.name];
 
                     },
-                    showValues: true,
+                    showValues: false,
                     valueFormat: function (d) {
                         return d3.format(',')(d);
                     },
                     duration: 500,
                     xAxis: {
+                        rotateLabels:90,
                         tickFormat: function (d) {
                             if (self.reportOptions.xValue.labelFormat)
                             {
