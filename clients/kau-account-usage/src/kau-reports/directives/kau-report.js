@@ -81,7 +81,7 @@ module.exports = function()
             sections.push(section);
 
             // extend section api with functions that can trigger report actions
-            $.extend(section,{refreshReport : loadData,updateStatus : 'Error occurred while trying to create csv file'});
+            $.extend(section,{refreshReport : loadData});
 
             // wait until all sections were added to load data
             if (sections.length=== self.reportConfig.sections.length)
