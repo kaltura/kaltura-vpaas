@@ -8,6 +8,7 @@ module.exports = function (grunt) {
         grunt.config.set('sass.kan-styles',
             {
                 options: {
+                    sourceMap: false,
                     style: 'expanded'
                 },
                 files: this.data.files

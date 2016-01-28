@@ -17,6 +17,7 @@
 | browserify-shim | 3.8.12 | MIT (package file),  (license file) | http://github.com/thlorenz/browserify-shim |
 | d3 | 3.5.13 | BSD-3-Clause (package file),  (license file) | git+https://github.com/mbostock/d3 |
 | grunt | 0.4.5 | MIT (package file),  (license file) | http://github.com/gruntjs/grunt |
+| grunt-angular-templates | 1.0.2 | MIT (package file),  (license file) | http://github.com/ericclemmons/grunt-angular-templates |
 | grunt-autoprefixer | 3.0.3 | MIT (package file), MIT (license file) | git+https://github.com/ndmitry/grunt-autoprefixer |
 | grunt-browserify | 4.0.1 | MIT (package file) | http://github.com/jmreidy/grunt-browserify |
 | grunt-concurrent | 2.1.0 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/grunt-concurrent |
@@ -32,13 +33,16 @@
 | grunt-contrib-sass | 0.9.2 | MIT (package file) | git+https://github.com/gruntjs/grunt-contrib-sass |
 | grunt-contrib-uglify | 0.11.0 | MIT (package file) | git+https://github.com/gruntjs/grunt-contrib-uglify |
 | grunt-contrib-watch | 0.6.1 | MIT (package file),  (license file) | http://github.com/gruntjs/grunt-contrib-watch |
+| grunt-dom-munger | 3.4.0 | MIT (package file),  (license file) | http://github.com/cgross/grunt-dom-munger |
 | grunt-modernizr | 1.0.2 | MIT (package file),  (license file) | http://github.com/Modernizr/grunt-modernizr |
 | grunt-newer | 1.1.1 | MIT (package file),  (license file) | http://github.com/tschaub/grunt-newer |
+| grunt-ng-annotate | 1.0.1 | MIT (package file) | git+https://github.com/mzgol/grunt-ng-annotate |
 | grunt-node-inspector | 0.4.1 | MIT (package file),  (license file) | git+https://github.com/ChrisWren/grunt-node-inspector |
 | grunt-rev | 0.1.0 | MIT (package file),  (license file) | http://github.com/cbas/grunt-rev |
 | grunt-shell | 1.1.2 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/grunt-shell |
 | grunt-svgmin | 3.1.2 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/grunt-svgmin |
 | grunt-usemin | 3.1.1 | BSD-2-Clause (package file),  (license file) | git+https://github.com/yeoman/grunt-usemin |
+| grunt-zip | 0.17.1 | MIT (package file),  (license file) | http://github.com/twolfson/grunt-zip |
 | jquery | 2.1.4 | MIT (package file),  (license file) | git+https://github.com/jquery/jquery |
 | jshint-stylish | 2.1.0 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/jshint-stylish |
 | json.sortify | 1.0.2 | Apache-2.0 (package file), Apache (license file) | git+https://github.com/ThomasR/JSON.sortify |

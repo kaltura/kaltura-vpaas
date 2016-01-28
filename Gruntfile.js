@@ -3,42 +3,23 @@
 var _ = require('lodash');
 var defaultEnvName = 'dev';
 var defaultConfigName = 'live';
+var allEnvTaskConfigName = 'all-env';
+var vpaasAppModule = 'kauApp';
 
 module.exports = function (grunt) {
 
-    function addEnvTasks(tasks, newTasks, envTaskId)
-    {
-        _.each(newTasks, function(taskName)
-        {
-            var taskConfig = grunt.config(taskName);
-            _.chain(taskConfig).keys().filter(function(key)
-            {
-                return key === envTaskId || key.indexOf(envTaskId + '-') === 0;
-            }).each(function(key)
-            {
-                console.log(taskName + ':' + key);
-                tasks.push(taskName + ':' + key);
-            }).value();
-        });
-    }
-
+    var packageConfig = grunt.file.readJSON('./package.json');
     var buildConfig = grunt.file.readJSON('./build/build-config.json');
 
-    // Load grunt tasks automatically
-    require('load-grunt-tasks')(grunt);
-
-    // Time how long tasks take. Can help when optimizing build times
-    require('time-grunt')(grunt);
-
     // Define the configuration for all the tasks
-    grunt.initConfig({
-
+    var gruntConfig = {
+        packageConfig: packageConfig,
         // Project settings
         project: {
             // Configurable paths
             app: 'clients/kau-account-usage',
-            infra : 'clients/ka-infra',
-            config : '<%= project.app %>/config',
+            infra: 'clients/ka-infra',
+            config: '<%= project.app %>/config',
             assets: '<%= project.app %>/assets',
             dist: 'dist',
             temp: '.tmp'
@@ -65,6 +46,7 @@ module.exports = function (grunt) {
             },
             'env-prod': {
                 options: {
+                    keepalive: true,
                     open: true,
                     base: '<%= project.dist %>',
                     livereload: false
@@ -79,28 +61,28 @@ module.exports = function (grunt) {
                     port: '<%= connect.options.livereload %>'
                 }
             },
-            js: {
-                files: ['<%= project.app %>/src/**/*.js','<%= project.infra %>/src/**/*.js'],
+            'env-dev-js': {
+                files: ['<%= project.app %>/src/**/*.js', '<%= project.infra %>/**/*.js'],
                 tasks: ['jshint', 'kan-browserify:app']
             },
-            config: {
-                options:{
+            'env-dev-config': {
+                options: {
                     spawn: false
                 },
                 files: ['<%= project.config %>/*.json'],
                 tasks: ['copy:config']
             },
-            html: {
+            'env-dev-html': {
                 files: [
                     '<%= project.app %>/**/*.html'
                 ]
             },
-            scss: {
+            'env-dev-scss': {
                 files: ['<%= project.assets %>/**/*.scss'],
                 tasks: ['kan-app-styles:app']
 
             },
-            assets: {
+            'env-dev-assets': {
                 files: [
                     '<%= project.assets %>/*.*',
                     '!**/*.scss'
@@ -144,8 +126,7 @@ module.exports = function (grunt) {
 
         // Copies remaining files to places other tasks can use
         copy: {
-            'env-dev':
-            {
+            'env-dev': {
                 files: [{
                     dest: '<%= project.temp %>/app-config.json',
                     src: '<%= project.config %>/<%= runtime.configName %>.json'
@@ -154,26 +135,20 @@ module.exports = function (grunt) {
             'env-prod': {
                 files: [
                     {
-                        dest: '<%= project.temp %>/app-config.json',
+                        dest: '<%= project.dist %>/app-config.json',
                         src: '<%= project.config %>/<%= runtime.configName %>.json'
                     },
                     {
-                    expand: true,
-                    dot: true,
-                    cwd: '<%= project.app %>/src',
-                    dest: '<%= project.dist %>',
-                    src: [
-                        '**/*.html'
-                    ]
-                },
+                        expand: true,
+                        cwd: '<%= project.temp %>',
+                        dest: '<%= project.dist %>',
+                        src: ['app.js', 'assets/**/*.*','!assets/**.scss']
+                    },
                     {
                         expand: true,
                         dot: true,
-                        cwd: '<%= project.app %>',
-                        dest: '<%= project.dist %>',
-                        src: [
-                            '*.html'
-                        ]
+                        dest: '<%= project.dist %>/',
+                        src: ['LICENSE', 'open-source-libraries.md']
                     },
                     {
                         expand: true,
@@ -182,15 +157,6 @@ module.exports = function (grunt) {
                         dest: '<%= project.dist %>/assets/bootstrap',
                         src: [
                             '**/*.*'
-                        ]
-                    },
-                    {
-                        expand: true,
-                        dot: true,
-                        cwd: 'node_modules/jquery/dist',
-                        dest: '<%= project.dist %>',
-                        src: [
-                            'jquery.js'
                         ]
                     },
                     {
@@ -215,25 +181,19 @@ module.exports = function (grunt) {
                     {
                         dest: '<%= project.dist %>/assets/nvd3/nv.d3.css',
                         src: ['node_modules/nvd3/build/nv.d3.css']
-                    },
-                    {
-                        expand: true,
-                        cwd: '<%= project.temp %>',
-                        dest: '<%= project.dist %>',
-                        src: ['app.js', 'vendors.js', 'assets/**/*.*','app-config.json']
                     }]
             }
         },
 
         'kan-app-styles': {
-            'env-dev': {
+            'all-env': {
                 files: {
                     '<%= project.temp %>/assets/main.css': '<%= project.assets %>/sass/main.scss'
                 }
             }
         },
         'kan-browserify': {
-            'env-dev-app': {
+            'all-env-app': {
                 options: {
                     debug: true,
                     vendors: require('./clients/kau-account-usage/vendors-references'),
@@ -243,7 +203,7 @@ module.exports = function (grunt) {
 
                 }
             },
-            'env-dev-vendors': {
+            'all-env-vendors': {
                 options: {
                     debug: true,
                     vendors: require('./clients/kau-account-usage/vendors-references'),
@@ -254,8 +214,8 @@ module.exports = function (grunt) {
             }
         },
 
-        'kan-license-crwaler':{
-            all: {
+        'kan-license-crwaler': {
+            'all-env': {
                 options: {
                     bowerDirectory: 'bower_components',
                     libsDirectory: 'libs',
@@ -264,23 +224,107 @@ module.exports = function (grunt) {
             }
         },
         zip: {
-            'env_prod': {
-                'location/to/zip/files.zip': ['file/to/zip.js', 'another/file.css']
+            'env-prod': {
+                files: {
+                    '<%= project.temp + "/" + packageConfig.name + "v_" + packageConfig.version %>.zip': ['dist/**/*.*']
+                }
+            }
+        },
+        concat: {
+            'env-prod-vendors': {
+                src: ['./node_modules/jquery/dist/jquery.js', '<%= project.temp %>/vendors.js'
+                ],
+                dest: '<%= project.dist %>/vendors.js',
+            },
+            'env-prod-templates': {
+                src: ['<%= project.temp %>/infra-templates.js', '<%= project.temp %>/app-templates.js'],
+                dest: '<%= project.dist %>/app-templates.js',
+            }
+        },
+        ngtemplates: {
+            options: {
+                module : vpaasAppModule,
+                htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true}
+            },
+            'env-prod-app': {
+                cwd: '<%=project.app %>/src',
+                src: ['**/**.html', '!index.html'],
+                dest: '<%= project.temp %>/app-templates.js'
+
+
+            },
+            'env-prod-infra': {
+                cwd: '<%=project.infra %>',
+                src: '**/**.html',
+                dest: '<%= project.temp %>/infra-templates.js'
+            }
+        },
+        'dom_munger': {
+            'env-prod': {
+                options: {
+                    read: [
+                        {selector: 'link', attribute: 'href', writeto: 'cssRefs', isPath: true},
+                        {selector: 'script', attribute: 'src', writeto: 'jsRefs', isPath: true}
+                    ],
+                    remove: ['[data-remove=true]', 'script'],
+                    append: [
+                        {selector: 'body', html: '<script src="vendors.js"></script>'},
+                        {selector: 'body', html: '<script src="app.js"></script>'},
+                        {selector: 'body', html: '<script src="app-templates.js"></script>'}
+                    ],
+                    callback: function ($) {
+                        // this is a temporary workaround until we will support css budnling
+                        _.each($('link'), function (element) {
+                            var href = $(element).attr('href');
+                            href = 'assets/' + href.replace(/(node_modules|dist|build|assets)[\/]/g, '');
+                            $(element).attr('href', href);
+                        });
+                    }
+
+                },
+                src: '<%= project.app %>/index.html',
+                dest: '<%= project.dist %>/index.html'
             }
         }
-    });
+    };
+
+
+    function logTasksList(tasks) {
+        console.log('Running the following tasks:');
+        _.each(tasks, function (task) {
+            console.log(task);
+        });
+    }
+
+    function addEnvTasks(tasks, newTasks, envTaskId) {
+        _.each(newTasks, function (taskName) {
+            var taskConfig = gruntConfig[taskName];
+            _.chain(taskConfig).keys().filter(function (key) {
+                return key === envTaskId || key.indexOf(envTaskId + '-') === 0 || key === allEnvTaskConfigName || key.indexOf(allEnvTaskConfigName + '-') === 0;
+            }).each(function (key) {
+                tasks.push(taskName + ':' + key);
+            }).value();
+        });
+    }
+
+    // Load grunt tasks automatically
+    require('load-grunt-tasks')(grunt);
+
+    // Time how long tasks take. Can help when optimizing build times
+    require('time-grunt')(grunt);
+
+    grunt.initConfig(gruntConfig);
 
     grunt.loadTasks('./build/grunt/tasks');
 
-    grunt.registerTask('generate-license',['kan-license-crwaler']);
+    grunt.registerTask('generate-license', ['kan-license-crwaler']);
 
     grunt.registerTask('build', function (envName, configName) {
         envName = envName || defaultEnvName;
         configName = configName || defaultConfigName;
 
         var envConfig = buildConfig.environments[envName];
-        if (!envConfig)
-        {
+        if (!envConfig) {
             grunt.fatal('missing configuration for environment "' + envName + '"');
             return;
         }
@@ -289,28 +333,29 @@ module.exports = function (grunt) {
 
         grunt.config('runtime.configName', configName);
 
-        console.log('invoking task with environment "' + envName + '" (grunt task "' + envTaskId + '", config "' +  configName + '")');
+        console.log('invoking task with environment "' + envName + '" (grunt task "' + envTaskId + '", config "' + configName + '")');
 
 
         var tasks = ['jshint'];
 
-        addEnvTasks(tasks, ['clean','kan-browserify','kan-app-styles'],envTaskId);
+        addEnvTasks(tasks, ['clean', 'kan-browserify', 'kan-app-styles'], envTaskId);
 
         tasks.push('kan-license-crwaler');
 
-        addEnvTasks(tasks, ['copy'],envTaskId);
+        addEnvTasks(tasks, ['ngtemplates', 'dom_munger', 'concat', 'copy', 'zip'], envTaskId);
+
+        logTasksList(tasks);
 
         grunt.task.run(tasks);
     });
 
 
-    grunt.registerTask('serve', function (envName,configName) {
+    grunt.registerTask('serve', function (envName, configName) {
         envName = envName || defaultEnvName;
         configName = configName || defaultConfigName;
 
         var envConfig = buildConfig.environments[envName];
-        if (!envConfig)
-        {
+        if (!envConfig) {
             grunt.fatal('missing configuration for environment "' + envName + '"');
             return;
         }
@@ -323,10 +368,12 @@ module.exports = function (grunt) {
         ];
 
         if (envTaskId === 'env-dev') {
-            tasks.push('watch' /* temoprary solution - currently only support watching env dev */);
+            tasks.push('watch');
         }
 
-    grunt.task.run(tasks);
+        logTasksList(tasks);
+
+        grunt.task.run(tasks);
     });
 };
 
