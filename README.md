@@ -59,6 +59,26 @@ This command will browserify your project and open a browser with your site. Whe
 
 If you get any errors during the process just follow the [FAQ](##faq) section.
 
+### Packaging the application for deployment
+When you are ready to deploy your application run one of the following.
+
+To build the project and create a zip file run the following command.
+
+```
+$ grunt build:prod 
+```
+You will then have:
+
+- folder **'dist'** will include the deployed application
+- folder **'.tmp'** will include a zip file ready for deployment
+
+If you want to test your packaged application in a browser first run the following command:
+
+```
+$ grunt serve:prod
+```
+
+
 ## Demo (local) server
 kAnalony front-end application uses a demo server to simulate front-end scenarios. In order to run the demo (local) server, open the server folder ```$ cd server``` and install node modules.
 
