@@ -1,0 +1,12 @@
+{
+    "environments":
+    {
+        "dev":{
+            "gruntTaskId" :  "env-dev",
+            "watch" : true
+        },
+        "prod":{
+            "gruntTaskId" :  "env-prod"
+        }
+    }
+}

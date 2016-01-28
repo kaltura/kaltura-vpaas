@@ -1,6 +1,28 @@
 'use strict';
 
+var _ = require('lodash');
+var defaultEnvName = 'dev';
+var defaultConfigName = 'live';
+
 module.exports = function (grunt) {
+
+    function addEnvTasks(tasks, newTasks, envTaskId)
+    {
+        _.each(newTasks, function(taskName)
+        {
+            var taskConfig = grunt.config(taskName);
+            _.chain(taskConfig).keys().filter(function(key)
+            {
+                return key === envTaskId || key.indexOf(envTaskId + '-') === 0;
+            }).each(function(key)
+            {
+                console.log(taskName + ':' + key);
+                tasks.push(taskName + ':' + key);
+            }).value();
+        });
+    }
+
+    var buildConfig = grunt.file.readJSON('./build/build-config.json');
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
@@ -30,7 +52,7 @@ module.exports = function (grunt) {
                 // Change this to '0.0.0.0' to access the server from outside
                 hostname: 'localhost'
             },
-            livereload: {
+            'env-dev': {
                 options: {
                     open: true,
                     base: [
@@ -41,18 +63,7 @@ module.exports = function (grunt) {
                     ]
                 }
             },
-            test: {
-                options: {
-                    hostname: 'localhost',
-                    port: 9001,
-                    base: [
-                        '.tmp',
-                        'test',
-                        '<%= project.app %>'
-                    ]
-                }
-            },
-            dist: {
+            'env-prod': {
                 options: {
                     open: true,
                     base: '<%= project.dist %>',
@@ -99,20 +110,20 @@ module.exports = function (grunt) {
 
         // Empties folders to start fresh
         clean: {
-            dist: {
+            'env-prod': {
                 files: [{
                     dot: true,
                     src: [
-                        '.tmp',
+                        '<%= project.temp %>',
                         '<%= project.dist %>/*',
                         '!<%= project.dist %>/.git*'
                     ]
                 }]
             },
-            serve: {
+            'env-dev': {
                 files: [{
                     dot: true,
-                    src: ['<%= project.temp %>/**/*.*']
+                    src: ['<%= project.temp %>']
                 }]
             }
         },
@@ -133,15 +144,20 @@ module.exports = function (grunt) {
 
         // Copies remaining files to places other tasks can use
         copy: {
-            'config':
+            'env-dev':
             {
                 files: [{
                     dest: '<%= project.temp %>/app-config.json',
-                    src: '<%= project.config %>/<%= runtime.env %>.json'
+                    src: '<%= project.config %>/<%= runtime.configName %>.json'
                 }]
             },
-            'dist': {
-                files: [{
+            'env-prod': {
+                files: [
+                    {
+                        dest: '<%= project.temp %>/app-config.json',
+                        src: '<%= project.config %>/<%= runtime.configName %>.json'
+                    },
+                    {
                     expand: true,
                     dot: true,
                     cwd: '<%= project.app %>/src',
@@ -210,14 +226,14 @@ module.exports = function (grunt) {
         },
 
         'kan-app-styles': {
-            app: {
+            'env-dev': {
                 files: {
                     '<%= project.temp %>/assets/main.css': '<%= project.assets %>/sass/main.scss'
                 }
             }
         },
         'kan-browserify': {
-            app: {
+            'env-dev-app': {
                 options: {
                     debug: true,
                     vendors: require('./clients/kau-account-usage/vendors-references'),
@@ -227,7 +243,7 @@ module.exports = function (grunt) {
 
                 }
             },
-            vendors: {
+            'env-dev-vendors': {
                 options: {
                     debug: true,
                     vendors: require('./clients/kau-account-usage/vendors-references'),
@@ -246,43 +262,71 @@ module.exports = function (grunt) {
                     output: 'open-source-libraries.md'
                 }
             }
+        },
+        zip: {
+            'env_prod': {
+                'location/to/zip/files.zip': ['file/to/zip.js', 'another/file.css']
+            }
         }
     });
 
     grunt.loadTasks('./build/grunt/tasks');
 
-
-    grunt.registerTask('default', ['serve']);
-
     grunt.registerTask('generate-license',['kan-license-crwaler']);
 
-    grunt.registerTask('serve', function (env) {
-        grunt.config('runtime.env',env || 'staging');
+    grunt.registerTask('build', function (envName, configName) {
+        envName = envName || defaultEnvName;
+        configName = configName || defaultConfigName;
 
-        grunt.task.run([
-            'clean:serve',
-            'jshint',
-            'copy:config',
-            'kan-browserify',
-            'kan-app-styles',
-            'kan-license-crwaler',
-            'connect:livereload',
-            'watch'
-        ]);
+        var envConfig = buildConfig.environments[envName];
+        if (!envConfig)
+        {
+            grunt.fatal('missing configuration for environment "' + envName + '"');
+            return;
+        }
+
+        var envTaskId = envConfig.gruntTaskId;
+
+        grunt.config('runtime.configName', configName);
+
+        console.log('invoking task with environment "' + envName + '" (grunt task "' + envTaskId + '", config "' +  configName + '")');
+
+
+        var tasks = ['jshint'];
+
+        addEnvTasks(tasks, ['clean','kan-browserify','kan-app-styles'],envTaskId);
+
+        tasks.push('kan-license-crwaler');
+
+        addEnvTasks(tasks, ['copy'],envTaskId);
+
+        grunt.task.run(tasks);
     });
 
-    grunt.registerTask('build', function (env) {
-        grunt.config('runtime.env',env || 'staging');
 
-        grunt.task.run([
-            'clean:dist',
-            'jshint',
-            'kan-browserify',
-            'copy:config',
-            'kan-app-styles',
-            'kan-license-crwaler',
-            'copy:dist'
-        ]);
+    grunt.registerTask('serve', function (envName,configName) {
+        envName = envName || defaultEnvName;
+        configName = configName || defaultConfigName;
+
+        var envConfig = buildConfig.environments[envName];
+        if (!envConfig)
+        {
+            grunt.fatal('missing configuration for environment "' + envName + '"');
+            return;
+        }
+
+        var envTaskId = envConfig.gruntTaskId;
+
+        var tasks = [
+            'build:' + envName + ':' + configName,
+            'connect:' + envTaskId
+        ];
+
+        if (envTaskId === 'env-dev') {
+            tasks.push('watch' /* temoprary solution - currently only support watching env dev */);
+        }
+
+    grunt.task.run(tasks);
     });
 };
 
