@@ -1,11 +1,11 @@
 "use strict";
 
-function KalturaAPIFacade($q, RequestsHandlerRepository, $injector) {
+function KalturaAPIFacade($q, kalturaAPIContext, $injector) {
     var self = this;
 
     function invoke(service, action, requestParams) {
 
-        var handler = RequestsHandlerRepository.get({service : service, action:action});
+        var handler = kalturaAPIContext.getHandler({service : service, action:action});
 
         if (handler) {
             return $injector.instantiate(handler).handleRequest(requestParams);
@@ -14,15 +14,40 @@ function KalturaAPIFacade($q, RequestsHandlerRepository, $injector) {
         }
     };
 
+
+    function getKalturaAPIService()
+    {
+        return kalturaAPIContext.getInfo().kalturaApiUri;
+    }
+
+    function getPartnerKS()
+    {
+        return kalturaAPIContext.getInfo().partnerKS;
+    }
+
+
+    self.getPartnerKS = getPartnerKS;
+    self.getKalturaAPIService = getKalturaAPIService;
     self.invoke = invoke;
 };
 
 
 module.exports = function () {
 
-    var handlers = {};
-    var RequestsHandlerRepository = {
-        get: getHandler
+    var handlers = {},
+        kalturaAPIContext = {
+            getHandler: getHandler,
+            getInfo : getInfo
+        },
+        info = {
+            partnerKS : '',
+            kalturaApiUri : ''
+        };
+
+
+    function getInfo()
+    {
+        return info;
     }
 
     function getHandler(handlerInfo) {
@@ -39,11 +64,23 @@ module.exports = function () {
         handlers[key] = handler;
     }
 
+    function setKalturaAPIService(serviceUri)
+    {
+        info.kalturaApiUri = serviceUri;
+    }
+
+    function setPartnerKS(ks)
+    {
+        info.partnerKS = ks;
+    }
+
+    this.setPartnerKS = setPartnerKS;
+    this.setKalturaAPIService = setKalturaAPIService;
 
     this.registerHandler = registerHandler;
 
 
     this.$get = function ($injector) {
-        return $injector.instantiate(KalturaAPIFacade, {RequestsHandlerRepository: RequestsHandlerRepository});
+        return $injector.instantiate(KalturaAPIFacade, {kalturaAPIContext: kalturaAPIContext});
     }
 }

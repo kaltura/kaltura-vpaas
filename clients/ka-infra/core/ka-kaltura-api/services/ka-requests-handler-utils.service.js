@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function ($http, $q, kaKMCConfig, $httpParamSerializer, kAppConfig) {
+module.exports = function ($http, $q,  $httpParamSerializer, kaKalturaAPIFacade) {
 
     var self = this;
     var isIE = (!!window.ActiveXObject && +(/msie\s(\d+)/i.exec(navigator.userAgent)[1])) || NaN;
@@ -47,7 +47,7 @@ module.exports = function ($http, $q, kaKMCConfig, $httpParamSerializer, kAppCon
         if (isIE < 10) {
             method = 'jsonp';
             parsedRequestParams = $.extend(true, {}, requestParams, {
-                ks: kaKMCConfig.ks,
+                ks: kaKalturaAPIFacade.getPartnerKS(),
                 'callback': 'JSON_CALLBACK',
                 'format': '9'
             });
@@ -55,12 +55,12 @@ module.exports = function ($http, $q, kaKMCConfig, $httpParamSerializer, kAppCon
         else {
             method = "post";
             parsedRequestParams = $.extend(true, {}, requestParams, {
-                ks: kaKMCConfig.ks,
+                ks: kaKalturaAPIFacade.getPartnerKS(),
                 'format': '1'
             });
         }
 
-        var url = kAppConfig.server.apiUri;
+        var url = kaKalturaAPIFacade.getKalturaAPIService();
         if (queryParams)
         {
             url += '?' + $httpParamSerializer(queryParams);

@@ -1,7 +1,14 @@
 ﻿'use strict';
 
-module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $provide, kAppConfig) {
+module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $provide, kAppConfig,kaKMCConfig, kaKalturaAPIFacadeProvider) {
 
+
+    function getQueryStringByName(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)'),
+            results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
 
     $urlRouterProvider.otherwise(kAppConfig.routing.defaultUri);
 
@@ -20,6 +27,12 @@ module.exports = function ($stateProvider, $urlRouterProvider, $httpProvider, $p
             return $delegate;
         }
     );
+
+    var apiUri = kaKMCConfig.kalturaAPIUri || _.get(kAppConfig,'server.apiUri');
+    var partnerKS = kaKMCConfig.ks || getQueryStringByName('ks');
+    kaKalturaAPIFacadeProvider.setKalturaAPIService(apiUri);
+    kaKalturaAPIFacadeProvider.setPartnerKS(partnerKS);
+
 
     $stateProvider.state('root', {
         url: '',

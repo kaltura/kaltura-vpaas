@@ -2,24 +2,21 @@
 
 var config = {};
 
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
+
 
 function extractKMC()
 {
     try {
         var kmc = window.parent.kmc;
         if (kmc && kmc.vars) {
-            if (kmc.vars.ks)
-            config.ks =  kmc.vars.ks;
-            if (kmc.vars.partner_id)
+            if (kmc.vars.ks) {
+                config.ks = kmc.vars.ks;
+            }
+            if (kmc.vars.partner_id) {
                 config.pid = kmc.vars.partner_id;
+            }
             if (kmc.vars.service_url)
-                config.service_url = kmc.vars.service_url;
+                config.kalturaAPIUri = kmc.vars.service_url + '/api_v3/index.php';
             if (kmc.vars.liveanalytics) {
                 if (kmc.vars.liveanalytics.player_id) {
                     config.live.playerId = kmc.vars.liveanalytics.player_id;
@@ -42,11 +39,6 @@ function extractKMC()
 
 extractKMC();
 
-if (!config.ks)
-{
-    // fallback to query string ks
-    config.ks =  getParameterByName('ks');
-}
 
 
 module.exports = config;
