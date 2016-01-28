@@ -38,9 +38,8 @@ module.exports = function (grunt) {
                     open: true,
                     base: [
                         './',
-                        '.tmp',
                         '<%= project.app %>/src',
-                        '<%= project.app %>'
+                        '.tmp',
                     ]
                 }
             },
@@ -225,9 +224,9 @@ module.exports = function (grunt) {
         },
         zip: {
             'env-prod': {
-                files: {
-                    '<%= project.temp + "/" + packageConfig.name + "v_" + packageConfig.version %>.zip': ['dist/**/*.*']
-                }
+                cwd : 'dist/',
+                dest: '<%= project.temp + "/" + packageConfig.name + "v_" + packageConfig.version %>.zip',
+                src : ['dist/**/*.*']
             }
         },
         concat: {
@@ -260,6 +259,16 @@ module.exports = function (grunt) {
             }
         },
         'dom_munger': {
+            'env-dev': {
+                options: {
+                    append: [
+                        {selector: 'body', html: '<script src="vendors.js"></script>'},
+                        {selector: 'body', html: '<script src="app.js"></script>'},
+                    ]
+                },
+                src: '<%= project.app %>/index.html',
+                dest: '<%= project.temp %>/index.html'
+            },
             'env-prod': {
                 options: {
                     read: [
