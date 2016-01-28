@@ -254,7 +254,7 @@ module.exports = function (grunt) {
         zip: {
             'env-prod': {
                 cwd: 'dist/',
-                dest: '<%= project.temp + "/" + packageConfig.name + "v_" + packageConfig.version %>.zip',
+                dest: '<%= project.temp + "/" + packageConfig.name + "_v" + packageConfig.version %>.zip',
                 src: ['dist/**/*.*']
             }
         },
