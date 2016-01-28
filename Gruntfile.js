@@ -61,8 +61,11 @@ module.exports = function (grunt) {
                 }
             },
             'env-dev-js': {
+                options: {
+                    spawn: false
+                },
                 files: ['<%= project.app %>/src/**/*.js', '<%= project.infra %>/**/*.js'],
-                tasks: ['jshint', 'kan-browserify:app']
+                tasks: ['jshint', 'kan-browserify:all-env-app']
             },
             'env-dev-config': {
                 options: {
@@ -115,10 +118,10 @@ module.exports = function (grunt) {
                 jshintrc: '.jshintrc',
                 reporter: require('jshint-stylish')
             },
-            all: [
+            'all-env': [
                 'Gruntfile.js',
                 '<%= project.app %>/src/{,*/}*.js',
-                'test/spec/{,*/}*.js'
+                '<%= project.infra %>/{,*/}*.js'
             ]
         },
 
@@ -345,9 +348,9 @@ module.exports = function (grunt) {
         console.log('invoking task with environment "' + envName + '" (grunt task "' + envTaskId + '", config "' + configName + '")');
 
 
-        var tasks = ['jshint'];
+        var tasks = [];
 
-        addEnvTasks(tasks, ['clean', 'kan-browserify', 'kan-app-styles'], envTaskId);
+        addEnvTasks(tasks, ['jshint','clean', 'kan-browserify', 'kan-app-styles'], envTaskId);
 
         tasks.push('kan-license-crwaler');
 
