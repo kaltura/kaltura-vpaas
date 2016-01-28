@@ -144,7 +144,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%= project.temp %>',
                         dest: '<%= project.dist %>',
-                        src: ['app.js', 'assets/**/*.*','!assets/**.scss']
+                        src: ['app.js', 'assets/**/*.*', '!assets/**.scss']
                     },
                     {
                         expand: true,
@@ -221,15 +221,41 @@ module.exports = function (grunt) {
                 options: {
                     bowerDirectory: 'bower_components',
                     libsDirectory: 'libs',
-                    output: 'open-source-libraries.md'
+                    output: 'open-source-libraries.md',
+                    removeLibraries: ['kAnalony'],
+                    addLibraries: [{
+                        name: 'node.js',
+                        version: '',
+                        license: '',
+                        repository: 'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
+                    },
+                        {
+                            name: 'bower',
+                            version: '',
+                            license: '',
+                            repository: 'https://github.com/bower/bower'
+                        },
+                        {
+                            name: 'sass',
+                            version: '',
+                            license: 'MIT',
+                            repository: 'http://sass-lang.com/documentation/file.MIT-LICENSE.html'
+                        },
+                        {
+                            name: 'ruby',
+                            version: '',
+                            license: '',
+                            repository: 'https://www.ruby-lang.org/en/about/license.txt'
+                        }
+                    ]
                 }
             }
         },
         zip: {
             'env-prod': {
-                cwd : 'dist/',
+                cwd: 'dist/',
                 dest: '<%= project.temp + "/" + packageConfig.name + "v_" + packageConfig.version %>.zip',
-                src : ['dist/**/*.*']
+                src: ['dist/**/*.*']
             }
         },
         concat: {
@@ -245,7 +271,7 @@ module.exports = function (grunt) {
         },
         ngtemplates: {
             options: {
-                module : vpaasAppModule,
+                module: vpaasAppModule,
                 htmlmin: {collapseWhitespace: true, collapseBooleanAttributes: true}
             },
             'env-prod-app': {
@@ -350,7 +376,7 @@ module.exports = function (grunt) {
 
         var tasks = [];
 
-        addEnvTasks(tasks, ['jshint','clean', 'kan-browserify', 'kan-app-styles'], envTaskId);
+        addEnvTasks(tasks, ['jshint', 'clean', 'kan-browserify', 'kan-app-styles'], envTaskId);
 
         tasks.push('kan-license-crwaler');
 
