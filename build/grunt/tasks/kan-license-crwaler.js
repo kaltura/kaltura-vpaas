@@ -94,6 +94,20 @@ module.exports = function (grunt) {
                     fileContent += util.format('| Name | Version| Licenses | Repository |\n');
                     fileContent += util.format('| ---- |------- | -------- | ---------- |\n');
 
+                    if (options.addLibraries) {
+                        items = _.flatten([items, options.addLibraries]);
+                    }
+
+                    if (options.removeLibraries) {
+                        _.remove(items,function(item)
+                        {
+                            return _.find(options.removeLibraries,function(license)
+                            {
+                                return license === item.name;
+                            });
+                        });
+                    }
+
                     _.chain(items).sortBy('name').each(function (item) {
                         var formattedVersion = item.version && item.version !== 'undefined' ? item.version : '{unknown version}';
                         var formattedLicenses = '';
