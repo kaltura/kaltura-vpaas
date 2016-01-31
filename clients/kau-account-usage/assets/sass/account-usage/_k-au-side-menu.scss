@@ -3,7 +3,6 @@
 
 
         li {
-            padding-left: 20px;
             position: relative;
             span {
                 cursor: pointer;
@@ -21,7 +20,7 @@
                     width: 7px;
                     display: block;
                     position: absolute;
-                    left: 8px;
+                    left: -12px;
                 }
             }
         }
@@ -31,7 +30,6 @@
             margin-top: 5px;
             font-size: $medium-font;
             li {
-                padding-left: 20px;
                 span {
                     &:hover {
                         text-shadow: 1px 1px 1px #ADACAC;
