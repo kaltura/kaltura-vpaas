@@ -8,6 +8,7 @@ var vpaasAppModule = 'kauApp';
 
 module.exports = function (grunt) {
 
+    var vendors = require('./clients/kau-account-usage/vendors-references');
     var packageConfig = grunt.file.readJSON('./package.json');
     var buildConfig = grunt.file.readJSON('./build/build-config.json');
 
@@ -65,7 +66,14 @@ module.exports = function (grunt) {
                     spawn: false
                 },
                 files: ['<%= project.app %>/src/**/*.js', '<%= project.infra %>/**/*.js'],
-                tasks: ['jshint', 'kan-browserify:all-env-app']
+                tasks: ['jshint', 'kan-browserify:all-env-app','jasmine']
+            },
+            'env-dev-spec': {
+                options: {
+                    spawn: false
+                },
+                files: ['<%= project.app %>/src/**/*.spec.js', '<%= project.infra %>/**/*.spec.js'],
+                tasks: ['jasmine']
             },
             'env-dev-config': {
                 options: {
@@ -198,7 +206,7 @@ module.exports = function (grunt) {
             'all-env-app': {
                 options: {
                     debug: true,
-                    vendors: require('./clients/kau-account-usage/vendors-references'),
+                    vendors: vendors,
                     appFiles: {
                         '.tmp/app.js': ['./<%= project.app %>/src/kau-app/index.js']
                     }
@@ -259,6 +267,11 @@ module.exports = function (grunt) {
             }
         },
         concat: {
+            'env-dev-vendors': {
+                src: ['./node_modules/jquery/dist/jquery.js', '<%= project.temp %>/vendors.js'
+                ],
+                dest: '<%= project.temp %>/vendors.js',
+            },
             'env-prod-vendors': {
                 src: ['./node_modules/jquery/dist/jquery.js', '<%= project.temp %>/vendors.js'
                 ],
@@ -323,7 +336,15 @@ module.exports = function (grunt) {
                 src: '<%= project.app %>/index.html',
                 dest: '<%= project.dist %>/index.html'
             }
+        },
+        jasmine: {
+            src: '<%= project.temp %>/app.js',
+            options: {
+                specs: ['<%= project.app %>/src/**/*.spec.js', '<%= project.infra %>/**/*.spec.js'],
+                vendor: ['<%= project.temp %>/vendors.js']
+            }
         }
+
     };
 
 
@@ -354,6 +375,11 @@ module.exports = function (grunt) {
     grunt.initConfig(gruntConfig);
 
     grunt.loadTasks('./build/grunt/tasks');
+
+    grunt.registerTask('test', function () {
+        grunt.task.run(['build','jasmine']);
+
+    });
 
     grunt.registerTask('generate-license', ['kan-license-crwaler']);
 
