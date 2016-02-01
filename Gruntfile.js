@@ -377,7 +377,7 @@ module.exports = function (grunt) {
     grunt.loadTasks('./build/grunt/tasks');
 
     grunt.registerTask('test', function () {
-        grunt.task.run(['build','jasmine']);
+        grunt.task.run(['build']);
 
     });
 
@@ -404,7 +404,7 @@ module.exports = function (grunt) {
 
         addEnvTasks(tasks, ['jshint', 'clean', 'kan-browserify', 'kan-app-styles'], envTaskId);
 
-        tasks.push('kan-license-crwaler');
+        tasks.push('jasmine', 'kan-license-crwaler');
 
         addEnvTasks(tasks, ['ngtemplates', 'dom_munger', 'concat', 'copy', 'zip'], envTaskId);
 

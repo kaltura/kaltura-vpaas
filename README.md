@@ -1,4 +1,7 @@
 # Kaltura Analytics 2.0 Front-End (aka kAnalony project Front-End) 
+
+[![Build Status](https://travis-ci.org/kaltura/kanalony-front-end.svg?branch=master)](https://travis-ci.org/kaltura/kanalony-front-end)
+
 This project is the new client analytics project of Kaltura. 
 
 With kAnalony project, Kaltura real time analytics for live and on-demand video, you'll get historical or near real-time, raw or summarized data Kaltura partners need to truly understand how, when, and where their content is seen and shared by viewers. What keeps viewers watching? When do they lose interest? What do they share? Actionable Analytics ends the guesswork. 
