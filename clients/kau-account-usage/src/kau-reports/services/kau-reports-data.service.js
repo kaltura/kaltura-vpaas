@@ -1,5 +1,7 @@
 "use strict";
 
+var moment = require('moment');
+
 module.exports = function($q, kaKalturaAPIFacade, kauReportsConfiguration)
 {
     var self = this;
