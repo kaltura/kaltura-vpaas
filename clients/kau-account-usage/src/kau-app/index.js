@@ -1,7 +1,5 @@
 'use strict';
 
-require('../../vendors-shim-workaround');
-
 require('./kau-app-bootstrap');
 
 var appModule = require('./kau-app.module.js');

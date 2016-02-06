@@ -15,6 +15,7 @@
 | bower | {unknown version} | {unknown license} | https://github.com/bower/bower |
 | bower-license | 0.4.1 | Apache-2.0 (package file), Apache (license file),  (license file) | git+https://github.com/AceMetrix/bower-license |
 | browserify | 12.0.2 | MIT (package file),  (license file) | git+ssh://git@github.com/substack/node-browserify |
+| browserify-global-shim | 1.0.3 | MIT (package file) | git+https://github.com/rluba/browserify-global-shim |
 | browserify-shim | 3.8.12 | MIT (package file),  (license file) | http://github.com/thlorenz/browserify-shim |
 | d3 | 3.5.14 | BSD-3-Clause (package file),  (license file) | git+https://github.com/mbostock/d3 |
 | grunt | 0.4.5 | MIT (package file),  (license file) | http://github.com/gruntjs/grunt |
@@ -44,6 +45,7 @@
 | grunt-rev | 0.1.0 | MIT (package file),  (license file) | http://github.com/cbas/grunt-rev |
 | grunt-shell | 1.1.2 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/grunt-shell |
 | grunt-svgmin | 3.1.2 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/grunt-svgmin |
+| grunt-ts | 5.3.2 | MIT (package file),  (license file) | git+ssh://git@github.com/grunt-ts/grunt-ts |
 | grunt-usemin | 3.1.1 | BSD-2-Clause (package file),  (license file) | git+https://github.com/yeoman/grunt-usemin |
 | grunt-zip | 0.17.1 | MIT (package file),  (license file) | http://github.com/twolfson/grunt-zip |
 | jasmine-node | 1.13.1 | MIT (package file), MIT (license file) | git+https://github.com/mhevery/jasmine-node |

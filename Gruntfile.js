@@ -66,7 +66,7 @@ module.exports = function (grunt) {
                     spawn: false
                 },
                 files: ['<%= project.app %>/src/**/*.js', '<%= project.infra %>/**/*.js'],
-                tasks: ['jshint', 'kan-browserify:all-env-app','jasmine']
+                tasks: ['jshint', 'kan-app-scripts:all-env-app']
             },
             'env-dev-spec': {
                 options: {
@@ -202,24 +202,28 @@ module.exports = function (grunt) {
                 }
             }
         },
-        'kan-browserify': {
+        'kan-app-scripts': {
             'all-env-app': {
                 options: {
-                    debug: true,
-                    vendors: vendors,
-                    appFiles: {
-                        '.tmp/app.js': ['./<%= project.app %>/src/kau-app/index.js']
+                    debug: false,
+                    browserify: {
+                        external: vendors.commonjs
                     }
-
+                },
+                files: {
+                    '.tmp/app.js': ['./<%= project.app %>/src/kau-app/index.js']
                 }
             },
             'all-env-vendors': {
                 options: {
                     debug: true,
-                    vendors: require('./clients/kau-account-usage/vendors-references'),
-                    vendorFiles: {
-                        '.tmp/vendors.js': ['.']
+                    globals: vendors.globals,
+                    browserify: {
+                        require: vendors.commonjs
                     }
+                },
+                files: {
+                    '.tmp/vendors.js': ['.']
                 }
             }
         },
@@ -267,16 +271,6 @@ module.exports = function (grunt) {
             }
         },
         concat: {
-            'env-dev-vendors': {
-                src: ['./node_modules/jquery/dist/jquery.js', '<%= project.temp %>/vendors.js'
-                ],
-                dest: '<%= project.temp %>/vendors.js',
-            },
-            'env-prod-vendors': {
-                src: ['./node_modules/jquery/dist/jquery.js', '<%= project.temp %>/vendors.js'
-                ],
-                dest: '<%= project.dist %>/vendors.js',
-            },
             'env-prod-templates': {
                 src: ['<%= project.temp %>/infra-templates.js', '<%= project.temp %>/app-templates.js'],
                 dest: '<%= project.dist %>/app-templates.js',
@@ -338,13 +332,15 @@ module.exports = function (grunt) {
             }
         },
         jasmine: {
-            src: '<%= project.temp %>/app.js',
-            options: {
-                specs: ['<%= project.app %>/src/**/*.spec.js', '<%= project.infra %>/**/*.spec.js'],
-                vendor: ['<%= project.temp %>/vendors.js']
+            'all-env': {
+                src: '<%= project.temp %>/app.js',
+                options: {
+                    specs: ['<%= project.app %>/src/**/*.spec.js', '<%= project.infra %>/**/*.spec.js'],
+                    vendor: ['<%= project.temp %>/vendors.js', './node_modules/angular-mocks/angular-mocks.js'],
+                    summary: false
+                }
             }
         }
-
     };
 
 
@@ -402,9 +398,9 @@ module.exports = function (grunt) {
 
         var tasks = [];
 
-        addEnvTasks(tasks, ['jshint', 'clean', 'kan-browserify', 'kan-app-styles'], envTaskId);
+        addEnvTasks(tasks, ['jshint', 'clean', 'kan-app-scripts', 'kan-app-styles'], envTaskId);
 
-        tasks.push('jasmine', 'kan-license-crwaler');
+        tasks.push('kan-license-crwaler');
 
         addEnvTasks(tasks, ['ngtemplates', 'dom_munger', 'concat', 'copy', 'zip'], envTaskId);
 
