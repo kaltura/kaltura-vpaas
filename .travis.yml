@@ -7,4 +7,4 @@ before_script:
   - 'bower install' # install bower packages
 
 after_script:
-  - 'grunt' # or other command for build, run tests, etc
+  - 'grunt build' # or other command for build, run tests, etc
