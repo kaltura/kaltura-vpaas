@@ -89,7 +89,7 @@ module.exports = function (grunt) {
             },
             'env-dev-scss': {
                 files: ['<%= project.assets %>/**/*.scss'],
-                tasks: ['kan-app-styles:all-env-app']
+                tasks: ['kan-app-styles:all-env']
 
             },
             'env-dev-assets': {
