@@ -56,7 +56,13 @@
         line-height: 18px;
         border-radius: 4px;
         border-width: 0 1px 4px;
+
+        span {
+            cursor: pointer;
+        }
     }
+
+
 
     .usual-table thead {
         background-image: #efefef;
