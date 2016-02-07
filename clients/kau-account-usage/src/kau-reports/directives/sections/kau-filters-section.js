@@ -4,7 +4,7 @@ var moment = require('moment');
 
 module.exports = function()
 {
-    function Controller($scope,kaAppRoutingUtils,  kauReportsData,$window)
+    function Controller($scope,kaAppRoutingUtils,  kauReportsData,$element,$timeout)
     {
         var self = this;
 
@@ -32,11 +32,17 @@ module.exports = function()
         self.filters = { date : { startDate: moment().subtract(2, 'month').startOf('month'), endDate: moment().endOf('month')}};
 
         self.dateOptions = {
-            max: moment().format('MM-DD-YYYY'),
+            showDropdowns : true,
+            autoApply : true,
+            maxDate : moment(),
             ranges: {
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
                 'Previous Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
                 'Last 3 Months': [moment().subtract(2, 'month').startOf('month'), moment().endOf('month')]
+            },
+            isInvalidDate : function(date)
+            {
+                return !moment(date).isValid();
             }
         };
 
@@ -55,6 +61,24 @@ module.exports = function()
                 self.reportAPI.refreshReport.call(null);
             }
         });
+
+        self.initDateRangeControl = function()
+        {
+            // bypass
+            $timeout(function(){
+                var $dateRangeElement = $($element.find('.date-picker')[0]);
+                var dateRange = $dateRangeElement.data('daterangepicker');
+                var $dateRangeSpan = $($dateRangeElement.find('span')[0]);
+                var prevCallback = dateRange.callback;
+                var wrapperCallback = function(start,end)
+                {
+                    $dateRangeSpan.html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                    return prevCallback.call(null,start,end);
+                };
+                dateRange.callback = wrapperCallback;
+                wrapperCallback(dateRange.startDate,dateRange.endDate);
+            },200);
+        }
 
 
     }
