@@ -152,7 +152,7 @@ module.exports = function (grunt) {
                         expand: true,
                         cwd: '<%= project.temp %>',
                         dest: '<%= project.dist %>',
-                        src: ['app.js', 'assets/**/*.*', '!assets/**.scss']
+                        src: ['app.js', 'vendors.js', 'assets/**/*.*', '!assets/**.scss']
                     },
                     {
                         expand: true,
@@ -227,7 +227,13 @@ module.exports = function (grunt) {
                 }
             }
         },
+        browserify: {
+            specs: {
+                src: ['<%= project.app %>/src/**/*.spec.js', '<%= project.infra %>/**/*.spec.js'],
+                dest: '<%= project.temp %>/app-specs.js'
 
+            }
+        },
         'kan-license-crwaler': {
             'all-env': {
                 options: {
@@ -294,6 +300,17 @@ module.exports = function (grunt) {
                 dest: '<%= project.temp %>/infra-templates.js'
             }
         },
+        cachebreaker: {
+            'env-prod': {
+                options: {
+                    match: ['.js', '.css'],
+                },
+                files: {
+                    src: ['<%= project.dist %>/index.html']
+                }
+            }
+        },
+
         'dom_munger': {
             'env-dev': {
                 options: {
@@ -333,9 +350,12 @@ module.exports = function (grunt) {
         },
         jasmine: {
             'all-env': {
-                src: '<%= project.temp %>/app.js',
+
                 options: {
-                    specs: ['<%= project.app %>/src/**/*.spec.js', '<%= project.infra %>/**/*.spec.js'],
+                    //'--remote-debugger-port': 9009,
+                    keepRunner: true,
+                    outfile: '.tmp/_SpecRunner.html',
+                    specs: ['<%= project.temp %>/app-specs.js'],
                     vendor: ['<%= project.temp %>/vendors.js', './node_modules/angular-mocks/angular-mocks.js'],
                     summary: false
                 }
@@ -402,7 +422,7 @@ module.exports = function (grunt) {
 
         tasks.push('kan-license-crwaler');
 
-        addEnvTasks(tasks, ['ngtemplates', 'dom_munger', 'concat', 'copy', 'zip'], envTaskId);
+        addEnvTasks(tasks, ['ngtemplates', 'dom_munger', 'concat', 'copy','cachebreaker', 'zip'], envTaskId);
 
         logTasksList(tasks);
 

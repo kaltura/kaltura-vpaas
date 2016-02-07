@@ -1,6 +1,6 @@
 {
   "name": "kAnalony",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/kaltura/kanalony-front-end"
@@ -33,6 +33,7 @@
     "grunt-angular-templates": "^1.0.2",
     "grunt-autoprefixer": "*",
     "grunt-browserify": "*",
+    "grunt-cache-breaker": "^2.0.1",
     "grunt-concurrent": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-compass": "*",
@@ -67,15 +68,15 @@
   },
   "engines": {
     "node": ">=0.8.0"
-  } ,
-    "browserify": {
-        "transform": [
-            "browserify-shim"
-        ]
-    },
-    "browserify-shim": {
-        "angular": "global:angular",
-        "moment": "global:moment",
-        "jquery": "global:$"
-    }
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "angular": "global:angular",
+    "moment": "global:moment",
+    "jquery": "global:$"
+  }
 }

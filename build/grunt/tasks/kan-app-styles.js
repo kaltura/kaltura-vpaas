@@ -11,7 +11,7 @@ module.exports = function (grunt) {
                     sourceMap: false,
                     style: 'expanded'
                 },
-                files: this.data.files
+                files: this.files
 
             });
 

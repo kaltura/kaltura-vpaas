@@ -22,6 +22,7 @@
 | grunt-angular-templates | 1.0.2 | MIT (package file),  (license file) | http://github.com/ericclemmons/grunt-angular-templates |
 | grunt-autoprefixer | 3.0.3 | MIT (package file), MIT (license file) | git+https://github.com/ndmitry/grunt-autoprefixer |
 | grunt-browserify | 4.0.1 | MIT (package file) | http://github.com/jmreidy/grunt-browserify |
+| grunt-cache-breaker | 2.0.1 | MIT (package file),  (license file) | http://github.com/shakyshane/grunt-cache-breaker |
 | grunt-concurrent | 2.1.0 | MIT (package file), MIT (license file) | git+https://github.com/sindresorhus/grunt-concurrent |
 | grunt-contrib-clean | 0.7.0 | MIT (package file) | git+https://github.com/gruntjs/grunt-contrib-clean |
 | grunt-contrib-compass | 1.0.4 | MIT (package file) | git+https://github.com/gruntjs/grunt-contrib-compass |
