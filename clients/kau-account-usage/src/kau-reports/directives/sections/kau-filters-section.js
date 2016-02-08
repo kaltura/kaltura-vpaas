@@ -16,24 +16,36 @@ module.exports = function()
                 reportTitle: 'Usage report'
             },self.filters);
 
-            self.reportStatus.isLoading = true;
+            self.csvProcessing = true;
             self.reportStatus.errorMessage = false;
             kauReportsData.getReportCSVUri(requestParams).then(function (result) {
-                self.reportStatus.isLoading = false;
-                kaAppRoutingUtils.openExternalUri(result.csvUri);
+
+                if (self.csvProcessing) {
+                    // if csvProcessing is off it means this response is not longer needed (user might performed a report query)
+                    self.csvProcessing = false;
+                    self.csvUrl = result.csvUri;
+                }
+
 
             }, function (reason) {
-                self.reportStatus.isLoading = false;
+                self.csvProcessing = false;
                 self.reportStatus.errorMessage = 'Error occurred while trying to create cvs file';
             });
 
         }
 
+        function clearCsvUrl()
+        {
+            self.csvUrl = '';
+        }
+
+        self.csvProcessing = false;
+        self.csvUrl = '';
+        self.clearCsvUrl = clearCsvUrl;
         self.filters = { date : { startDate: moment().subtract(2, 'month').startOf('month'), endDate: moment().endOf('month')}};
 
         self.dateOptions = {
             showDropdowns : true,
-            autoApply : true,
             maxDate : moment(),
             ranges: {
                 'This Month': [moment().startOf('month'), moment().endOf('month')],
@@ -80,6 +92,11 @@ module.exports = function()
             },200);
         }
 
+        $scope.$watch('vm.reportStatus.isLoading',function()
+        {
+           self.csvUrl = false;
+            self.csvProcessing = false;
+        });
 
     }
 

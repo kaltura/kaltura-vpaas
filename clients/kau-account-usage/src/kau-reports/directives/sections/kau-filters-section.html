@@ -1,14 +1,34 @@
 <div >
-    <div class="title-text" data-ng-if="vm.reportOptions.title">{{vm.reportOptions.title}}</div>
-    <form class="form-inline">
-        <div class="form-group" data-ng-if="vm.reportOptions.filters.dateRange">
-            Date Range:
-                <div class="date-picker" date-range-picker ng-init="vm.initDateRangeControl()" options="vm.dateOptions"
-                     ng-model="vm.filters.date">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
-                    <span></span> <b class="caret"></b>
+
+            <form class="form-inline">
+                <div class="form-group">
+                    <div class="form-control-static">
+                        <div class="title-text" data-ng-if="vm.reportOptions.title">{{vm.reportOptions.title}}</div>
+                    </div>
                 </div>
-        </div>
-        <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading"><a href="javascript:void(0)" data-ng-click="vm.export()">Export to CSV</a></div>
-    </form>
+                <div class="form-group" data-ng-if="vm.reportOptions.filters.dateRange">
+                    <label >Date Range</label>
+                    <div class="form-control-static">
+                        <div class=" date-picker" date-range-picker ng-init="vm.initDateRangeControl()" options="vm.dateOptions"
+                             ng-model="vm.filters.date">
+                            <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+                            <span></span> <b class="caret"></b>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group pull-right">
+                    <div class="form-control-static">
+                        <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading && !vm.csvProcessing && !vm.csvUrl">
+                            <a href="javascript:void(0)" data-ng-click="vm.export()">Export to CSV</a>
+                        </div>
+                        <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading && !vm.csvProcessing && vm.csvUrl">
+                            <a class="btn btn-default" data-ng-click="vm.clearCsvUrl()" href="javascript:void(0)">Cancel</a> &nbsp; <a class="btn btn-info" target="_blank" data-ng-click="vm.clearCsvUrl()" href="{{vm.csvUrl}}" download="eran.csv">Download</a>
+                        </div>
+                        <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading && vm.csvProcessing ">
+                            <span>processing...</span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
 </div>
