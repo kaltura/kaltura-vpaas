@@ -22,7 +22,7 @@
                             <a href="javascript:void(0)" data-ng-click="vm.export()">Export to CSV</a>
                         </div>
                         <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading && !vm.csvProcessing && vm.csvUrl">
-                            <a class="btn btn-default" data-ng-click="vm.clearCsvUrl()" href="javascript:void(0)">Cancel</a> &nbsp; <a class="btn btn-info" target="_blank" data-ng-click="vm.clearCsvUrl()" href="{{vm.csvUrl}}" download="eran.csv">Download</a>
+                            <a class="btn btn-default" data-ng-click="vm.clearCsvUrl()" href="javascript:void(0)">Cancel</a> &nbsp; <a class="btn btn-info" target="_blank" ng-href="{{vm.csvUrl}}">Download</a>
                         </div>
                         <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading && vm.csvProcessing ">
                             <span>processing...</span>
