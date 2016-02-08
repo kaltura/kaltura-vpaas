@@ -17,7 +17,7 @@ module.exports = function()
             },self.filters);
 
             self.csvProcessing = true;
-            self.reportStatus.errorMessage = false;
+            self.reportStatus.errorMessage = '';
             kauReportsData.getReportCSVUri(requestParams).then(function (result) {
 
                 if (self.csvProcessing) {
@@ -34,15 +34,40 @@ module.exports = function()
 
         }
 
+        function getDefaultDateRange()
+        {
+            return { startDate: moment().subtract(2, 'month').startOf('month'), endDate: moment().endOf('month')};
+        }
+
         function clearCsvUrl()
         {
             self.csvUrl = '';
         }
 
+
+        function checkIsDateValid(date)
+        {
+            var momentDate = moment.isMoment(date) ? date : moment(date);
+            return date ? moment(momentDate._i, momentDate._f,true).isValid() : false;
+        }
+
+        self.reportAPI = {
+            assignFilters : function(filters)
+            {
+                $.extend(filters, self.filters);
+            },
+            loadReportData : function(reportData)
+            {
+                self.reportData = reportData;
+            }
+        };
+
+
+        self.reportData = null;
         self.csvProcessing = false;
         self.csvUrl = '';
         self.clearCsvUrl = clearCsvUrl;
-        self.filters = { date : { startDate: moment().subtract(2, 'month').startOf('month'), endDate: moment().endOf('month')}};
+        self.filters = { date : getDefaultDateRange()};
 
         self.dateOptions = {
             showDropdowns : true,
@@ -54,23 +79,24 @@ module.exports = function()
             },
             isInvalidDate : function(date)
             {
-                return !moment(date).isValid();
-            }
-        };
-
-
-        self.reportAPI = {
-            assignFilters : function(filters)
-            {
-                $.extend(filters, self.filters);
+                return !checkIsDateValid(date);
             }
         };
 
         self.export = exportToCsv;
         $scope.$watch('vm.filters.date',function()
         {
-            if (self.reportAPI.refreshReport) {
-                self.reportAPI.refreshReport.call(null);
+            self.reportStatus.errorMessage = '';
+            if (checkIsDateValid(self.filters.date.startDate) && checkIsDateValid(self.filters.date.endDate))
+            {
+                if (self.reportAPI.refreshReport) {
+                    self.reportAPI.refreshReport.call(null);
+                }
+            }else {
+                self.reportStatus.errorMessage = 'Provided dates are invalid. Please try again with valid values.';
+                if (self.reportAPI.clearReportData) {
+                    self.reportAPI.clearReportData.call(null);
+                }
             }
         });
 

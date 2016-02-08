@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="form-group pull-right">
-                    <div class="form-control-static">
+                    <div class="form-control-static" data-ng-show="vm.reportData">
                         <div class="pull-right" data-ng-show="!vm.reportStatus.isLoading && !vm.csvProcessing && !vm.csvUrl">
                             <a href="javascript:void(0)" data-ng-click="vm.export()">Export to CSV</a>
                         </div>
