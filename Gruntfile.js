@@ -216,7 +216,7 @@ module.exports = function (grunt) {
             },
             'all-env-vendors': {
                 options: {
-                    debug: true,
+                    debug: false,
                     globals: vendors.globals,
                     browserify: {
                         require: vendors.commonjs

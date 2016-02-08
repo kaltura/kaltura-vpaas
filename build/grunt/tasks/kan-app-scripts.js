@@ -34,10 +34,39 @@ module.exports = function (grunt) {
         grunt.task.run(['browserify:kan-app-scripts']);
     }
 
+    function validateOptions(options)
+    {
+        var missingFile = false;
+
+        _.chain(options.browserify.external).each(function(file)
+        {
+            if (!grunt.file.exists(file))
+            {
+                missingFile = true;
+                grunt.log.warn('missing file marked as browserify external',file);
+            }
+        }).value();
+
+        _.chain(options.globals).each(function(file)
+        {
+            if (!grunt.file.exists(file))
+            {
+                missingFile = true;
+                grunt.log.warn('missing file marked as browserify global',file);
+            }
+        }).value();
+
+        if (missingFile)
+        {
+            grunt.fatal('cannot browserify requested files');
+        }
+
+    }
+
     grunt.registerMultiTask('kan-app-scripts', 'Bundle app and vendor scripts separately', function () {
 
         var options = this.options({
-            debug: false,
+            debug: true,
             browserify: {
                 require: {},
                 external : {}
@@ -45,6 +74,7 @@ module.exports = function (grunt) {
             globals : []
         });
 
+        validateOptions(options);
         invokeBrowserifyTask(options,this.files);
 
 
