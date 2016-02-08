@@ -76,12 +76,25 @@ module.exports = function()
             });
         }
 
+        function clearReportData()
+        {
+            self.reportData = null;
+
+            _.forEach(sections,function(section)
+            {
+                if (section.loadReportData)
+                {
+                    section.loadReportData.call(section, self.reportData);
+                }
+            });
+        }
+
         function addSection(section)
         {
             sections.push(section);
 
             // extend section api with functions that can trigger report actions
-            $.extend(section,{refreshReport : loadData});
+            $.extend(section,{refreshReport : loadData, clearReportData:clearReportData});
 
             // wait until all sections were added to load data
             if (sections.length=== self.reportConfig.sections.length)
