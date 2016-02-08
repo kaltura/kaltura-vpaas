@@ -26,6 +26,16 @@ module.exports = function($q, kaKalturaAPIFacade, kauReportsConfiguration)
         }
     }
 
+    function isValidCachedResponse(cachedItem)
+    {
+        if (cachedItem)
+        {
+            return cachedItem.expirationDate.isAfter(moment());
+        }
+
+        return false;
+    }
+
     function getReportData(filters)
     {
         if (filters && _.every(requireFiltersProperties, _.partial(_.has,filters))) {
@@ -38,13 +48,17 @@ module.exports = function($q, kaKalturaAPIFacade, kauReportsConfiguration)
 
             var cacheKey = JSON.sortify(requestParams);
             var cachedResponse = cachedReportsData[cacheKey];
-            if (cachedResponse)
+            if (isValidCachedResponse(cachedResponse))
             {
-                deferred.resolve(cachedResponse);
+                console.log('loading response from cache (cached data expires ' + cachedResponse.expirationDate.fromNow() + ')');
+                deferred.resolve(cachedResponse.response);
             }else {
+                cachedReportsData[cacheKey] = null;
 
                 kaKalturaAPIFacade.invoke('report', 'getTable', requestParams).then(function (result) {
-                    cachedReportsData[cacheKey] = result;
+                    var cachedResponseItem = {response : result, expirationDate : moment().add(1,'h')};
+                    console.log('added response to cache (cached data expires ' + cachedResponseItem.expirationDate.fromNow() + ')');
+                    cachedReportsData[cacheKey] = cachedResponseItem;
                     deferred.resolve(result);
                     }, function (reason) {
                         deferred.reject(reason);
