@@ -336,7 +336,7 @@ module.exports = function (grunt) {
                     ],
                     callback: function ($) {
                         // this is a temporary workaround until we will support css budnling
-                        _.each($('link'), function (element) {
+                        _.each($('link[rel="stylesheet"]'), function (element) {
                             var href = $(element).attr('href');
                             href = 'assets/' + href.replace(/(node_modules|dist|build|assets)[\/]/g, '');
                             $(element).attr('href', href);
