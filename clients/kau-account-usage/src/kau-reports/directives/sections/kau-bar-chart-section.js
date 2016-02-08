@@ -13,10 +13,10 @@ module.exports = function()
 
         function loadReportData(reportData)
         {
-            self.grid.data = [{key: '', values: reportData}];
-
+            var chartData = [];
             if (reportData )
             {
+                chartData = [{key: '', values: reportData}];
                 var itemsNumber = reportData.length;
 
                 if (itemsNumber > 5)
@@ -29,6 +29,8 @@ module.exports = function()
                     self.grid.options.chart.xAxis.rotateLabels = 0;
                 }
             }
+
+            self.grid.data = chartData;
 
             if (self.grid.api.updateWithData)
             {
