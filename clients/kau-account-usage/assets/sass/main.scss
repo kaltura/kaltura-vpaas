@@ -17,9 +17,9 @@
 
 .daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date
 {
-    color: #F8F8F8 !important;
+    color: lightgray !important;
     background: #fff !important;
-    visibility: hidden;
+    cursor: not-allowed !important;
 }
 
 .daterangepicker td.in-range, .daterangepicker td.active, .daterangepicker td.active:hover{
