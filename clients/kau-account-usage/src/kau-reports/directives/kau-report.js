@@ -99,10 +99,10 @@ module.exports = function()
             // wait until all sections were added to load data
             if (sections.length=== self.reportConfig.sections.length)
             {
-                areAllSectionsLoaded = true;
-
                 $timeout(function()
                 {
+                    areAllSectionsLoaded = true;
+
                     // Loads the report data after all sections where registered in the next digest cycle
                     // TODO - should use more common technique.
                     loadData();
