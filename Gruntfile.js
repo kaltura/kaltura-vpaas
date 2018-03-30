@@ -234,41 +234,6 @@ module.exports = function (grunt) {
 
             }
         },
-        'kan-license-crwaler': {
-            'all-env': {
-                options: {
-                    bowerDirectory: 'bower_components',
-                    libsDirectory: 'libs',
-                    output: 'open-source-libraries.md',
-                    removeLibraries: ['kAnalony'],
-                    addLibraries: [{
-                        name: 'node.js',
-                        version: '',
-                        license: '',
-                        repository: 'https://raw.githubusercontent.com/nodejs/node/master/LICENSE'
-                    },
-                        {
-                            name: 'bower',
-                            version: '',
-                            license: '',
-                            repository: 'https://github.com/bower/bower'
-                        },
-                        {
-                            name: 'sass',
-                            version: '',
-                            license: 'MIT',
-                            repository: 'http://sass-lang.com/documentation/file.MIT-LICENSE.html'
-                        },
-                        {
-                            name: 'ruby',
-                            version: '',
-                            license: '',
-                            repository: 'https://www.ruby-lang.org/en/about/license.txt'
-                        }
-                    ]
-                }
-            }
-        },
         zip: {
             'env-prod': {
                 cwd: 'dist/',
@@ -325,8 +290,8 @@ module.exports = function (grunt) {
             'env-prod': {
                 options: {
                     read: [
-                        {selector: 'link', attribute: 'href', writeto: 'cssRefs', isPath: true},
-                        {selector: 'script', attribute: 'src', writeto: 'jsRefs', isPath: true}
+                        {selector: 'link', attribute: 'href', writeto: 'cssRefs'},
+                        {selector: 'script', attribute: 'src', writeto: 'jsRefs'}
                     ],
                     remove: ['[data-remove=true]', 'script'],
                     append: [
@@ -397,8 +362,6 @@ module.exports = function (grunt) {
 
     });
 
-    grunt.registerTask('generate-license', ['kan-license-crwaler']);
-
     grunt.registerTask('build', function (envName, configName) {
         envName = envName || defaultEnvName;
         configName = configName || defaultConfigName;
@@ -419,8 +382,6 @@ module.exports = function (grunt) {
         var tasks = [];
 
         addEnvTasks(tasks, ['jshint', 'clean', 'kan-app-scripts', 'kan-app-styles'], envTaskId);
-
-        tasks.push('kan-license-crwaler');
 
         addEnvTasks(tasks, ['ngtemplates', 'dom_munger', 'concat', 'copy','cachebreaker', 'zip'], envTaskId);
 

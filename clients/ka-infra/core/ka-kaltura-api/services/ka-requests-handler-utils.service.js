@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = function ($http, $q,  $httpParamSerializer, kaKalturaAPIFacade) {
-
     var self = this;
     var isIE = (!!window.ActiveXObject && +(/msie\s(\d+)/i.exec(navigator.userAgent)[1])) || NaN;
 

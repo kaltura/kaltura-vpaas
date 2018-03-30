@@ -16,20 +16,15 @@ To run kAnalony project on your machine,first make sure you setup your machine c
 
 > Before continuing make sure you have [node.js](https://nodejs.org/en/) installed on your machine.
 
-Install both bower and grunt-cli globally (note the -g flag)
+Install grunt-cli globally (note the -g flag)
 
 ```bash
-$ npm install -g bower grunt-cli 
+$ npm install -g grunt-cli 
 ```
 
 In the repository folder install node modules
 ```
 $ npm install 
-```
-
-Make sure bower libraries are installed
-```
-$ bower install
 ```
 
 You also required to have [Ruby](https://www.ruby-lang.org/en/downloads/) and [Sass](http://sass-lang.com/install) installed. If you're on OS X or Linux you probably already have Ruby installed; test with the following command in your terminal. 
@@ -80,28 +75,6 @@ If you want to test your packaged application in a browser first run the followi
 ```
 $ grunt serve:prod
 ```
-
-
-## Demo (local) server
-kAnalony front-end application uses a demo server to simulate front-end scenarios. In order to run the demo (local) server, open the server folder ```$ cd server``` and install node modules.
-
-```
-$ npm install
-```
-
-Now you should be able to run the demo server at port 9911 using the following command
-
-```
-$ grunt
-```
-
-To make sure it works, just run the following url in your browser *'http://localhost:9911/yo'* and excect the following result:
-
-```
-{"name":"kAnalony demo (local) server","version":"v3"}
-```
-
-
 
 ## Technical information
 kAnalony application is based on many third party libraries. You can review the full list in the wiki (TBD). 
