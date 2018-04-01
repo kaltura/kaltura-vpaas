@@ -43,12 +43,21 @@ This project is using grunt to run develop & packaging tasks.
 To start working on the project, use the 'serve' grunt task as followed:
 
 ```
-$ grunt serve
+$ npm start
 ```
 
 This command will browserify your project and open a browser with your site. Whenever you change an html of javascript file the site will be loaded automatically.
 
 If you get any errors during the process just follow the [FAQ](##faq) section.
+
+### Run the application as standalone
+
+You will need to provide a valid KS. you can provide it by passing a query string named 'ks' with a valid value. Note that we use in this application the # notion in the url so you will need to add the query string **before this notation**, for example:
+
+```
+http://localhost:9003/index.html?ks=the_ks_value
+```
+
 
 ### Packaging the application for deployment
 When you are ready to deploy your application run one of the following.
@@ -56,7 +65,7 @@ When you are ready to deploy your application run one of the following.
 To build the project and create a zip file run the following command.
 
 ```
-$ grunt build:prod 
+$ npm run build
 ```
 You will then have:
 
