@@ -71,9 +71,10 @@ module.exports = function ($http, $q,  $httpParamSerializer, kaKalturaAPIFacade)
             method: method,
             params: (method === 'jsonp' ? parsedRequestParams : null),
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).success(function (data, status) {
+        }).then(function (response, status) {
+            var data = response.data;
             if (data.objectType === "KalturaAPIException") {
-                if (data.code == "INVALID_KS") {
+                if (data.code === "INVALID_KS") {
                     // TODO
                     deferred.reject({error: 'invalid-ks', errorMessage: 'Invalid partner KS'});
                 }
@@ -85,7 +86,7 @@ module.exports = function ($http, $q,  $httpParamSerializer, kaKalturaAPIFacade)
             else {
                 deferred.resolve({data: data});
             }
-        }).error(function (data, status) {
+        }).catch(function (data, status) {
             var errorMessage = (data ? data.message : '') || 'unkown error';
             console.log(errorMessage);
             deferred.reject({errorMessage: errorMessage});

@@ -76,9 +76,6 @@ If you want to test your packaged application in a browser first run the followi
 $ grunt serve:prod
 ```
 
-## Technical information
-kAnalony application is based on many third party libraries. You can review the full list in the wiki (TBD). 
-
 ## FAQ
 
 **Why am I getting jshint errors when running grunt tasks?**
