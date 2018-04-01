@@ -14,7 +14,7 @@ module.exports = {
         './node_modules/jquery/dist/jquery.min.js',
         './node_modules/moment/min/moment.min.js',
         './node_modules/angular/angular.min.js',
-        './bower_components/lodash/dist/lodash.min.js',
+        './node_modules/lodash/lodash.js',
         './node_modules/d3/d3.min.js',
         './node_modules/nvd3/build/nv.d3.min.js',
         './node_modules/json.sortify/index.js',

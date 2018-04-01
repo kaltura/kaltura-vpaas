@@ -1,35 +1,23 @@
-# Kaltura Analytics 2.0 Front-End (aka kAnalony project Front-End) 
+# Kaltura Usage Dashboard (VPaas) 
 
-[![Build Status](https://travis-ci.org/kaltura/kanalony-front-end.svg?branch=master)](https://travis-ci.org/kaltura/kanalony-front-end)
 
-This project is the new client analytics project of Kaltura. 
-
-With kAnalony project, Kaltura real time analytics for live and on-demand video, you'll get historical or near real-time, raw or summarized data Kaltura partners need to truly understand how, when, and where their content is seen and shared by viewers. What keeps viewers watching? When do they lose interest? What do they share? Actionable Analytics ends the guesswork. 
-
-With the clear numbers in hand, Kaltura’s partner can build a content and monetization strategy that really works.
-
-> To make it work with real data, you will need to setup the [server analytics project](https://github.com/kaltura/kanalony).  
+learn more [here](https://vpaas.kaltura.com/)
 
 ## Getting Started
 
-To run kAnalony project on your machine,first make sure you setup your machine correctly.
+To run vpaas project on your machine, first make sure you setup your machine correctly.
 
 > Before continuing make sure you have [node.js](https://nodejs.org/en/) installed on your machine.
 
-Install both bower and grunt-cli globally (note the -g flag)
+Install grunt-cli globally (note the -g flag)
 
 ```bash
-$ npm install -g bower grunt-cli 
+$ npm install -g grunt-cli 
 ```
 
 In the repository folder install node modules
 ```
 $ npm install 
-```
-
-Make sure bower libraries are installed
-```
-$ bower install
 ```
 
 You also required to have [Ruby](https://www.ruby-lang.org/en/downloads/) and [Sass](http://sass-lang.com/install) installed. If you're on OS X or Linux you probably already have Ruby installed; test with the following command in your terminal. 
@@ -55,12 +43,21 @@ This project is using grunt to run develop & packaging tasks.
 To start working on the project, use the 'serve' grunt task as followed:
 
 ```
-$ grunt serve
+$ npm start
 ```
 
 This command will browserify your project and open a browser with your site. Whenever you change an html of javascript file the site will be loaded automatically.
 
 If you get any errors during the process just follow the [FAQ](##faq) section.
+
+### Run the application as standalone
+
+You will need to provide a valid KS. you can provide it by passing a query string named 'ks' with a valid value. Note that we use in this application the # notion in the url so you will need to add the query string **before this notation**, for example:
+
+```
+http://localhost:9003/index.html?ks=the_ks_value
+```
+
 
 ### Packaging the application for deployment
 When you are ready to deploy your application run one of the following.
@@ -68,7 +65,7 @@ When you are ready to deploy your application run one of the following.
 To build the project and create a zip file run the following command.
 
 ```
-$ grunt build:prod 
+$ npm run build
 ```
 You will then have:
 
@@ -80,31 +77,6 @@ If you want to test your packaged application in a browser first run the followi
 ```
 $ grunt serve:prod
 ```
-
-
-## Demo (local) server
-kAnalony front-end application uses a demo server to simulate front-end scenarios. In order to run the demo (local) server, open the server folder ```$ cd server``` and install node modules.
-
-```
-$ npm install
-```
-
-Now you should be able to run the demo server at port 9911 using the following command
-
-```
-$ grunt
-```
-
-To make sure it works, just run the following url in your browser *'http://localhost:9911/yo'* and excect the following result:
-
-```
-{"name":"kAnalony demo (local) server","version":"v3"}
-```
-
-
-
-## Technical information
-kAnalony application is based on many third party libraries. You can review the full list in the wiki (TBD). 
 
 ## FAQ
 

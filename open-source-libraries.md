@@ -12,8 +12,6 @@
 | angular-ui-router | 0.2.17 | MIT (package file), MIT (license file) | git+https://github.com/angular-ui/ui-router |
 | bootstrap | 3.3.6 | MIT (package file), MIT (license file) | git+https://github.com/twbs/bootstrap |
 | bootstrap-daterangepicker | 2.1.17 | MIT (package file) | git+https://github.com/dangrossman/bootstrap-daterangepicker |
-| bower | {unknown version} | {unknown license} | https://github.com/bower/bower |
-| bower-license | 0.4.1 | Apache-2.0 (package file), Apache (license file),  (license file) | git+https://github.com/AceMetrix/bower-license |
 | browserify | 12.0.2 | MIT (package file),  (license file) | git+ssh://git@github.com/substack/node-browserify |
 | browserify-global-shim | 1.0.3 | MIT (package file) | git+https://github.com/rluba/browserify-global-shim |
 | browserify-shim | 3.8.12 | MIT (package file),  (license file) | http://github.com/thlorenz/browserify-shim |

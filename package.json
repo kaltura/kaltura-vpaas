@@ -5,6 +5,10 @@
     "type": "git",
     "url": "https://github.com/kaltura/kanalony-front-end"
   },
+  "scripts": {
+    "build": "grunt build:prod",
+    "start": "grunt serve"
+  },
   "dependencies": {
     "angular": "^1.4.8",
     "angular-bootstrap": "^0.12.2",
@@ -12,13 +16,14 @@
     "angular-leaflet-directive": "^0.10.0",
     "angular-nvd3": "~1.0.5",
     "angular-route": "^1.4.8",
-    "angular-ui-router": "~0.2.13",
+    "angular-ui-router": "^0.3.2",
     "bootstrap": "^3.3.6",
     "bootstrap-daterangepicker": "^2.1.17",
     "d3": "~3.5.12",
     "jquery": "~2.1.2",
     "json.sortify": "^1.0.2",
     "leaflet": "^0.7.7",
+    "lodash": "^4.0.1",
     "moment": "^2.10.6",
     "ngstorage": "^0.3.10",
     "nvd3": "~1.8.1"
@@ -53,7 +58,6 @@
     "grunt-modernizr": "*",
     "grunt-newer": "*",
     "grunt-ng-annotate": "^1.0.1",
-    "grunt-node-inspector": "^0.4.1",
     "grunt-rev": "*",
     "grunt-shell": "*",
     "grunt-svgmin": "*",
@@ -62,7 +66,6 @@
     "jasmine-node": "~1.13.1",
     "jshint-stylish": "*",
     "load-grunt-tasks": "*",
-    "lodash": "^4.0.1",
     "nlf": "^1.4.0",
     "time-grunt": "*"
   },
