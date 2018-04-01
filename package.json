@@ -20,7 +20,7 @@
     "bootstrap": "^3.3.6",
     "bootstrap-daterangepicker": "^2.1.17",
     "d3": "~3.5.12",
-    "jquery": "~2.1.2",
+    "jquery": "^3.3.1",
     "json.sortify": "^1.0.2",
     "leaflet": "^0.7.7",
     "lodash": "^4.0.1",
