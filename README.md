@@ -1,18 +1,11 @@
-# Kaltura Analytics 2.0 Front-End (aka kAnalony project Front-End) 
+# Kaltura Usage Dashboard (VPaas) 
 
-[![Build Status](https://travis-ci.org/kaltura/kanalony-front-end.svg?branch=master)](https://travis-ci.org/kaltura/kanalony-front-end)
 
-This project is the new client analytics project of Kaltura. 
-
-With kAnalony project, Kaltura real time analytics for live and on-demand video, you'll get historical or near real-time, raw or summarized data Kaltura partners need to truly understand how, when, and where their content is seen and shared by viewers. What keeps viewers watching? When do they lose interest? What do they share? Actionable Analytics ends the guesswork. 
-
-With the clear numbers in hand, Kaltura’s partner can build a content and monetization strategy that really works.
-
-> To make it work with real data, you will need to setup the [server analytics project](https://github.com/kaltura/kanalony).  
+learn more [here](https://vpaas.kaltura.com/)
 
 ## Getting Started
 
-To run kAnalony project on your machine,first make sure you setup your machine correctly.
+To run vpaas project on your machine, first make sure you setup your machine correctly.
 
 > Before continuing make sure you have [node.js](https://nodejs.org/en/) installed on your machine.
 
