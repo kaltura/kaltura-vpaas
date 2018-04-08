@@ -469,6 +469,70 @@ var repository = [
                         }]
                     }
                 }]
+        },
+        {
+            reportId: 'entries',
+            menu: {title: 'Peak Entries Report', order: 0},
+            data: {
+                reportType: 27,
+                interval: 'months',
+            },
+            sections: [
+                {
+                    type: 'filters',
+                    showOnLoading: true,
+                    showOnError: false,
+                    options: {
+                        filters : {
+                            dateRange : true
+                        }
+                    }
+                },
+                {
+                    type: 'status',
+                    showOnLoading: true,
+                    showOnError: true,
+                    options: {
+                        showErrors: true,
+                        showLoading: true
+                    }
+                },
+                {
+                    type: 'barChart',
+                    showOnLoading: false,
+                    showOnError: false,
+                    options: {
+                        xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
+                        yValue: {
+                            name: 'peak_entries',
+                            type: 'number',
+                            labelFormat: ',',
+                            title: 'Peak'
+                        }
+                    }
+                },
+                {
+                    type: 'table',
+                    showOnLoading: false,
+                    showOnError: false,
+                    options: {
+                        title: 'Monthly Usage Breakdown',
+                        order: '-month_id',
+                        width : '50%',
+
+                        fields: [{
+                            name: 'month_id',
+                            type: 'date',
+                            valueFormat: 'MMMM, YYYY',
+                            title: 'Month'
+                        }, {
+                            name: 'peak_entries',
+                            type: 'number',
+                            valueFormat: ',',
+                            title: 'Peak'
+                        }]
+                    }
+                }]
         }]
     ;
 

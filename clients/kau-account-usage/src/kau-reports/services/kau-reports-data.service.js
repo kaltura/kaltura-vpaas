@@ -43,7 +43,7 @@ module.exports = function($q, kaKalturaAPIFacade, kauReportsConfiguration)
 
             var requestParams = {
                 reportType: filters.reportType,
-                reportInputFilter: {fromDay: moment(filters.date.startDate).format('YYYYMMDD'), toDay: moment(filters.date.endDate).format('YYYYMMDD')}
+                reportInputFilter: {interval: filters.interval ,fromDay: moment(filters.date.startDate).format('YYYYMMDD'), toDay: moment(filters.date.endDate).format('YYYYMMDD')}
             };
 
             var cacheKey = JSON.sortify(requestParams);

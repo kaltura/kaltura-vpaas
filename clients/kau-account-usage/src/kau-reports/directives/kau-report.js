@@ -44,7 +44,7 @@ module.exports = function()
             self.reportStatus.errorMessage = '';
 
 
-            var filters = { reportType : self.reportConfig.data.reportType };
+            var filters = { reportType : self.reportConfig.data.reportType, interval: self.reportConfig.data.interval };
 
             _.forEach(sections,function(section)
             {

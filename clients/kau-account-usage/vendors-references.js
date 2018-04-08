@@ -2,7 +2,7 @@
 
 module.exports = {
     commonjs : {
-        'ngStorage': './node_modules/ngStorage/ngstorage.min.js',
+        'ngStorage': './node_modules/ngstorage/ngStorage.min.js',
         'angular-ui-router': './node_modules/angular-ui-router/release/angular-ui-router.min.js',
         'ui-bootstrap': './node_modules/angular-bootstrap/ui-bootstrap-tpls.min.js',
         'angular-nvd3': './node_modules/angular-nvd3/dist/angular-nvd3.min.js',
