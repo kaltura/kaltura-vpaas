@@ -51,14 +51,27 @@ var repository = [
                             title: 'Month'
                             },
                             {name: 'total_plays', type: 'number', valueFormat: ',', title: 'Plays (CPM)'},
-                            {name: 'avg_storage_gb', type: 'number', valueFormat: ',.2f', title: 'Average Storage (GB)'},
                             {
-                                name: 'transcoding_gb',
+                                name: 'average_storage',
                                 type: 'number',
                                 valueFormat: ',.2f',
-                                title: 'Transcoding Consumption (GB)'
+                                title: 'Average Storage (GB)',
+                                conversion: 'mb_gb'
                             },
-                            {name: 'bandwidth_gb', type: 'number', valueFormat: ',.2f', title: 'Bandwidth Consumption (GB)'},
+                            {
+                                name: 'transcoding_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Transcoding Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'bandwidth_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
                             {
                                 name: 'total_media_entries',
                                 type: 'number',
@@ -174,7 +187,13 @@ var repository = [
                     showOnError: false,  // todo - should be false by default
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
-                        yValue: {name: 'avg_storage_gb', type: 'number', labelFormat: ',.0f', title: 'Average Storage (GB)'}
+                        yValue: {
+                            name: 'average_storage',
+                            type: 'number',
+                            labelFormat: ',.0f',
+                            title: 'Average Storage (GB)',
+                            conversion: 'mb_gb'
+                        }
                     }
                 },
                 {
@@ -186,13 +205,20 @@ var repository = [
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
                         width : '50%',
-                        fields: [{
-                            name: 'month_id',
-                            type: 'date',
-                            valueFormat: 'MMMM, YYYY',
-                            title: 'Month'
-                        },
-                            {name: 'avg_storage_gb', type: 'number', valueFormat: ',.2f', title: 'Average Storage (GB)'}
+                        fields: [
+                            {
+                                name: 'month_id',
+                                type: 'date',
+                                valueFormat: 'MMMM, YYYY',
+                                title: 'Month'
+                            },
+                            {
+                                name: 'average_storage',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Average Storage (GB)',
+                                conversion: 'mb_gb'
+                            }
                         ]
                     }
                 }
@@ -237,10 +263,11 @@ var repository = [
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
                         yValue: {
-                            name: 'bandwidth_gb',
+                            name: 'bandwidth_consumption',
                             type: 'number',
                             labelFormat: ',.0f',
-                            title: 'Bandwidth Consumption (GB)'
+                            title: 'Bandwidth Consumption (GB)',
+                            conversion: 'mb_gb'
                         }
                     }
                 },
@@ -259,7 +286,13 @@ var repository = [
                             valueFormat: 'MMMM, YYYY',
                             title: 'Month'
                         },
-                            {name: 'bandwidth_gb', type: 'number', valueFormat: ',.2f', title: 'Bandwidth Consumption (GB)'}
+                            {
+                                name: 'bandwidth_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)',
+                                conversion: 'mb_gb'
+                            }
                         ]
                     }
                 }]
@@ -302,9 +335,10 @@ var repository = [
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
                         yValue: {
-                            name: 'transcoding_gb',
+                            name: 'transcoding_consumption',
                             type: 'number',
                             labelFormat: ',.0f',
+                            conversion: 'mb_gb',
                             title: 'Transcoding Consumption (GB)'
                         }
                     }
@@ -324,9 +358,10 @@ var repository = [
                             valueFormat: 'MMMM, YYYY',
                             title: 'Month'
                         }, {
-                            name: 'transcoding_gb',
+                            name: 'transcoding_consumption',
                             type: 'number',
                             valueFormat: ',.2f',
+                            conversion: 'mb_gb',
                             title: 'Transcoding Consumption (GB)'
                         }]
                     }

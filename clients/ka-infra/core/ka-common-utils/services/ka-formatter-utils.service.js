@@ -30,7 +30,7 @@ module.exports = function()
         return result;
     }
 
-    function formatByType(input, type,format)
+    function formatByType(input, type, format, conversion)
     {
         var result = input;
         if (input && type) {
@@ -41,8 +41,15 @@ module.exports = function()
                     }
                     break;
                 case 'number':
+                    switch (conversion) {
+                        case 'mb_gb':
+                            result = result / 1024;
+                            break;
+                        default:
+                            break;
+                    }
                     if (format) {
-                        result = d3.format(format)(input);
+                        result = d3.format(format)(result);
                     }
                     break;
                 default:

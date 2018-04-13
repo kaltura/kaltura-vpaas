@@ -11,6 +11,16 @@ module.exports = function()
             yValue : {}
         };
 
+        function convertData(input, conversion) {
+            switch (conversion) {
+                case 'mb_gb':
+                    let inputNumber = parseInt(input, 10);
+                    return !isNaN(inputNumber) ? input / 1024 : input;
+                default:
+                    return input;
+            }
+        }
+
         function loadReportData(reportData)
         {
             var chartData = [];
@@ -65,6 +75,9 @@ module.exports = function()
                     },
                     showValues: false,
                     valueFormat: function (d) {
+                        if (self.reportOptions.yValue.conversion) {
+                            return d3.format(',')(convertData(d, self.reportOptions.yValue.conversion));
+                        }
                         return d3.format(',')(d);
                     },
                     duration: 500,
@@ -83,7 +96,7 @@ module.exports = function()
                         tickFormat: function (d) {
                             if (self.reportOptions.yValue.labelFormat)
                             {
-                                return kFormatterUtils.formatByType(d,self.reportOptions.yValue.type,self.reportOptions.yValue.labelFormat);
+                                return kFormatterUtils.formatByType(d,self.reportOptions.yValue.type,self.reportOptions.yValue.labelFormat,self.reportOptions.yValue.conversion);
                             }
                             return d;
                         },
