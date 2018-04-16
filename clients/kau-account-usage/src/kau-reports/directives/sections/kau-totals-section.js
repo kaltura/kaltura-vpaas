@@ -8,15 +8,23 @@ module.exports = function()
         var self = this;
 
         self.reportAPI = {
-            loadReportData : function(reportData)
-            {
-                if (reportData)
-                {
-                    self.currentMonth =  _.find(reportData,function(item)
-                    {
-                        var monthValue = item['month_id'];
-                       return monthValue ? monthValue.format('YYYYMM') === moment().format('YYYYMM') : false;
+            loadReportData: function (reportData) {
+                if (reportData) {
+                    const currentMonthValues = _.find(reportData, function (item) {
+                        const monthValue = item['month_id'];
+                        return monthValue ? monthValue.format('YYYYMM') === moment().format('YYYYMM') : false;
                     });
+
+                    if (currentMonthValues) {
+                        self.currentMonth = self.reportOptions.fields
+                            .map(option => {
+                                const value = currentMonthValues[option.name];
+                                if (value) {
+                                    return Object.assign(option, {value})
+                                }
+                            })
+                            .filter(Boolean);
+                    }
                 }
             }
         };
