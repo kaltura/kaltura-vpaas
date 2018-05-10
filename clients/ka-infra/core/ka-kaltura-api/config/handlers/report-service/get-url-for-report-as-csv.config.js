@@ -13,6 +13,7 @@ module.exports = function(kaKalturaAPIFacadeProvider)
             order : "-month_id",
             reportText:'',
             reportInputFilter: {
+                interval: 'months',
                 timeZoneOffset: -moment().utcOffset()
             }
         }
