@@ -166,6 +166,12 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
+                        dest: '<%= project.dist %>/',
+                        src: ['LICENSE']
+                    },
+                    {
+                        expand: true,
+                        dot: true,
                         cwd: 'node_modules/bootstrap-daterangepicker',
                         dest: '<%= project.dist %>/assets/bootstrap-daterangepicker',
                         src: [
