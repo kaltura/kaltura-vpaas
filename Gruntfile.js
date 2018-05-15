@@ -157,12 +157,6 @@ module.exports = function (grunt) {
                     {
                         expand: true,
                         dot: true,
-                        dest: '<%= project.dist %>/',
-                        src: ['LICENSE', 'open-source-libraries.md']
-                    },
-                    {
-                        expand: true,
-                        dot: true,
                         cwd: 'node_modules/bootstrap/dist',
                         dest: '<%= project.dist %>/assets/bootstrap',
                         src: [

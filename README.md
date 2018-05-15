@@ -101,6 +101,3 @@ All code in this project is released under the [AGPLv3 license](http://www.gnu.o
 
 Copyright © Kaltura Inc. All rights reserved.   
 Authors and contributors: See [GitHub contributors list](https://github.com/kaltura/kaltura-vpaas/graphs/contributors).  
-
-### Open Source Libraries
-Review the [list of Open Source 3rd party libraries](open-source-libraries.md) used in this project.
