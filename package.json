@@ -1,6 +1,6 @@
 {
   "name": "kaltura-vpaas",
-  "version": "0.11.2",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/kaltura/kaltura-vpaas"
