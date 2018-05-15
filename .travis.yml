@@ -1,0 +1,8 @@
+language: node_js
+node_js:
+  - '8.9.1'
+before_script:
+  - 'npm install -g karma grunt-cli jshint'
+
+after_script:
+  - 'npm run build' # or other command for build, run tests, etc
