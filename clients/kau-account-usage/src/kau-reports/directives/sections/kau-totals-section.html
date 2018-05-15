@@ -1,41 +1,11 @@
 <div class="ka-totals-section"  data-ng-if="vm.reportStatus.hasData">
     <div class="title-text" data-ng-if="vm.reportOptions.title">{{vm.reportOptions.title}}</div>
     <div class="ka-table " ng-if="vm.currentMonth">
-        <div class="ka-col">
+        <div class="ka-col" ng-repeat="item in vm.currentMonth">
             <div class="title">
-                <div>Plays</div>
-                <div>(CPM)</div>
+                <div>{{item.title}}</div>
             </div>
-            <div class="value">{{vm.currentMonth['total_plays'] | kauDynamicFilter : 'number' : ','}}</div>
-        </div>
-        <div class="ka-col">
-            <div class="title">
-                <div>Average Storage</div>
-                <div>(GB)</div>
-            </div>
-            <div class="value">{{vm.currentMonth['avg_storage_gb'] | kauDynamicFilter : 'number' : ',.2f'}}</div>
-        </div>
-        <div class="ka-col">
-            <div class="title">
-                <div>Bandwidth Consumption</div>
-                <div>(GB)</div>
-            </div>
-            <div class="value">{{vm.currentMonth['bandwidth_gb'] | kauDynamicFilter : 'number' : ',.2f'}}</div>
-        </div>
-        <div class="ka-col">
-            <div class="title">
-                <div>Transcoding Consumption</div>
-                <div>(GB)</div>
-            </div>
-            <div class="value">{{vm.currentMonth['transcoding_gb'] | kauDynamicFilter : 'number' : ',.2f'}}</div>
-        </div>
-        <div class="ka-col">
-            <div class="title">Media Entries</div>
-            <div class="value">{{vm.currentMonth['total_media_entries'] | kauDynamicFilter : 'number' : ','}}</div>
-        </div>
-        <div class="ka-col">
-            <div class="title">End Users</div>
-            <div class="value">{{vm.currentMonth['total_end_users'] | kauDynamicFilter : 'number' : ','}}</div>
+            <div class="value">{{item.value | kauDynamicFilter : item.type : item.valueFormat : item.conversion}}</div>
         </div>
     </div>
 </div>

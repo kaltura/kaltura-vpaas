@@ -15,21 +15,31 @@ module.exports = function()
         function loadReportData(reportData)
         {
             self.reportData = reportData;
+            updateTableColumns();
         }
 
-        self.tableHeaders = null;
+        function updateTableColumns() {
+            self.reportOptions = $.extend({},defaultOptions,self.options);
+
+            self.tableColumns = self.reportOptions.fields
+                .filter(({ name }) => {
+                    if (Array.isArray(self.reportData) && self.reportData.length) {
+                        return !!self.reportData[0][name];
+                    }
+
+                    return true;
+                });
+        }
+
+        self.tableColumns = null;
         self.reportData = null;
         self.reportOptions = null;
         self.title = '';
 
         self.loadReportData = loadReportData;
 
-        $scope.$watch('vm.options',function()
-        {
-            self.reportOptions = $.extend({},defaultOptions,self.options);
-
-            self.tableHeaders = _.map(self.reportOptions.fields, function(item) { return {name : item.title};});
-
+        $scope.$watch('vm.options', function() {
+            updateTableColumns();
         });
     }
 

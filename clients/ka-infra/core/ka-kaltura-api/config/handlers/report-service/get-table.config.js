@@ -13,8 +13,11 @@ module.exports = function(kaKalturaAPIFacadeProvider)
                 'month_id,date,YYYYMM',
                 'total_plays,number',
                 'bandwidth_gb,number',
+                'bandwidth_consumption,number',
                 'avg_storage_gb,number',
+                'average_storage,number',
                 'transcoding_gb,number',
+                'transcoding_consumption,number',
                 'total_media_entries,number',
                 'total_end_users,number'
             ]
@@ -22,6 +25,7 @@ module.exports = function(kaKalturaAPIFacadeProvider)
         var defaultRequestData = {
             pager: {pageIndex: 1, pageSize: 1},
             reportInputFilter: {
+                interval: 'months',
                 timeZoneOffset: -moment().utcOffset()
             }
         };

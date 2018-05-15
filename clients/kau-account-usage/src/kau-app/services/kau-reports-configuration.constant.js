@@ -33,6 +33,64 @@ var repository = [
                     showOnLoading: false,
                     showOnError: false,  // todo - should be false by default
                     options: {
+                        fields: [
+                            {
+                                name: 'total_plays',
+                                type: 'number',
+                                valueFormat: ',',
+                                title: 'Plays (CPM)'
+                            },
+                            {
+                                name: 'avg_storage_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Average Storage (GB)'
+                            },
+                            {
+                                name: 'average_storage',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Average Storage (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'transcoding_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Transcoding Consumption (GB)'
+                            },
+                            {
+                                name: 'transcoding_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Transcoding Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'bandwidth_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)'
+                            },
+                            {
+                                name: 'bandwidth_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'total_media_entries',
+                                type: 'number',
+                                valueFormat: ',',
+                                title: 'Media Entries'
+                            }, {
+                                name: 'total_end_users',
+                                type: 'number',
+                                valueFormat: ',',
+                                title: 'End Users'
+                            }
+                        ]
                     }
                 },
                 {
@@ -43,22 +101,59 @@ var repository = [
                     options: {
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
-                        width : '100%',
-                        fields: [{
-                            name: 'month_id',
-                            type: 'date',
-                            valueFormat: 'MMMM, YYYY',
-                            title: 'Month'
+                        width: '100%',
+                        fields: [
+                            {
+                                name: 'month_id',
+                                type: 'date',
+                                valueFormat: 'MMMM, YYYY',
+                                title: 'Month'
                             },
-                            {name: 'total_plays', type: 'number', valueFormat: ',', title: 'Plays (CPM)'},
-                            {name: 'avg_storage_gb', type: 'number', valueFormat: ',.2f', title: 'Average Storage (GB)'},
+                            {
+                                name: 'total_plays',
+                                type: 'number',
+                                valueFormat: ',',
+                                title: 'Plays (CPM)'
+                            },
+                            {
+                                name: 'avg_storage_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Average Storage (GB)'
+                            },
+                            {
+                                name: 'average_storage',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Average Storage (GB)',
+                                conversion: 'mb_gb'
+                            },
                             {
                                 name: 'transcoding_gb',
                                 type: 'number',
                                 valueFormat: ',.2f',
                                 title: 'Transcoding Consumption (GB)'
                             },
-                            {name: 'bandwidth_gb', type: 'number', valueFormat: ',.2f', title: 'Bandwidth Consumption (GB)'},
+                            {
+                                name: 'transcoding_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Transcoding Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'bandwidth_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)'
+                            },
+                            {
+                                name: 'bandwidth_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
                             {
                                 name: 'total_media_entries',
                                 type: 'number',
@@ -174,7 +269,21 @@ var repository = [
                     showOnError: false,  // todo - should be false by default
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
-                        yValue: {name: 'avg_storage_gb', type: 'number', labelFormat: ',.0f', title: 'Average Storage (GB)'}
+                        yValue: [
+                            {
+                                name: 'average_storage',
+                                type: 'number',
+                                labelFormat: ',.0f',
+                                title: 'Average Storage (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'avg_storage_gb',
+                                type: 'number',
+                                labelFormat: ',.0f',
+                                title: 'Average Storage (GB)'
+                            },
+                        ]
                     }
                 },
                 {
@@ -186,13 +295,26 @@ var repository = [
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
                         width : '50%',
-                        fields: [{
-                            name: 'month_id',
-                            type: 'date',
-                            valueFormat: 'MMMM, YYYY',
-                            title: 'Month'
-                        },
-                            {name: 'avg_storage_gb', type: 'number', valueFormat: ',.2f', title: 'Average Storage (GB)'}
+                        fields: [
+                            {
+                                name: 'month_id',
+                                type: 'date',
+                                valueFormat: 'MMMM, YYYY',
+                                title: 'Month'
+                            },
+                            {
+                                name: 'avg_storage_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Average Storage (GB)'
+                            },
+                            {
+                                name: 'average_storage',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Average Storage (GB)',
+                                conversion: 'mb_gb'
+                            }
                         ]
                     }
                 }
@@ -236,12 +358,21 @@ var repository = [
                     showOnError: false,  // todo - should be false by default
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
-                        yValue: {
-                            name: 'bandwidth_gb',
-                            type: 'number',
-                            labelFormat: ',.0f',
-                            title: 'Bandwidth Consumption (GB)'
-                        }
+                        yValue: [
+                            {
+                                name: 'bandwidth_consumption',
+                                type: 'number',
+                                labelFormat: ',.0f',
+                                title: 'Bandwidth Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'bandwidth_gb',
+                                type: 'number',
+                                labelFormat: ',.0f',
+                                title: 'Bandwidth Consumption (GB)'
+                            },
+                        ]
                     }
                 },
                 {
@@ -253,13 +384,26 @@ var repository = [
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
                         width : '50%',
-                        fields: [{
-                            name: 'month_id',
-                            type: 'date',
-                            valueFormat: 'MMMM, YYYY',
-                            title: 'Month'
-                        },
-                            {name: 'bandwidth_gb', type: 'number', valueFormat: ',.2f', title: 'Bandwidth Consumption (GB)'}
+                        fields: [
+                            {
+                                name: 'month_id',
+                                type: 'date',
+                                valueFormat: 'MMMM, YYYY',
+                                title: 'Month'
+                            },
+                            {
+                                name: 'bandwidth_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)',
+                                conversion: 'mb_gb'
+                            },
+                            {
+                                name: 'bandwidth_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                title: 'Bandwidth Consumption (GB)'
+                            }
                         ]
                     }
                 }]
@@ -301,12 +445,21 @@ var repository = [
                     showOnError: false,  // todo - should be false by default
                     options: {
                         xValue: {name: 'month_id', type: 'date', labelFormat: 'MMMM, YYYY', title: 'Month'},
-                        yValue: {
-                            name: 'transcoding_gb',
-                            type: 'number',
-                            labelFormat: ',.0f',
-                            title: 'Transcoding Consumption (GB)'
-                        }
+                        yValue: [
+                            {
+                                name: 'transcoding_consumption',
+                                type: 'number',
+                                labelFormat: ',.0f',
+                                conversion: 'mb_gb',
+                                title: 'Transcoding Consumption (GB)'
+                            },
+                            {
+                                name: 'transcoding_gb',
+                                type: 'number',
+                                labelFormat: ',.0f',
+                                conversion: 'mb_gb'
+                            },
+                        ]
                     }
                 },
                 {
@@ -318,17 +471,27 @@ var repository = [
                         title: 'Monthly Usage Breakdown',
                         order: '-month_id',
                         width: '100%',
-                        fields: [{
-                            name: 'month_id',
-                            type: 'date',
-                            valueFormat: 'MMMM, YYYY',
-                            title: 'Month'
-                        }, {
-                            name: 'transcoding_gb',
-                            type: 'number',
-                            valueFormat: ',.2f',
-                            title: 'Transcoding Consumption (GB)'
-                        }]
+                        fields: [
+                            {
+                                name: 'month_id',
+                                type: 'date',
+                                valueFormat: 'MMMM, YYYY',
+                                title: 'Month'
+                            },
+                            {
+                                name: 'transcoding_consumption',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                conversion: 'mb_gb',
+                                title: 'Transcoding Consumption (GB)'
+                            },
+                            {
+                                name: 'transcoding_gb',
+                                type: 'number',
+                                valueFormat: ',.2f',
+                                conversion: 'mb_gb'
+                            },
+                        ]
                     }
                 }]
         },

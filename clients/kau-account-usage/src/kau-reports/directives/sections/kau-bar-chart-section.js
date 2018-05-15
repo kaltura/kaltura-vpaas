@@ -10,12 +10,26 @@ module.exports = function()
             xValue : {},
             yValue : {}
         };
+        let dataKeys = [];
+
+        function convertData(input, conversion) {
+            switch (conversion) {
+                case 'mb_gb':
+                    let inputNumber = parseInt(input, 10);
+                    return !isNaN(inputNumber) ? input / 1024 : input;
+                default:
+                    return input;
+            }
+        }
 
         function loadReportData(reportData)
         {
             var chartData = [];
-            if (reportData )
-            {
+            if (reportData) {
+                if (Array.isArray(reportData) && reportData.length) {
+                    self.dataKeys = Object.keys(reportData[0]);
+                }
+
                 chartData = [{key: '', values: reportData}];
                 var itemsNumber = reportData.length;
 
@@ -60,11 +74,20 @@ module.exports = function()
                         return d[self.reportOptions.xValue.name];
                     },
                     y: function (d) {
-                        return d[self.reportOptions.yValue.name];
+                        const yValue = Array.isArray(self.reportOptions.yValue)
+                            ? self.reportOptions.yValue.find(value => self.dataKeys.indexOf(value.name) !== -1)
+                            : self.reportOptions.yValue;
+                        return d[yValue.name];
 
                     },
                     showValues: false,
                     valueFormat: function (d) {
+                        const yValue = Array.isArray(self.reportOptions.yValue)
+                            ? self.reportOptions.yValue.find(value => self.dataKeys.indexOf(value.name) !== -1)
+                            : self.reportOptions.yValue;
+                        if (yValue && yValue.conversion) {
+                            return d3.format(',')(convertData(d, yValue.conversion));
+                        }
                         return d3.format(',')(d);
                     },
                     duration: 500,
@@ -81,9 +104,11 @@ module.exports = function()
                     yAxis: {
                         axisLabel: '',
                         tickFormat: function (d) {
-                            if (self.reportOptions.yValue.labelFormat)
-                            {
-                                return kFormatterUtils.formatByType(d,self.reportOptions.yValue.type,self.reportOptions.yValue.labelFormat);
+                            const yValue = Array.isArray(self.reportOptions.yValue)
+                                ? self.reportOptions.yValue.find(value => self.dataKeys.indexOf(value.name) !== -1)
+                                : self.reportOptions.yValue;
+                            if (yValue && yValue.labelFormat) {
+                                return kFormatterUtils.formatByType(d,yValue.type, yValue.labelFormat, yValue.conversion);
                             }
                             return d;
                         },
