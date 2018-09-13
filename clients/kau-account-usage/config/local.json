@@ -1,0 +1,16 @@
+{
+    "server" : {
+        "apiUri" : ""
+    },
+    "routing": {
+        "defaultState" : "root.shell.reports.report({reportId : 'overall'}",
+        "defaultUri" : "/reports/overall"
+    },
+    "debug" :{
+        "enabled" : false,
+        "kau-app" : {
+            "reportDiagnostic" : true
+        }
+    }
+
+}

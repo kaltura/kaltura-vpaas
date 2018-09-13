@@ -6,7 +6,8 @@
     "url": "https://github.com/kaltura/kaltura-vpaas"
   },
   "scripts": {
-    "build": "grunt build:prod",
+    "build": "grunt build",
+    "build:prod": "grunt build:prod:local",
     "start": "grunt serve"
   },
   "dependencies": {
