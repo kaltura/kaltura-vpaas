@@ -8,7 +8,7 @@ module.exports = function(kaKalturaAPIFacadeProvider)
         var self = this;
 
         var defaultRequestData = {
-            pager: {pageIndex: 1, pageSize: 1},
+            pager: {pageIndex: 1, pageSize: 500},
             headers:";Month,Plays (CPM),Bandwidth (GB),Avg Storage (GB),Transcoding (GB),Entries,Users",
             order : "-month_id",
             reportText:'',

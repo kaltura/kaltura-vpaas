@@ -23,7 +23,7 @@ module.exports = function(kaKalturaAPIFacadeProvider)
             ]
         };
         var defaultRequestData = {
-            pager: {pageIndex: 1, pageSize: 1},
+            pager: {pageIndex: 1, pageSize: 500},
             reportInputFilter: {
                 interval: 'months',
                 timeZoneOffset: -moment().utcOffset()
